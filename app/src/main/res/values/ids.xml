@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="mallfloor_floor_title"></item>
+    <item type="id" name="jdImageLoader_status_tag"></item>
+    <item type="id" name="image_last_url"></item>
+
+    <item type="id" name="home_icon_text"></item>
+    <item type="id" name="home_icon_reddot"></item>
+    <item type="id" name="home_icon_image"></item>
+
+    <item type="id" name="mallfloor_announcement_leftimage"></item>
+</resources>

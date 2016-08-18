@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" android:gravity="center" android:orientation="vertical"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content">
+    <include android:id="@+id/loading_error_tips_layout" android:visibility="gone" android:layout_width="fill_parent"
+             android:layout_height="wrap_content" layout="@layout/jd_common_state_page_01"/>
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@+id/home_product_loading_layout"
+                  android:layout_width="fill_parent" android:layout_height="50.0dip">
+        <com.jingdong.common.ui.JDProgressBar android:gravity="center" android:id="@+id/boz"
+                                              style="@style/progress_loading"/>
+        <TextView android:textColor="@color/f" android:gravity="center_vertical" android:id="@+id/bp0"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginLeft="4.0dip" android:text="加载中..."/>
+    </LinearLayout>
+    <TextView android:textColor="@color/f" android:gravity="center" android:id="@+id/home_product_err" android:visibility="gone"
+              android:layout_width="fill_parent" android:layout_height="50.0dip" android:text="@string/bb5"/>
+    <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/home_product_end" android:visibility="gone"
+                                               android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+</merge>

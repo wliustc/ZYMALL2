@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/r3"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/main_navigation_bottom_big_icon_height">
+
+    <View
+        android:id="@+id/navigation_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/main_navigation_bottom_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/main_navigation_bg_5" />
+
+    <HorizontalScrollView
+        android:id="@+id/r5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:alwaysDrawnWithCache="false"
+        android:animationCache="false"
+        android:persistentDrawingCache="none"
+        android:scrollbars="none">
+
+        <RadioGroup
+            android:id="@+id/bottomMenu"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/main_navigation_bottom_big_icon_height"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+
+</RelativeLayout>

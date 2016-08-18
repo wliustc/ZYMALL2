@@ -1,0 +1,32 @@
+<resources>
+
+
+    <style name="b6" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:background">@drawable/c1w</item>
+        <item name="android:backgroundSplit">@drawable/c1v</item>
+    </style>
+    <style name="b7" parent="@android:style/Widget.DeviceDefault.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/c1u</item>
+    </style>
+    <style name="b8" parent="@android:style/Widget.DeviceDefault.Light.ActionButton">
+        <item name="android:src">@drawable/c1t</item>
+    </style>
+    <style name="MeizuTheme" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:textColor">@color/d5</item>
+        <item name="android:actionBarStyle">@style/b6</item>
+        <item name="android:actionButtonStyle">@style/b8</item>
+        <item name="android:actionOverflowButtonStyle">@style/b7</item>
+    </style>
+
+    <style name="splashTheme" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowBackground">@drawable/m7</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+    <style name="fa" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowBackground">@drawable/m7</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+</resources>

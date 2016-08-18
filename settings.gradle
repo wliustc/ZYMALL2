@@ -1,0 +1,4 @@
+include ':app'
+
+include ':libraries/AndroidPullToRefresh'
+//project(':app').projectDir = new File(settingsDir, 'WRC_APP/app')

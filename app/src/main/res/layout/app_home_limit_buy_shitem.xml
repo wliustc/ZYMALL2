@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="84.0dip">
+        <com.facebook.drawee.view.SimpleDraweeView android:id="@+id/app_home_limit_buy_icon" android:layout_width="84.0dip" android:layout_height="84.0dip" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" android:scaleType="fitXY" android:layout_centerInParent="true" />
+        <TextView android:textSize="10.0dip" android:textColor="@color/a5" android:gravity="center" android:id="@+id/tv_discount" android:paddingLeft="2.0dip" android:paddingRight="2.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignLeft="@id/app_home_limit_buy_icon" android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+    <RelativeLayout android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dip">
+        <LinearLayout android:orientation="horizontal" android:id="@+id/qo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true">
+            <TextView android:textSize="10.0dip" android:textColor="#fff62d2d" android:gravity="bottom" android:id="@+id/qp" android:padding="0.0dip" android:layout_width="wrap_content" android:layout_height="15.0dip" android:text="@string/yangjiao" android:includeFontPadding="false" />
+            <TextView android:textSize="15.0dip" android:textColor="#fff62d2d" android:id="@+id/app_home_jdprice" android:padding="0.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:includeFontPadding="false" android:layout_toRightOf="@id/qp" />
+        </LinearLayout>
+        <TextView android:textSize="12.0dip" android:textColor="#ffababab" android:gravity="center" android:id="@+id/app_home_limit_buy_price" android:padding="0.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3.0dip" android:includeFontPadding="false" android:layout_below="@id/qo" android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+</LinearLayout>
