@@ -446,7 +446,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.b.setFocusable(false);
         this.b.setOnTouchListener(this.l);
         this.Q.findViewById(R.id.search_box_layout).setOnTouchListener(this.l);//2131166397
-        this.Q.findViewById(R.id.category_saoasao_button).setOnClickListener(new View.OnClickListener(){//o(this)
+        this.Q.findViewById(R.id.category_saoasao_button).setOnClickListener(new View.OnClickListener(){//2131165803 //o(this)
             @Override
             public void onClick(View view) {
                 if (CatelogyUtil.a(JDNewCategoryFragment.b(this.a)))
@@ -454,7 +454,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Search_Scan", "", "", this.a, "", JDNewCategoryFragment.b(this.a).getClass(), "");
 
             }
-        });//2131165803
+        });
         this.c.setOnClickListener(new View.OnClickListener(){//b(this)
             @Override
             public void onClick(View view) {
