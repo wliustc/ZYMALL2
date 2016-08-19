@@ -34,4 +34,9 @@
         <item name="android:layout_width">34.0dip</item>
         <item name="android:layout_height">34.0dip</item>
     </style>
+
+    <style name="popup_anim_alpha_style"><!-- i_ -->
+        <item name="android:windowEnterAnimation">@anim/view_in</item>
+        <item name="android:windowExitAnimation">@anim/view_out</item>
+    </style>
 </resources>

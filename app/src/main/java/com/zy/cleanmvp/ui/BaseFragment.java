@@ -284,4 +284,17 @@ public abstract class BaseFragment extends Fragment {
         this.shop_id = paramString;
     }
 
+    public String getFragmentString(int paramInt)
+    {
+        if (isAdded())
+            return getString(paramInt);
+        return "";
+    }
+
+    public int getFragmentTextColor(int paramInt)
+    {
+        if (isAdded())
+            return getResources().getColor(paramInt);
+        return 0;
+    }
 }

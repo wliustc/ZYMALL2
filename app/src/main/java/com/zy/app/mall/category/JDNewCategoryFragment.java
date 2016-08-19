@@ -36,6 +36,9 @@ import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.app.mall.utils.LoginUser;
 import com.jingdong.common.BaseActivity;
 import com.jingdong.common.login.LoginUserBase;
+import com.jingdong.common.utils.JDFrescoUtils;
+import com.jingdong.common.utils.StatisticsReportUtil;
+import com.jingdong.jdma.model.UserInfoModel;
 import com.jingdong.lib.zxing.client.android.CaptureActivity;
 import com.zy.app.mall.R;
 import com.zy.app.mall.basic.JDTaskModule;
@@ -48,6 +51,7 @@ import com.zy.app.mall.navigationbar.JDTabFragment;
 import com.zy.app.mall.personel.a.a.PersonalMessageChannel;
 import com.zy.app.mall.personel.a.a.PersonalMessageObserver;
 import com.zy.app.mall.searchRefactor.view.Activity.SearchActivity;
+import com.zy.common.e.ConfigUtil;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.utils.DPIUtil;
@@ -449,9 +453,9 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.Q.findViewById(R.id.category_saoasao_button).setOnClickListener(new View.OnClickListener(){//2131165803 //o(this)
             @Override
             public void onClick(View view) {
-                if (CatelogyUtil.a(JDNewCategoryFragment.b(this.a)))
-                    this.a.startActivity(new Intent(JDNewCategoryFragment.b(this.a), CaptureActivity.class));
-                JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Search_Scan", "", "", this.a, "", JDNewCategoryFragment.b(this.a).getClass(), "");
+                if (CatelogyUtil.a(JDNewCategoryFragment.this.P))
+                    JDNewCategoryFragment.this.startActivity(new Intent(JDNewCategoryFragment.this.P, CaptureActivity.class));
+                JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Search_Scan", "", "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
 
             }
         });
@@ -460,19 +464,19 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             public void onClick(View view) {
                 if (JDNewCategoryFragment.q(this.a))
                     return;
-                JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Classification_MyMessage", "", "", this.a, "", "", "");
-                this.a.e.setVisibility(8);
-                this.a.d.setVisibility(8);
-                com.jingdong.app.mall.personel.a.a.b.a(LoginUserBase.getLoginUserName());
-                com.jingdong.app.mall.personel.a.a.b.a("message", System.currentTimeMillis(), JDNewCategoryFragment.b(this.a).getHttpGroupWithNPSGroup());
+                JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Classification_MyMessage", "", "", JDNewCategoryFragment.this, "", "", "");
+                JDNewCategoryFragment.this.e.setVisibility(View.GONE);
+                JDNewCategoryFragment.this.d.setVisibility(View.GONE);
+                PersonalMessageManager.a(LoginUserBase.getLoginUserName());
+                PersonalMessageManager.a("message", System.currentTimeMillis(), JDNewCategoryFragment.this.P.getHttpGroupWithNPSGroup());
                 //paramView = new c(this);
-                LoginUser.getInstance().executeLoginRunnable(JDNewCategoryFragment.b(this.a), new Runnable(){
+                LoginUser.getInstance().executeLoginRunnable(JDNewCategoryFragment.this.P, new Runnable(){
                     @Override
                     public void run() {
-                        Intent localIntent = new Intent(JDNewCategoryFragment.b(this.a.a), MyMessageBox.class);
-                        localIntent.putExtra("title", this.a.a.getFragmentString(2131231239));
+                        Intent localIntent = new Intent(JDNewCategoryFragment.this.P, MyMessageBox.class);
+                        localIntent.putExtra("title", JDNewCategoryFragment.this.getFragmentString(R.string.content_message_center));
                         localIntent.putExtra("com.360buy:navigationDisplayFlag", -1);
-                        JDNewCategoryFragment.b(this.a.a).startActivity(localIntent);
+                        JDNewCategoryFragment.this.P.startActivity(localIntent);
                     }
                 });
             }
@@ -486,14 +490,14 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             popupWindow.setHeight(i1);
             popupWindow.setBackgroundDrawable(new ColorDrawable(0xCC3E3F4C));//-868335796
             popupWindow.setFocusable(true);
-            popupWindow.setAnimationStyle(2131296588);//2131296588
+            popupWindow.setAnimationStyle(R.style.popup_anim_alpha_style);//2131296588
             popupWindow.update();
             this.y = popupWindow;
         }
         View view = ImageUtil.inflate(R.layout.app_search_toolbar_button, null);//2130903176
         if (view != null)
         {
-            a(com.jingdong.common.e.a.a(14, false), view.findViewById(R.id.search_camera_btn));//2131165521
+            a(ConfigUtil.a(14, false), view.findViewById(R.id.search_camera_btn));//2131165521
             view.findViewById(R.id.search_barcode_btn).setOnClickListener(this.z);//2131165520
             view.findViewById(R.id.color_shopping_btn).setOnClickListener(this.z);//2131165523
             this.Q.findViewById(R.id.search_voice).setOnClickListener(this.z);//2131168592
@@ -505,15 +509,15 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             public void onReceive(Context context, Intent intent) {
                 if ((intent != null) && ("refresh_recommedData".equals(intent.getAction())))
                 {
-                    JDNewCategoryFragment.a(this.a, UserInfoModel.getEncryptLoginUserName(LoginUserBase.getLoginUserName()));
-                    if (JDNewCategoryFragment.a(this.a) == null)
-                        JDNewCategoryFragment.a(this.a, "");
-                    JDNewCategoryFragment.b(this.a, StatisticsReportUtil.genarateDeviceUUID(JDNewCategoryFragment.b(this.a)));
-                    if ((JDNewCategoryFragment.c(this.a) == -1) && (this.a.getActivity() != null) && (!this.a.getActivity().isFinishing()))
+                    JDNewCategoryFragment.this.p = UserInfoModel.getEncryptLoginUserName(LoginUserBase.getLoginUserName());
+                    if (JDNewCategoryFragment.this.p == null)
+                        JDNewCategoryFragment.this.p = "";
+                    JDNewCategoryFragment.this.q = StatisticsReportUtil.genarateDeviceUUID(JDNewCategoryFragment.this.P);
+                    if ((JDNewCategoryFragment.this.w == -1) && (JDNewCategoryFragment.this.getActivity() != null) && (!JDNewCategoryFragment.this.getActivity().isFinishing()))
                     {
                         if (Log.D)
-                            Log.d(JDNewCategoryFragment.c(), "ActivityHasNotFinished");
-                        JDNewCategoryFragment.a(this.a, false, false, true, false);
+                            Log.d(JDNewCategoryFragment.this.n, "ActivityHasNotFinished");
+                        JDNewCategoryFragment.this.a(false, false, true, false);
                     }
                 }
             }
@@ -525,62 +529,74 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.t.a(new ILeftAdapterListener(){//f(this)
             @Override
             public void a(View paramView) {
-                JDNewCategoryFragment.a(this.a, paramView);
+                JDNewCategoryFragment.this.u = paramView;
             }
         });
         this.s.setAdapter(this.t);
         this.s.setOnItemClickListener(new AdapterView.OnItemClickListener(){//g(this)
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (((JDNewCategoryFragment.d(this.a)) && (JDNewCategoryFragment.c(this.a) == paramInt - 1)) || ((!JDNewCategoryFragment.d(this.a)) && (JDNewCategoryFragment.c(this.a) == paramInt)))
+            public void onItemClick(AdapterView<?> adapterView, final View view, int paramInt, long l) {
+                if (((JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.w == paramInt - 1)) || ((!JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.w == paramInt)))
                     return;
-                cb.a(JDNewCategoryFragment.e(this.a));
-                if (JDNewCategoryFragment.f(this.a))
+                JDFrescoUtils.a(JDNewCategoryFragment.this.T);
+                if (JDNewCategoryFragment.this.S)
                 {
-                    JDNewCategoryFragment.a(this.a, JDNewCategoryFragment.g(this.a).getChildAt(0));
-                    JDNewCategoryFragment.a(this.a, false);
+                    JDNewCategoryFragment.this.u = JDNewCategoryFragment.this.s.getChildAt(0);
+                    JDNewCategoryFragment.this.S = false;
                 }
-                if ((JDNewCategoryFragment.h(this.a) != null) && (this.a.isAdded()))
+                if ((JDNewCategoryFragment.this.u != null) && (JDNewCategoryFragment.this.isAdded()))
                 {
-                    JDNewCategoryFragment.h(this.a).setBackgroundResource(2130838454);
-                    ((d)JDNewCategoryFragment.h(this.a).getTag()).a.setTextColor(this.a.getFragmentTextColor(2131099873));
+                    JDNewCategoryFragment.this.u.setBackgroundResource(R.drawable.category_new_left_normal);//2130838454
+                    ((LeftListAdapter.LeftListViewHolder)JDNewCategoryFragment.this.u.getTag()).mText.setTextColor(JDNewCategoryFragment.this.getFragmentTextColor(R.color.category_new__dark_font));//2131099873
                 }
-                if (this.a.isAdded())
+                if (JDNewCategoryFragment.this.isAdded())
                 {
-                    paramView.setBackgroundResource(2130838453);
-                    ((d)paramView.getTag()).a.setTextColor(this.a.getFragmentTextColor(2131099877));
+                    view.setBackgroundResource(R.drawable.category_new_left_facous);//2130838453
+                    ((LeftListAdapter.LeftListViewHolder)view.getTag()).mText.setTextColor(JDNewCategoryFragment.this.getFragmentTextColor(R.color.category_new_red_font));//2131099877
                 }
-                if ((JDNewCategoryFragment.d(this.a)) && (paramInt != 0))
+                if ((JDNewCategoryFragment.this.v) && (paramInt != 0))
                 {
-                    paramAdapterView = (Catelogy)JDNewCategoryFragment.i(this.a).get(paramInt - 1);
-                    JDNewCategoryFragment.a(this.a, paramInt - 1);
-                    JDNewCategoryFragment.c(this.a, paramAdapterView.getcId());
-                    JDNewCategoryFragment.d(this.a, JDNewCategoryFragment.j(this.a));
-                    JDNewCategoryFragment.e(this.a, JDNewCategoryFragment.j(this.a));
-                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Classification_BCategory", JDNewCategoryFragment.j(this.a) + "_" + JDNewCategoryFragment.k(this.a) + "_" + paramInt, "", this.a, "", JDNewCategoryFragment.b(this.a).getClass(), "");
+                    Catelogy catelogy = (Catelogy)JDNewCategoryFragment.this.A.get(paramInt - 1);
+                    JDNewCategoryFragment.this.w = paramInt - 1;
+                    JDNewCategoryFragment.this.o = catelogy.getcId();
+                    JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.o);
+                    JDNewCategoryFragment.this.H = JDNewCategoryFragment.this.o;
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Classification_BCategory", JDNewCategoryFragment.this.o + "_" + JDNewCategoryFragment.this.D + "_" + paramInt, "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
                 }
-                if ((JDNewCategoryFragment.d(this.a)) && (paramInt == 0))
+                if ((JDNewCategoryFragment.this.v) && (paramInt == 0))
                 {
-                    this.a.post(new h(this));
-                    JDNewCategoryFragment.a(this.a, false, false, true, false);
-                    JDNewCategoryFragment.a(this.a, -1);
-                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Classification_CateCustomize", "", "", this.a, "", JDNewCategoryFragment.b(this.a).getClass(), "");
-                    JDNewCategoryFragment.e(this.a).clear();
-                    JDNewCategoryFragment.a(this.a, JDNewCategoryFragment.b(this.a, JDNewCategoryFragment.n(this.a)));
+                    JDNewCategoryFragment.this.post(new Runnable(){//h(this)
+                        @Override
+                        public void run() {
+                            JDNewCategoryFragment.this.I.setVisibility(View.GONE);
+                            if (JDNewCategoryFragment.this.isAdded())
+                                JDNewCategoryFragment.this.K.setBackgroundResource(R.drawable.category_kongbai);//2130838448
+                        }
+                    });
+                    JDNewCategoryFragment.this.a(false, false, true, false);
+                    JDNewCategoryFragment.this.w = -1;
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Classification_CateCustomize", "", "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
+                    JDNewCategoryFragment.this.T.clear();
+                    JDNewCategoryFragment.this.T = JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.B);
                 }
-                if (!JDNewCategoryFragment.d(this.a))
+                if (!JDNewCategoryFragment.this.v)
                 {
-                    paramAdapterView = (Catelogy)JDNewCategoryFragment.i(this.a).get(paramInt);
-                    JDNewCategoryFragment.a(this.a, paramInt);
-                    JDNewCategoryFragment.c(this.a, paramAdapterView.getcId());
-                    JDNewCategoryFragment.d(this.a, JDNewCategoryFragment.j(this.a));
-                    JDNewCategoryFragment.e(this.a, JDNewCategoryFragment.j(this.a));
-                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Classification_BCategory", JDNewCategoryFragment.j(this.a) + "_" + JDNewCategoryFragment.k(this.a) + "_" + (paramInt + 1), "", this.a, "", JDNewCategoryFragment.b(this.a).getClass(), "");
+                    Catelogy catelogy = (Catelogy)JDNewCategoryFragment.this.A.get(paramInt);
+                    JDNewCategoryFragment.this.w = paramInt;
+                    JDNewCategoryFragment.this.o = catelogy.getcId();
+                    JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.o);
+                    JDNewCategoryFragment.this.H = JDNewCategoryFragment.this.o;
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Classification_BCategory", JDNewCategoryFragment.this.o + "_" + JDNewCategoryFragment.this.D + "_" + (paramInt + 1), "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
                 }
-                if (JDNewCategoryFragment.o(this.a) != null)
-                    JDNewCategoryFragment.o(this.a).a(JDNewCategoryFragment.c(this.a));
-                this.a.post(new i(this, paramView));
-                JDNewCategoryFragment.a(this.a, paramView);
+                if (JDNewCategoryFragment.this.t != null)
+                    JDNewCategoryFragment.this.t.a(JDNewCategoryFragment.this.w);
+                JDNewCategoryFragment.this.post(new Runnable(){//i(this, view)
+                    @Override
+                    public void run() {
+                        JDNewCategoryFragment.this.s.smoothScrollBy(view.getTop(), 700);
+                    }
+                });
+                JDNewCategoryFragment.this.u = view;
             }
         });
         this.J.setOnClickListener(new View.OnClickListener(){//j(this)
