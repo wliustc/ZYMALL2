@@ -51,6 +51,7 @@ import com.zy.app.mall.searchRefactor.view.Activity.SearchActivity;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.utils.DPIUtil;
+import com.zy.common.utils.FileUtils;
 import com.zy.common.utils.ImageUtil;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
@@ -115,12 +116,12 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
             {
                 //invoke-direct {p0, v0, v0}, Lcom/jingdong/app/mall/category/JDNewCategoryFragment;->a(Ljava/lang/String;Ljava/lang/String;)V
-                JDNewCategoryFragment.this.a(null);
+                JDNewCategoryFragment.this.a((String)null);
                 return true;
             }
             return false;
         }
-    }:
+    };
     private String o = "-1";
     private String p;
     private String q;
@@ -178,7 +179,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             }
 
         }
-    }:
+    };
 
     public static JDNewCategoryFragment getInstance() {
         if (instance == null)
@@ -233,13 +234,11 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         }
         this.ac = paramString;
         Object localObject2 = ((Catelogy)this.A.get(this.w)).getMergeCatalogs();
-        Object localObject1 = localObject2;
-        if (bp.b("/sdcard/jd_test_merged_category"))
+        if (FileUtils.b("/sdcard/jd_test_merged_category"))
         {
-            localObject1 = localObject2;
             if (this.w == 0)
             {
-                localObject1 = new ArrayList();
+                ArrayList localObject1 = new ArrayList();
                 for (int i1 = 0; i1 < 5; i1++)
                 {
                     localObject2 = new Catelogy.MergedCatelogy();
@@ -252,18 +251,18 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 }
             }
         }
-        if (localObject1 != null)
+        if (localObject2 != null)
         {
             ConjoinedCategoryFragment conjoinedCategoryFragment = new ConjoinedCategoryFragment();
             conjoinedCategoryFragment.a(this.L);
             conjoinedCategoryFragment.a(this.I, this.K);
             conjoinedCategoryFragment.a(this.H, this.D, this.w);
             conjoinedCategoryFragment.a(this.P);
-            conjoinedCategoryFragment.a((List)localObject1);
+            conjoinedCategoryFragment.a((List)localObject2);
             a(conjoinedCategoryFragment);
             return;
         }else {
-            OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = (OrdinaryL2CategoryFragment) OrdinaryL2CategoryFragment.b(paramString, this.D, this.w);
+            OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = OrdinaryL2CategoryFragment.b(paramString, this.D, this.w);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.L);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.I, this.K);
             ((L2CategoryFragment) ordinaryL2CategoryFragment).thisActivity = this.P;
@@ -447,7 +446,15 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.b.setFocusable(false);
         this.b.setOnTouchListener(this.l);
         this.Q.findViewById(R.id.search_box_layout).setOnTouchListener(this.l);//2131166397
-        this.Q.findViewById(R.id.category_saoasao_button).setOnClickListener(new o(this));//2131165803
+        this.Q.findViewById(R.id.category_saoasao_button).setOnClickListener(new View.OnClickListener(){//o(this)
+            @Override
+            public void onClick(View view) {
+                if (CatelogyUtil.a(JDNewCategoryFragment.b(this.a)))
+                    this.a.startActivity(new Intent(JDNewCategoryFragment.b(this.a), CaptureActivity.class));
+                JDMtaUtils.sendCommonData(JDNewCategoryFragment.b(this.a), "Search_Scan", "", "", this.a, "", JDNewCategoryFragment.b(this.a).getClass(), "");
+
+            }
+        });//2131165803
         this.c.setOnClickListener(new View.OnClickListener(){//b(this)
             @Override
             public void onClick(View view) {
