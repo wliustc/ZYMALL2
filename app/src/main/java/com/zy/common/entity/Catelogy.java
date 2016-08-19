@@ -748,4 +748,64 @@ public class Catelogy implements Serializable {
     {
         return "cId = " + this.cId + ", name = " + this.name + ", level = " + this.level + ", showTab = " + this.showTab + "\r\n";
     }
+
+    public static class MergedCatelogy implements Serializable
+    {
+        private String Id;
+        private String name;
+        private int order;
+
+        public MergedCatelogy()
+        {
+        }
+
+        public MergedCatelogy(JSONObjectProxy paramJSONObjectProxy)
+        {
+            this.Id = paramJSONObjectProxy.getStringOrNull("id");
+            this.name = paramJSONObjectProxy.getStringOrNull("name");
+            this.order = paramJSONObjectProxy.getIntOrNull("order").intValue();
+        }
+
+        public static java.util.ArrayList<MergedCatelogy> toList(JSONArrayProxy paramJSONArrayPoxy)
+        {
+
+        }
+
+        public String getId()
+        {
+            return this.Id;
+        }
+
+        public String getName()
+        {
+            if (TextUtils.isEmpty(this.name))
+                return "";
+            return this.name;
+        }
+
+        public int getOrder()
+        {
+            return this.order;
+        }
+
+        public void setId(String paramString)
+        {
+            this.Id = paramString;
+        }
+
+        public void setName(String paramString)
+        {
+            this.name = paramString;
+        }
+
+        public void setOrder(int paramInt)
+        {
+            this.order = paramInt;
+        }
+
+        public final String toString()
+        {
+            return "Id = " + this.Id + ", name = " + this.name + ", order = " + this.order + "\r\n";
+        }
+    }
 }
