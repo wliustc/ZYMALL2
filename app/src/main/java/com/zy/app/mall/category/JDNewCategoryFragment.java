@@ -73,7 +73,7 @@ import java.util.Map;
 public class JDNewCategoryFragment extends JDTabFragment implements PersonalMessageObserver {
 
     private static JDNewCategoryFragment instance;
-    private static final String n = JDNewCategoryFragment.class.getSimpleName();
+    private static final String TAG = JDNewCategoryFragment.class.getSimpleName();
     private ArrayList<Catelogy> A = new ArrayList();
     private List<RightColumnBase> B = new ArrayList();
     private JSONArrayProxy C = null;
@@ -130,7 +130,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     private String p;
     private String q;
     private View r;
-    private ListView s;
+    private ListView left_list;
     private LeftListAdapter t;
     private View u;
     private boolean v = false;
@@ -233,7 +233,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     {
         if (this.w < 0)
         {
-            Log.e(n, "Current Item is -1!!!");
+            Log.e(TAG, "Current Item is -1!!!");
             return;
         }
         this.ac = paramString;
@@ -351,7 +351,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     public final void a(int paramInt1, int paramInt2)
     {
         if (Log.D)
-            Log.d("navigation-click", n + "   old-->" + paramInt1 + " now-->" + paramInt2);
+            Log.d("navigation-click", TAG + "   old-->" + paramInt1 + " now-->" + paramInt2);
     }
 
     @SuppressLint({"InflateParams"})
@@ -366,9 +366,9 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             locald.mText.setTextColor(getFragmentTextColor(R.color.category_new_red_font));//2131099877
             localView.setTag(locald);
             localView.setBackgroundResource(R.drawable.category_new_left_facous);//2130838453
-            this.s.setAdapter(null);
-            this.s.addHeaderView(localView);
-            this.s.setAdapter(this.t);
+            this.left_list.setAdapter(null);
+            this.left_list.addHeaderView(localView);
+            this.left_list.setAdapter(this.t);
             this.u = localView;
             this.r1 = true;
         }
@@ -417,7 +417,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     {
         this.Q = paramLayoutInflater.inflate(R.layout.category_new_activity, null);//2130903255
         //paramLayoutInflater = this.Q;
-        this.s = ((ListView)this.Q.findViewById(R.id.left_list));//2131166227
+        this.left_list = ((ListView)this.Q.findViewById(R.id.left_list));//2131166227
         this.I = this.Q.findViewById(R.id.sublist_loading_error_tips);//2131166230
         this.J = ((Button)this.I.findViewById(R.id.jd_tip_button));//2131165236
         this.J.setText(R.string.loading_error_again);//2131232396
@@ -516,7 +516,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                     if ((JDNewCategoryFragment.this.w == -1) && (JDNewCategoryFragment.this.getActivity() != null) && (!JDNewCategoryFragment.this.getActivity().isFinishing()))
                     {
                         if (Log.D)
-                            Log.d(JDNewCategoryFragment.this.n, "ActivityHasNotFinished");
+                            Log.d(JDNewCategoryFragment.TAG, "ActivityHasNotFinished");
                         JDNewCategoryFragment.this.a(false, false, true, false);
                     }
                 }
@@ -524,7 +524,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         };
         getActivity().getApplicationContext().registerReceiver(this.h, intentFilter);
         a(false, true, true, false);
-        this.s.setDivider(null);
+        this.left_list.setDivider(null);
         this.t = new LeftListAdapter(this.A, this.P);
         this.t.a(new ILeftAdapterListener(){//f(this)
             @Override
@@ -532,8 +532,8 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 JDNewCategoryFragment.this.u = paramView;
             }
         });
-        this.s.setAdapter(this.t);
-        this.s.setOnItemClickListener(new AdapterView.OnItemClickListener(){//g(this)
+        this.left_list.setAdapter(this.t);
+        this.left_list.setOnItemClickListener(new AdapterView.OnItemClickListener(){//g(this)
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int paramInt, long l) {
                 if (((JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.w == paramInt - 1)) || ((!JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.w == paramInt)))
@@ -541,7 +541,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 JDFrescoUtils.a(JDNewCategoryFragment.this.T);
                 if (JDNewCategoryFragment.this.S)
                 {
-                    JDNewCategoryFragment.this.u = JDNewCategoryFragment.this.s.getChildAt(0);
+                    JDNewCategoryFragment.this.u = JDNewCategoryFragment.this.left_list.getChildAt(0);
                     JDNewCategoryFragment.this.S = false;
                 }
                 if ((JDNewCategoryFragment.this.u != null) && (JDNewCategoryFragment.this.isAdded()))
@@ -593,7 +593,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 JDNewCategoryFragment.this.post(new Runnable(){//i(this, view)
                     @Override
                     public void run() {
-                        JDNewCategoryFragment.this.s.smoothScrollBy(view.getTop(), 700);
+                        JDNewCategoryFragment.this.left_list.smoothScrollBy(view.getTop(), 700);
                     }
                 });
                 JDNewCategoryFragment.this.u = view;
@@ -705,7 +705,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 this.b.setHint(this.V);
             NavigationOptHelper.getInstance();
             NavigationOptHelper.c(1);
-            if ((this.v) && (!this.r1) && (this.s.getHeaderViewsCount() == 0))
+            if ((this.v) && (!this.r1) && (this.left_list.getHeaderViewsCount() == 0))
                 b();
             if (this.W) {
                 a(this.ab);

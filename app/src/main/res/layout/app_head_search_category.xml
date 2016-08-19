@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/q6"
+    android:id="@+id/q6"
     android:layout_width="fill_parent"
     android:layout_height="49.0dip"
-    android:background="@drawable/am"
+    android:background="@drawable/common_title_background"
     android:gravity="center_vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -11,7 +11,7 @@
         android:layout_width="49.0dip"
         android:layout_height="49.0dip"
         android:scaleType="centerInside"
-        android:src="@drawable/aj" />
+        android:src="@drawable/common_scan_selector" />
 
     <RelativeLayout
         android:id="@+id/category_message"
@@ -21,16 +21,16 @@
         android:clickable="true">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@id/q9"
+            android:id="@+id/q9"
             android:layout_width="49.0dip"
             android:layout_height="49.0dip"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/ar"
+            android:src="@drawable/common_title_message_selector"
             android:visibility="visible" />
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@id/q_"
+            android:id="@+id/q_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/q9"
@@ -38,18 +38,18 @@
             android:layout_marginRight="11.0dip"
             android:layout_marginTop="11.0dip"
             android:scaleType="centerInside"
-            android:src="@drawable/ay5"
+            android:src="@drawable/jd_red_point"
             android:visibility="gone" />
 
         <TextView
-            android:id="@id/qa"
+            android:id="@+id/qa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/q9"
             android:layout_alignTop="@id/q9"
             android:layout_marginRight="4.0dip"
             android:layout_marginTop="8.0dip"
-            android:background="@drawable/ay9"
+            android:background="@drawable/personal_icon_order_notify_bg"
             android:gravity="center"
             android:paddingBottom="0.0dip"
             android:paddingLeft="3.5dip"

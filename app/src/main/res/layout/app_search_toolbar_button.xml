@@ -65,7 +65,7 @@
         </LinearLayout>
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@id/ih"
+            android:id="@+id/ih"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right|top"
@@ -113,7 +113,7 @@
         </LinearLayout>
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@id/ij"
+            android:id="@+id/ij"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|right|top"
