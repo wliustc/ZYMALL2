@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@id/if"
+        android:id="@+id/search_barcode_btn"
         style="@style/home_color_shopping_button"
         android:layout_width="wrap_content"
         android:layout_weight="1.0"
@@ -40,7 +40,7 @@
         android:layout_weight="1.0">
 
         <LinearLayout
-            android:id="@id/ig"
+            android:id="@+id/search_camera_btn"
             style="@style/home_color_shopping_button"
             android:layout_width="wrap_content"
             android:clickable="true"
@@ -89,7 +89,7 @@
         android:layout_weight="1.0">
 
         <LinearLayout
-            android:id="@id/ii"
+            android:id="@+id/color_shopping_btn"
             style="@style/home_color_shopping_button"
             android:layout_width="wrap_content"
             android:clickable="true"

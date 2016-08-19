@@ -206,7 +206,7 @@
     <color name="fc">#fff3f4f6</color>
     <color name="fd">#fff7f7f7</color>
     <color name="fe">#ffa2a2a2</color>
-    <color name="ff">#ff252525</color>
+    <color name="category_new__dark_font">#ff252525</color><!-- ff -->
     <color name="fg">#ffe5e5e5</color>
     <color name="fh">#ff232326</color>
     <color name="fi">#ff686868</color>

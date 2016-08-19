@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <include
-            android:id="@id/a1r"
+            android:id="@+id/common_title_2"
             layout="@layout/app_head_search_category" />
     </RelativeLayout>
 
@@ -19,13 +19,13 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:id="@id/od"
+            android:id="@+id/mainlayout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal">
 
             <ListView
-                android:id="@id/a1s"
+                android:id="@+id/left_list"
                 android:layout_width="85.0dip"
                 android:layout_height="fill_parent"
                 android:cacheColorHint="#00000000"
@@ -44,7 +44,7 @@
                     android:layout_alignParentTop="true" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@id/a1u"
+                    android:id="@+id/catagory_list_to_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -55,7 +55,7 @@
                     android:visibility="gone" />
 
                 <RelativeLayout
-                    android:id="@id/a1v"
+                    android:id="@+id/sublist_loading_error_tips"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_centerInParent="true"
@@ -72,7 +72,7 @@
         </LinearLayout>
 
         <com.jingdong.common.ui.JDProgressBar
-            android:id="@id/a1w"
+            android:id="@+id/progress_bar"
             android:layout_width="34.0dip"
             android:layout_height="34.0dip"
             android:layout_centerInParent="true"
@@ -80,7 +80,7 @@
             android:visibility="visible" />
 
         <RelativeLayout
-            android:id="@id/a1x"
+            android:id="@+id/main_loading_error_tips"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@android:color/white"

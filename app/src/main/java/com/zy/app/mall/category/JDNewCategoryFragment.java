@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,14 +23,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jingdong.app.mall.color.CameraActivity;
 import com.jingdong.app.mall.more.VoiceSearchActivity;
 import com.jingdong.app.mall.more.VoiceSearchLayout;
+import com.jingdong.app.mall.search.CameraPurchaseActivity;
 import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.app.mall.utils.LoginUser;
 import com.jingdong.common.BaseActivity;
 import com.jingdong.common.login.LoginUserBase;
+import com.jingdong.lib.zxing.client.android.CaptureActivity;
 import com.zy.app.mall.R;
 import com.zy.app.mall.basic.JDTaskModule;
+import com.zy.app.mall.category.adapter.LeftListAdapter;
+import com.zy.app.mall.category.b.RightColumnBase;
+import com.zy.app.mall.category.b.RightListColumn;
+import com.zy.app.mall.category.c.CatelogyUtil;
 import com.zy.app.mall.navigationbar.JDTabFragment;
 import com.zy.app.mall.personel.a.a.PersonalMessageChannel;
 import com.zy.app.mall.personel.a.a.PersonalMessageObserver;
@@ -44,6 +52,7 @@ import com.zy.common.utils.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +64,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     private static JDNewCategoryFragment instance;
     private static final String n = JDNewCategoryFragment.class.getSimpleName();
     private ArrayList<Catelogy> A = new ArrayList();
-    private List<com.jingdong.app.mall.category.b.b> B = new ArrayList();
+    private List<RightColumnBase> B = new ArrayList();
     private JSONArrayProxy C = null;
     private String D = null;
     private String E = null;
@@ -89,24 +98,81 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     TextView d;
     SimpleDraweeView e;
     ImageView f;
-    HashMap<String, ArrayList<com.jingdong.app.mall.category.b.b>> g;
+    HashMap<String, ArrayList<com.zy.app.mall.category.b.RightColumnBase>> g;
     p h;
     protected String i = "";
     protected String j = "";
     protected boolean k = true;
-    View.OnTouchListener l = new n(this);
+    View.OnTouchListener l = new View.OnTouchListener(){//new n(this);
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+            {
+                //invoke-direct {p0, v0, v0}, Lcom/jingdong/app/mall/category/JDNewCategoryFragment;->a(Ljava/lang/String;Ljava/lang/String;)V
+                JDNewCategoryFragment.this.a(null);
+                return true;
+            }
+            return false;
+        }
+    }:
     private String o = "-1";
     private String p;
     private String q;
     private View r;
     private ListView s;
-    private com.jingdong.app.mall.category.adapter.c t;
+    private LeftListAdapter t;
     private View u;
     private boolean v = false;
     private int w = 0;
     private long x = 0L;
     private PopupWindow y;
-    private q z = new q(this, 0);
+    private View.OnClickListener z = new View.OnClickListener(){//q(this, 0);
+        @Override
+        public void onClick(View view) {
+            Context context = null;
+            view.setPressed(false);
+            switch (view.getId())
+            {
+                default:
+                    return;
+                case R.id.search_voice:    //2131168592 7F070D50    sswitch_0
+                    JDNewCategoryFragment.this.a("type", "voice");
+                    return;
+                case R.id.search_barcode_btn:    //2131165520   7F070150    sswitch_1
+                    //JDNewCategoryFragment.r(this.a);
+                    if(JDNewCategoryFragment.this.y != null && JDNewCategoryFragment.this.y.isShowing())
+                        JDNewCategoryFragment.this.y.dismiss();
+                    context = JDNewCategoryFragment.this.P.getBaseContext();
+                    if (CatelogyUtil.a(context))
+                        context.startActivity(new Intent(context, CaptureActivity.class));
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Scan_Scan", "", "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
+                    return;
+                case R.id.search_camera_btn:    //2131165521    7F070151    sswitch_2
+                    //JDNewCategoryFragment.r(this.a);
+                    if(JDNewCategoryFragment.this.y != null && JDNewCategoryFragment.this.y.isShowing())
+                        JDNewCategoryFragment.this.y.dismiss();
+                    context = JDNewCategoryFragment.this.P.getBaseContext();
+                    if (CatelogyUtil.a(context))
+                        context.startActivity(new Intent(context, CameraPurchaseActivity.class));
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Scan_PhotoBuy", "", "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
+                    return;
+                case R.id.color_shopping_btn:    //2131165523   7F070153    sswitch_3
+                    //JDNewCategoryFragment.r(this.a);
+                    if(JDNewCategoryFragment.this.y != null && JDNewCategoryFragment.this.y.isShowing())
+                        JDNewCategoryFragment.this.y.dismiss();
+                    context = JDNewCategoryFragment.this.P.getBaseContext();
+                    if (CatelogyUtil.a(context))
+                    {
+                        Intent localIntent = new Intent(context, CameraActivity.class);
+                        localIntent.putExtra("com.360buy:navigationDisplayFlag", -1);
+                        context.startActivity(localIntent);
+                    }
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Scan_ColorBuy", "", "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.P.getClass(), "");
+                    return;
+            }
+
+        }
+    }:
 
     public static JDNewCategoryFragment getInstance() {
         if (instance == null)
@@ -118,27 +184,24 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     }
 
 
-    private static List<String> a(List<com.jingdong.app.mall.category.b.b> paramList)
+    private static List<String> a(List<RightColumnBase> paramList)
     {
-        ArrayList localArrayList = new ArrayList();
-        paramList = paramList.iterator();
-        while (paramList.hasNext())
+        ArrayList<String> localArrayList = new ArrayList();
+        Iterator iterator = paramList.iterator();
+        while (iterator.hasNext())
         {
-            Object localObject = (com.jingdong.app.mall.category.b.b)paramList.next();
-            if (((com.jingdong.app.mall.category.b.b)localObject).a != 1)
+            RightListColumn localObject = (RightListColumn)iterator.next();
+            if (localObject.a != 1)
                 continue;
-            localObject = (com.jingdong.app.mall.category.b.c)localObject;
-            int i2 = ((com.jingdong.app.mall.category.b.c)localObject).c();
-            int i1 = 0;
-            while (i1 < i2)
+
+            for (int i1 = 0; i1 < localObject.c(); i1++)
             {
-                String str = ((com.jingdong.app.mall.category.b.c)localObject).a(i1).getImgUrl();
+                String str = localObject.a(i1).getImgUrl();
                 if (!TextUtils.isEmpty(str))
                     localArrayList.add(str);
-                i1 += 1;
             }
         }
-        return (List<String>)localArrayList;
+        return localArrayList;
     }
 
     private void a(Fragment paramFragment)
