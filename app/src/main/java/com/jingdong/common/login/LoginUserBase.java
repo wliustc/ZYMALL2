@@ -23,6 +23,10 @@ public abstract class LoginUserBase {
 
     }
 
+    public static boolean hasLogin() {
+        return false;
+    }
+
     public interface _D
     {
         public  void e();

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.jd.framework.json.JDJSON;
+import com.jingdong.app.mall.utils.LoginUser;
 import com.jingdong.common.login.LoginUserBase;
 import com.zy.common.entity.AddressGlobal;
 import com.zy.common.entity.UserAddress;
@@ -29,9 +30,29 @@ public class AddressUtil {
     {
         String v0 = a.getString(AddressUtil.e(), "");
         String v1 = a.getString( "AddressGlobal", "");
+        AddressGlobal addressGlobal1 = null, addressGlobal2=null;
         if(!TextUtils.isEmpty(v0)){//if-nez v3, :cond_1
-            JDJSON.parseObject(v0, AddressGlobal.class)
+            addressGlobal1 = (AddressGlobal)JDJSON.parseObject(v0, AddressGlobal.class);//v3
         }
+        if(!TextUtils.isEmpty(v1)){//if-nez v0, :cond_2
+            addressGlobal2 = (AddressGlobal)JDJSON.parseObject(v1, AddressGlobal.class);//v0
+        }
+        if(LoginUserBase.hasLogin()){//if-eqz v1, :cond_6
+            if(addressGlobal1 != null && addressGlobal2 != null) {
+                if (addressGlobal1.getTimeStamp() > addressGlobal2.getTimeStamp())
+                    return addressGlobal1;
+                else
+                    return addressGlobal2;
+            }else if(addressGlobal1 != null)
+                return addressGlobal1;
+            else if(addressGlobal2 != null){
+                return addressGlobal2;
+            }
+        }else{
+            if(addressGlobal2 != null)
+                return addressGlobal2;
+        }
+        return null;
     }
 
 
