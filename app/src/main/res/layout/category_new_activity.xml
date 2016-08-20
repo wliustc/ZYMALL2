@@ -51,7 +51,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="10.0dip"
                     android:layout_marginRight="10.0dip"
-                    android:src="@drawable/b3i"
+                    android:src="@drawable/c_up_button"
                     android:visibility="gone" />
 
                 <RelativeLayout

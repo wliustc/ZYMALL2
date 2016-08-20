@@ -1,6 +1,7 @@
 package com.jingdong.common.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,12 +12,16 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.jingdong.common.BaseApplication;
+import com.jingdong.common.c.LocManager;
 import com.jingdong.common.config.Configuration;
 import com.zy.common.utils.CommonUtil;
 import com.zy.common.utils.Log;
+import com.zy.common.utils.NetUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.UUID;
 
 /**
  * Created by robin on 16-8-19.
@@ -29,78 +34,71 @@ public class StatisticsReportUtil {
     private static boolean already;
     private static String deivceUUID;
     private static String macAddress;
-    private static ak macAddressListener = new fw();
+    private static CommonBase._AK macAddressListener = new CommonBase._AK(){//fw()
+        @Override
+        public synchronized void a(String paramString) {
+            StatisticsReportUtil.macAddress = paramString;
+            StatisticsReportUtil.already = true;
+            notifyAll();
+        }
+    };
     private static String paramStr;
     private static String paramStrWithOutDeviceUUID;
 
-    public static String genarateDeviceUUID(Context arg0)
-    {
+    public static String genarateDeviceUUID(Context arg0) {
         StringBuilder localStringBuilder = new StringBuilder();
-        Object localObject1 = CommonUtil.getDeviceId(???);
-        Object localObject3 = localObject1;
-        if (!TextUtils.isEmpty((CharSequence)localObject1))
-            localObject3 = ((String)localObject1).trim().replaceAll("-", "");
-        String str2 = macAddress;
-        localObject1 = str2;
-        if (str2 == null)
-            CommonUtil.getLocalMacAddress(macAddressListener, ???);
-        while (true)
-        {
-            synchronized (macAddressListener)
-            {
-                try
-                {
-                    if (already)
-                        continue;
-                    if (!Log.D)
-                        continue;
-                    Log.d("Temp", "mac wait start -->> ");
-                    macAddressListener.wait();
-                    if (!Log.D)
-                        continue;
-                    Log.d("Temp", "mac wait end -->> ");
-                    if (macAddress == null)
-                    {
-                        localObject1 = "";
-                        ??? = (Context)localObject1;
-                        if (TextUtils.isEmpty((CharSequence)localObject1))
-                            continue;
-                        ??? = ((String)localObject1).trim().replaceAll("-|\\.|:", "");
-                        if (TextUtils.isEmpty((CharSequence)localObject3))
-                            continue;
-                        localStringBuilder.append((String)localObject3);
-                        localStringBuilder.append("-");
-                        if (TextUtils.isEmpty(???))
-                        continue;
-                        localStringBuilder.append(???);
-                        return localStringBuilder.toString();
+        Object localObject3 = CommonUtil.getDeviceId(arg0);
+        if (!TextUtils.isEmpty((CharSequence) localObject3))
+            localObject3 = ((String) localObject3).trim().replaceAll("-", "");
+
+        if (macAddress == null) {//if-nez v1, :cond_3
+            CommonUtil.getLocalMacAddress(macAddressListener, arg0);
+            synchronized (macAddressListener) {
+                try {
+                    if (!already) {//if-nez v1, :cond_2
+                        if (Log.D)
+                            Log.d("Temp", "mac wait start -->> ");
+                        macAddressListener.wait();
+                        if (Log.D)
+                            Log.d("Temp", "mac wait end -->> ");
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                catch (InterruptedException localInterruptedException)
-                {
-                    localInterruptedException.printStackTrace();
-                    continue;
+                //:cond_2
+                if (macAddress == null) {//if-nez v1, :cond_7
+                    macAddress = "";
+                } else {
+                    //sget-object v1, Lcom/jingdong/common/utils/StatisticsReportUtil;->macAddress:Ljava/lang/String;
+                    macAddress = macAddress;
                 }
             }
-            String str1 = macAddress;
         }
+        //:cond_3
+        //:goto_1
+        if (!TextUtils.isEmpty((CharSequence) macAddress))
+            macAddress = ((String) macAddress).trim().replaceAll("-|\\.|:", "");
+        if (!TextUtils.isEmpty((CharSequence) localObject3))
+            localStringBuilder.append((String) localObject3);
+        localStringBuilder.append("-");
+        if (!TextUtils.isEmpty((String) macAddress))
+            localStringBuilder.append(macAddress);
+        return localStringBuilder.toString();
     }
 
     public static String getBrand()
     {
-        Object localObject = "";
+        String str = "";
         try
         {
-            String str = spilitSubString(Build.MANUFACTURER, 12).replaceAll(" ", "");
-            localObject = str;
-            return localObject;
+            str = spilitSubString(Build.MANUFACTURER, 12).replaceAll(" ", "");
         }
-        catch (Exception localException)
+        catch (Exception e)
         {
-            while (!Log.D);
-            localException.printStackTrace();
+            if (Log.D)
+                e.printStackTrace();
         }
-        return (String)"";
+        return str;
     }
 
     public static String getDNSParamStr()
@@ -122,11 +120,11 @@ public class StatisticsReportUtil {
         JSONObject localJSONObject = new JSONObject();
         try
         {
-            localJSONObject.put("uuid", readDeviceUUID());
+            localJSONObject.put(DEVICE_INFO_UUID, readDeviceUUID());
             localJSONObject.put("platform", 100);
             localJSONObject.put("brand", spilitSubString(Build.MANUFACTURER, 12));
             localJSONObject.put("model", spilitSubString(Build.MODEL, 12));
-            Display localDisplay = ((WindowManager)BaseApplication.getInstance().getSystemService("window")).getDefaultDisplay();
+            Display localDisplay = ((WindowManager)BaseApplication.getInstance().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
             localJSONObject.put("screen", localDisplay.getHeight() + "*" + localDisplay.getWidth());
             localJSONObject.put("clientVersion", getSoftwareVersionName());
             localJSONObject.put("osVersion", Build.VERSION.RELEASE);
@@ -134,87 +132,67 @@ public class StatisticsReportUtil {
             localJSONObject.put("nettype", getNetworkTypeName(BaseApplication.getInstance()));
             if (Log.D)
                 Log.d("Temp", "getDeviceInfoStr() return -->> " + localJSONObject.toString());
-            return localJSONObject.toString();
         }
-        catch (JSONException localJSONException)
+        catch (JSONException e)
         {
-            while (true)
-                localJSONException.printStackTrace();
+                e.printStackTrace();
         }
+        return localJSONObject.toString();
     }
 
     public static String getModel()
     {
-        Object localObject = "";
+        String str = "";
         try
         {
-            String str = spilitSubString(Build.MODEL, 12).replaceAll(" ", "");
-            localObject = str;
-            return localObject;
+            str = spilitSubString(Build.MODEL, 12).replaceAll(" ", "");
         }
-        catch (Exception localException)
+        catch (Exception e)
         {
-            while (!Log.D);
-            localException.printStackTrace();
+            if (Log.D)
+            e.printStackTrace();
         }
-        return (String)"";
+        return str;
     }
 
     public static String getNetworkTypeName(Context paramContext)
     {
-        Object localObject = (ConnectivityManager)paramContext.getSystemService("connectivity");
-        TelephonyManager localTelephonyManager = (TelephonyManager)paramContext.getSystemService("phone");
+        Object localObject = (ConnectivityManager)paramContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        TelephonyManager localTelephonyManager = (TelephonyManager)paramContext.getSystemService(Context.TELEPHONY_SERVICE);
         NetworkInfo[] arrayOfNetworkInfo = ((ConnectivityManager)localObject).getAllNetworkInfo();
-        localObject = null;
-        int i = 0;
-        while (true)
-        {
-            paramContext = (Context)localObject;
+        String str = "UNKNOWN";
             try
             {
-                if (i < arrayOfNetworkInfo.length)
-                {
+                for (int i = 0; i < arrayOfNetworkInfo.length; i++){//if-ge v2, v4, :cond_3
                     paramContext = (Context)localObject;
-                    if (!arrayOfNetworkInfo[i].isConnected())
-                        break label141;
-                    if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("MOBILE"))
-                    {
-                        paramContext = localTelephonyManager.getNetworkType();
-                        break label141;
+                    if (arrayOfNetworkInfo[i].isConnected()) {
+                        if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("MOBILE")) {
+                            str = localTelephonyManager.getNetworkType()+"";
+                        }else if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("WIFI")) {
+                            str = "WIFI";
+                        }else
+                            str = "UNKNOWN";
                     }
-                    if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("WIFI"))
-                    {
-                        paramContext = "WIFI";
-                        break label141;
-                    }
-                    paramContext = "UNKNOWN";
                 }
             }
-            catch (Exception paramContext)
+            catch (Exception e)
             {
-                paramContext = "UNKNOWN";
-                localObject = paramContext;
-                if (paramContext == null)
-                    localObject = "UNKNOWN";
-                return localObject;
+                str = "UNKNOWN";
             }
-            label141: i += 1;
-            localObject = paramContext;
-        }
+        return str;
     }
 
     private static PackageInfo getPackageInfo()
     {
         try
         {
-            Object localObject = BaseApplication.getInstance();
-            localObject = ((Context)localObject).getPackageManager().getPackageInfo(((Context)localObject).getPackageName(), 0);
-            return localObject;
+            Context context = BaseApplication.getInstance();
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
         }
         catch (Exception localException)
         {
         }
-        return (PackageInfo)null;
+        return null;
     }
 
     private static String getParamStr()
@@ -252,24 +230,21 @@ public class StatisticsReportUtil {
             localStringBuffer.append("&d_brand=").append((String)localObject);
             localObject = spilitSubString(Build.MODEL, 12).replaceAll(" ", "");
             localStringBuffer.append("&d_model=").append((String)localObject);
-            localStringBuffer.append("&osVersion=").append(spilitSubString(Build.VERSION.RELEASE, 12));
-            localObject = ((WindowManager)BaseApplication.getInstance().getSystemService("window")).getDefaultDisplay();
-            localStringBuffer.append("&screen=").append(((Display)localObject).getHeight() + "*" + ((Display)localObject).getWidth());
-            localStringBuffer.append("&partner=").append(Configuration.getProperty("partner", ""));
-            paramStrWithOutDeviceUUID = localStringBuffer.toString();
-            if (Log.D)
-                Log.d("Temp", "getParamStrWithOutDeviceUUID() create -->> " + paramStrWithOutDeviceUUID);
-            return paramStrWithOutDeviceUUID;
+
         }
         catch (Exception localException)
         {
-            while (true)
-            {
-                if (!Log.E)
-                    continue;
+                if (Log.E)
                 localException.printStackTrace();
-            }
         }
+        localStringBuffer.append("&osVersion=").append(spilitSubString(Build.VERSION.RELEASE, 12));
+        Display display = ((WindowManager)BaseApplication.getInstance().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        localStringBuffer.append("&screen=").append(display.getHeight() + "*" + display.getWidth());
+        localStringBuffer.append("&partner=").append(Configuration.getProperty("partner", ""));
+        paramStrWithOutDeviceUUID = localStringBuffer.toString();
+        if (Log.D)
+            Log.d("Temp", "getParamStrWithOutDeviceUUID() create -->> " + paramStrWithOutDeviceUUID);
+        return paramStrWithOutDeviceUUID;
     }
 
     public static String getReportString(boolean paramBoolean)
@@ -284,13 +259,13 @@ public class StatisticsReportUtil {
         {
             StringBuffer localStringBuffer = new StringBuffer();
             localStringBuffer.append(str);
-            str = c.e();
+            str = LocManager.e();
             if ((str != null) && (paramBoolean2))
             {
                 str = str.replace("-1", "0");
-                localStringBuffer.append("&area=").append(str);
+                localStringBuffer.append(REPORT_PARAM_LBS_AREA).append(str);
             }
-            localStringBuffer.append("&networkType=").append(NetUtils.getNetworkType());
+            localStringBuffer.append(REPORT_PARAM_NETWORK_TYPE).append(NetUtils.getNetworkType());
             if (Log.D)
                 Log.d("Temp", "getReportString() -->> " + localStringBuffer.toString());
             return localStringBuffer.toString();
@@ -317,7 +292,7 @@ public class StatisticsReportUtil {
     {
         if (!TextUtils.isEmpty(deivceUUID))
             return deivceUUID;
-        String str = CommonUtil.getJdSharedPreferences().getString("uuid", null);
+        String str = CommonUtil.getJdSharedPreferences().getString(DEVICE_INFO_UUID, null);
         if (isValidDeviceUUID(str))
         {
             deivceUUID = str;
@@ -328,26 +303,24 @@ public class StatisticsReportUtil {
 
     private static boolean isValidDeviceUUID(String paramString)
     {
-        if (TextUtils.isEmpty(paramString));
-        do
-        {
-            return false;
-            paramString = paramString.split("-");
+        if (!TextUtils.isEmpty(paramString)) {
+            String[] strs = paramString.split("-");
+            if ((strs.length > 1) && (!TextUtils.isEmpty(strs[1])))
+                return true;
         }
-        while ((paramString.length <= 1) || (TextUtils.isEmpty(paramString[1])));
-        return true;
+        return false;
     }
 
     public static String readCartUUID()
     {
         SharedPreferences localSharedPreferences = CommonUtil.getJdSharedPreferences();
-        String str2 = localSharedPreferences.getString("shoppingCartUUID", null);
+        String str2 = localSharedPreferences.getString(SHOPPING_CART_UUID, null);
         String str1 = str2;
         if (TextUtils.isEmpty(str2))
         {
             str1 = readDeviceUUID();
             str1 = str1 + UUID.randomUUID();
-            localSharedPreferences.edit().putString("shoppingCartUUID", str1).commit();
+            localSharedPreferences.edit().putString(SHOPPING_CART_UUID, str1).commit();
         }
         return str1;
     }
@@ -447,21 +420,16 @@ public class StatisticsReportUtil {
     private static String spilitSubString(String paramString, int paramInt)
     {
         String str = paramString;
-        if (paramString != null)
-            str = paramString;
-        try
-        {
-            if (paramString.length() > paramInt)
-                str = paramString.substring(0, paramInt);
-            return str;
+        if (str != null) {
+
+            try {
+                if (str.length() > paramInt)
+                    str = str.substring(0, paramInt);
+            } catch (Exception e) {
+                if (Log.E)
+                e.printStackTrace();
+            }
         }
-        catch (Exception localException)
-        {
-            do
-                str = paramString;
-            while (!Log.E);
-            localException.printStackTrace();
-        }
-        return paramString;
+        return str;
     }
 }

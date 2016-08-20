@@ -39,4 +39,29 @@
         <item name="android:windowEnterAnimation">@anim/view_in</item>
         <item name="android:windowExitAnimation">@anim/view_out</item>
     </style>
+
+    <style name="g0">
+        <item name="android:padding">10.0dip</item>
+    </style>
+    <style name="g1">
+        <item name="android:textColor">@color/a5</item>
+        <item name="android:background">@color/uw</item>
+    </style>
+    <style name="g2" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="g3">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/android_home_button_selector</item>
+        <item name="android:padding">0.0dip</item>
+        <item name="android:layout_height">40.0dip</item>
+    </style>
+    <style name="home_color_shopping_button"><!-- g4 -->
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/app_icon_btn_selector</item>
+        <item name="android:padding">@dimen/zv</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

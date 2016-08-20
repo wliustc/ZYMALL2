@@ -27,4 +27,12 @@ public class Configuration {
     {
         throw new RuntimeException("getPayUrl()");
     }
+
+    public static String getProperty(String client, String s) {
+        /**
+         * 该方法未实现
+         */
+        ////throw new RuntimeException("Not Find getBooleanProperty(String paramString)");
+        return s;
+    }
 }

@@ -96,7 +96,7 @@ public class LocManager {
             Log.d("LocManager", " removeUpdateLocation -->> ");
         if (k != null)
             k.b();
-    }
+    }*/
 
     public static String e()
     {
@@ -108,7 +108,7 @@ public class LocManager {
         return null;
     }
 
-    private void g()
+    /*private void g()
     {
         monitorenter;
         try
