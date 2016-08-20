@@ -3,6 +3,8 @@ package com.jingdong.common.c;
 import android.content.Context;
 
 import com.jingdong.common.BaseApplication;
+import com.jingdong.common.utils.AddressUtil;
+import com.zy.common.entity.AddressGlobal;
 import com.zy.common.res.StringUtil;
 import com.zy.common.utils.Log;
 
@@ -100,7 +102,7 @@ public class LocManager {
 
     public static String e()
     {
-        AddressGlobal localAddressGlobal = com.jingdong.common.utils.f.a();
+        AddressGlobal localAddressGlobal = AddressUtil.a();
         if ((localAddressGlobal != null) && (localAddressGlobal.getIdProvince() != 0))
             return localAddressGlobal.getIdProvince() + "_" + localAddressGlobal.getIdCity() + "_" + localAddressGlobal.getIdArea() + "_" + localAddressGlobal.getIdTown();
         if (a)

@@ -1,4 +1,4 @@
-package com.jingdong.common.utils;
+package com.zy.common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,9 +14,7 @@ import android.view.WindowManager;
 import com.jingdong.common.BaseApplication;
 import com.jingdong.common.c.LocManager;
 import com.jingdong.common.config.Configuration;
-import com.zy.common.utils.CommonUtil;
-import com.zy.common.utils.Log;
-import com.zy.common.utils.NetUtils;
+import com.jingdong.common.utils.CommonBase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +32,7 @@ public class StatisticsReportUtil {
     private static boolean already;
     private static String deivceUUID;
     private static String macAddress;
-    private static CommonBase._AK macAddressListener = new CommonBase._AK(){//fw()
+    private static CommonBase._AK macAddressListener = new CommonBase._AK() {//fw()
         @Override
         public synchronized void a(String paramString) {
             StatisticsReportUtil.macAddress = paramString;
@@ -86,45 +84,38 @@ public class StatisticsReportUtil {
         return localStringBuilder.toString();
     }
 
-    public static String getBrand()
-    {
+    public static String getBrand() {
         String str = "";
-        try
-        {
+        try {
             str = spilitSubString(Build.MANUFACTURER, 12).replaceAll(" ", "");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             if (Log.D)
                 e.printStackTrace();
         }
         return str;
     }
 
-    public static String getDNSParamStr()
-    {
+    public static String getDNSParamStr() {
         Object localObject = new StringBuffer();
-        ((StringBuffer)localObject).append("client=").append(Configuration.getProperty("client", ""));
-        ((StringBuffer)localObject).append("&clientVersion=").append(spilitSubString(getSoftwareVersionName(), 12));
-        ((StringBuffer)localObject).append("&osVersion=").append(spilitSubString(Build.VERSION.RELEASE, 12));
-        ((StringBuffer)localObject).append("&uuid=").append(readDeviceUUID());
-        ((StringBuffer)localObject).append("&build=").append(CommonUtil.getSoftwareVersionCode(BaseApplication.getInstance()));
-        localObject = ((StringBuffer)localObject).toString();
+        ((StringBuffer) localObject).append("client=").append(Configuration.getProperty("client", ""));
+        ((StringBuffer) localObject).append("&clientVersion=").append(spilitSubString(getSoftwareVersionName(), 12));
+        ((StringBuffer) localObject).append("&osVersion=").append(spilitSubString(Build.VERSION.RELEASE, 12));
+        ((StringBuffer) localObject).append("&uuid=").append(readDeviceUUID());
+        ((StringBuffer) localObject).append("&build=").append(CommonUtil.getSoftwareVersionCode(BaseApplication.getInstance()));
+        localObject = ((StringBuffer) localObject).toString();
         if (Log.D)
-            Log.d("Temp", "dns getParamStr() create -->> " + (String)localObject);
-        return (String)localObject;
+            Log.d("Temp", "dns getParamStr() create -->> " + (String) localObject);
+        return (String) localObject;
     }
 
-    public static String getDeviceInfoStr()
-    {
+    public static String getDeviceInfoStr() {
         JSONObject localJSONObject = new JSONObject();
-        try
-        {
+        try {
             localJSONObject.put(DEVICE_INFO_UUID, readDeviceUUID());
             localJSONObject.put("platform", 100);
             localJSONObject.put("brand", spilitSubString(Build.MANUFACTURER, 12));
             localJSONObject.put("model", spilitSubString(Build.MODEL, 12));
-            Display localDisplay = ((WindowManager)BaseApplication.getInstance().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+            Display localDisplay = ((WindowManager) BaseApplication.getInstance().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
             localJSONObject.put("screen", localDisplay.getHeight() + "*" + localDisplay.getWidth());
             localJSONObject.put("clientVersion", getSoftwareVersionName());
             localJSONObject.put("osVersion", Build.VERSION.RELEASE);
@@ -132,73 +123,57 @@ public class StatisticsReportUtil {
             localJSONObject.put("nettype", getNetworkTypeName(BaseApplication.getInstance()));
             if (Log.D)
                 Log.d("Temp", "getDeviceInfoStr() return -->> " + localJSONObject.toString());
-        }
-        catch (JSONException e)
-        {
-                e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         return localJSONObject.toString();
     }
 
-    public static String getModel()
-    {
+    public static String getModel() {
         String str = "";
-        try
-        {
+        try {
             str = spilitSubString(Build.MODEL, 12).replaceAll(" ", "");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             if (Log.D)
-            e.printStackTrace();
+                e.printStackTrace();
         }
         return str;
     }
 
-    public static String getNetworkTypeName(Context paramContext)
-    {
-        Object localObject = (ConnectivityManager)paramContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        TelephonyManager localTelephonyManager = (TelephonyManager)paramContext.getSystemService(Context.TELEPHONY_SERVICE);
-        NetworkInfo[] arrayOfNetworkInfo = ((ConnectivityManager)localObject).getAllNetworkInfo();
+    public static String getNetworkTypeName(Context paramContext) {
+        Object localObject = (ConnectivityManager) paramContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        TelephonyManager localTelephonyManager = (TelephonyManager) paramContext.getSystemService(Context.TELEPHONY_SERVICE);
+        NetworkInfo[] arrayOfNetworkInfo = ((ConnectivityManager) localObject).getAllNetworkInfo();
         String str = "UNKNOWN";
-            try
-            {
-                for (int i = 0; i < arrayOfNetworkInfo.length; i++){//if-ge v2, v4, :cond_3
-                    paramContext = (Context)localObject;
-                    if (arrayOfNetworkInfo[i].isConnected()) {
-                        if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("MOBILE")) {
-                            str = localTelephonyManager.getNetworkType()+"";
-                        }else if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("WIFI")) {
-                            str = "WIFI";
-                        }else
-                            str = "UNKNOWN";
-                    }
+        try {
+            for (int i = 0; i < arrayOfNetworkInfo.length; i++) {//if-ge v2, v4, :cond_3
+                paramContext = (Context) localObject;
+                if (arrayOfNetworkInfo[i].isConnected()) {
+                    if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("MOBILE")) {
+                        str = localTelephonyManager.getNetworkType() + "";
+                    } else if (arrayOfNetworkInfo[i].getTypeName().toUpperCase().contains("WIFI")) {
+                        str = "WIFI";
+                    } else
+                        str = "UNKNOWN";
                 }
             }
-            catch (Exception e)
-            {
-                str = "UNKNOWN";
-            }
+        } catch (Exception e) {
+            str = "UNKNOWN";
+        }
         return str;
     }
 
-    private static PackageInfo getPackageInfo()
-    {
-        try
-        {
+    private static PackageInfo getPackageInfo() {
+        try {
             Context context = BaseApplication.getInstance();
             return context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-        }
-        catch (Exception localException)
-        {
+        } catch (Exception localException) {
         }
         return null;
     }
 
-    private static String getParamStr()
-    {
-        if (!TextUtils.isEmpty(paramStr))
-        {
+    private static String getParamStr() {
+        if (!TextUtils.isEmpty(paramStr)) {
             if (Log.D)
                 Log.d("Temp", "getParamStr() -->> " + paramStr);
             return paramStr;
@@ -212,10 +187,8 @@ public class StatisticsReportUtil {
         return paramStr;
     }
 
-    private static String getParamStrWithOutDeviceUUID()
-    {
-        if (!TextUtils.isEmpty(paramStrWithOutDeviceUUID))
-        {
+    private static String getParamStrWithOutDeviceUUID() {
+        if (!TextUtils.isEmpty(paramStrWithOutDeviceUUID)) {
             if (Log.D)
                 Log.d("Temp", "getParamStrWithOutDeviceUUID() -->> " + paramStrWithOutDeviceUUID);
             return paramStrWithOutDeviceUUID;
@@ -224,21 +197,18 @@ public class StatisticsReportUtil {
         localStringBuffer.append("&clientVersion=").append(spilitSubString(getSoftwareVersionName(), 12));
         localStringBuffer.append("&build=").append(CommonUtil.getSoftwareVersionCode(BaseApplication.getInstance()));
         localStringBuffer.append("&client=").append(Configuration.getProperty("client", ""));
-        try
-        {
+        try {
             Object localObject = spilitSubString(Build.MANUFACTURER, 12).replaceAll(" ", "");
-            localStringBuffer.append("&d_brand=").append((String)localObject);
+            localStringBuffer.append("&d_brand=").append((String) localObject);
             localObject = spilitSubString(Build.MODEL, 12).replaceAll(" ", "");
-            localStringBuffer.append("&d_model=").append((String)localObject);
+            localStringBuffer.append("&d_model=").append((String) localObject);
 
-        }
-        catch (Exception localException)
-        {
-                if (Log.E)
+        } catch (Exception localException) {
+            if (Log.E)
                 localException.printStackTrace();
         }
         localStringBuffer.append("&osVersion=").append(spilitSubString(Build.VERSION.RELEASE, 12));
-        Display display = ((WindowManager)BaseApplication.getInstance().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Display display = ((WindowManager) BaseApplication.getInstance().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         localStringBuffer.append("&screen=").append(display.getHeight() + "*" + display.getWidth());
         localStringBuffer.append("&partner=").append(Configuration.getProperty("partner", ""));
         paramStrWithOutDeviceUUID = localStringBuffer.toString();
@@ -247,21 +217,17 @@ public class StatisticsReportUtil {
         return paramStrWithOutDeviceUUID;
     }
 
-    public static String getReportString(boolean paramBoolean)
-    {
+    public static String getReportString(boolean paramBoolean) {
         return getReportString(paramBoolean, true);
     }
 
-    public static String getReportString(boolean paramBoolean1, boolean paramBoolean2)
-    {
-        if ((paramBoolean1) || (getValidDeviceUUIDByInstant() != null));
-        for (String str = getParamStr(); ; str = getParamStrWithOutDeviceUUID())
-        {
+    public static String getReportString(boolean paramBoolean1, boolean paramBoolean2) {
+        if ((paramBoolean1) || (getValidDeviceUUIDByInstant() != null)) ;
+        for (String str = getParamStr(); ; str = getParamStrWithOutDeviceUUID()) {
             StringBuffer localStringBuffer = new StringBuffer();
             localStringBuffer.append(str);
             str = LocManager.e();
-            if ((str != null) && (paramBoolean2))
-            {
+            if ((str != null) && (paramBoolean2)) {
                 str = str.replace("-1", "0");
                 localStringBuffer.append(REPORT_PARAM_LBS_AREA).append(str);
             }
@@ -272,37 +238,32 @@ public class StatisticsReportUtil {
         }
     }
 
-    public static int getSoftwareVersionCode()
-    {
+    public static int getSoftwareVersionCode() {
         PackageInfo localPackageInfo = getPackageInfo();
         if (localPackageInfo == null)
             return 0;
         return localPackageInfo.versionCode;
     }
 
-    public static String getSoftwareVersionName()
-    {
+    public static String getSoftwareVersionName() {
         PackageInfo localPackageInfo = getPackageInfo();
         if (localPackageInfo == null)
             return "";
         return localPackageInfo.versionName;
     }
 
-    private static String getValidDeviceUUIDByInstant()
-    {
+    private static String getValidDeviceUUIDByInstant() {
         if (!TextUtils.isEmpty(deivceUUID))
             return deivceUUID;
         String str = CommonUtil.getJdSharedPreferences().getString(DEVICE_INFO_UUID, null);
-        if (isValidDeviceUUID(str))
-        {
+        if (isValidDeviceUUID(str)) {
             deivceUUID = str;
             return str;
         }
         return null;
     }
 
-    private static boolean isValidDeviceUUID(String paramString)
-    {
+    private static boolean isValidDeviceUUID(String paramString) {
         if (!TextUtils.isEmpty(paramString)) {
             String[] strs = paramString.split("-");
             if ((strs.length > 1) && (!TextUtils.isEmpty(strs[1])))
@@ -311,13 +272,11 @@ public class StatisticsReportUtil {
         return false;
     }
 
-    public static String readCartUUID()
-    {
+    public static String readCartUUID() {
         SharedPreferences localSharedPreferences = CommonUtil.getJdSharedPreferences();
         String str2 = localSharedPreferences.getString(SHOPPING_CART_UUID, null);
         String str1 = str2;
-        if (TextUtils.isEmpty(str2))
-        {
+        if (TextUtils.isEmpty(str2)) {
             str1 = readDeviceUUID();
             str1 = str1 + UUID.randomUUID();
             localSharedPreferences.edit().putString(SHOPPING_CART_UUID, str1).commit();
@@ -325,100 +284,34 @@ public class StatisticsReportUtil {
         return str1;
     }
 
-    // ERROR //
-    public static String readDeviceUUID()
-    {
-        // Byte code:
-        //   0: ldc 2
-        //   2: monitorenter
-        //   3: invokestatic 331	com/jingdong/common/utils/StatisticsReportUtil:getValidDeviceUUIDByInstant	()Ljava/lang/String;
-        //   6: astore_1
-        //   7: aload_1
-        //   8: ifnull +40 -> 48
-        //   11: aload_1
-        //   12: astore_0
-        //   13: getstatic 85	com/jingdong/common/utils/Log:D	Z
-        //   16: ifeq +27 -> 43
-        //   19: ldc 87
-        //   21: new 50	java/lang/StringBuilder
-        //   24: dup
-        //   25: ldc_w 407
-        //   28: invokespecial 175	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-        //   31: aload_1
-        //   32: invokevirtual 104	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
-        //   35: invokevirtual 107	java/lang/StringBuilder:toString	()Ljava/lang/String;
-        //   38: invokestatic 93	com/jingdong/common/utils/Log:d	(Ljava/lang/String;Ljava/lang/String;)V
-        //   41: aload_1
-        //   42: astore_0
-        //   43: ldc 2
-        //   45: monitorexit
-        //   46: aload_0
-        //   47: areturn
-        //   48: getstatic 85	com/jingdong/common/utils/Log:D	Z
-        //   51: ifeq +11 -> 62
-        //   54: ldc 87
-        //   56: ldc_w 409
-        //   59: invokestatic 93	com/jingdong/common/utils/Log:d	(Ljava/lang/String;Ljava/lang/String;)V
-        //   62: invokestatic 166	com/jingdong/common/BaseApplication:getInstance	()Lcom/jingdong/common/BaseApplication;
-        //   65: invokestatic 411	com/jingdong/common/utils/StatisticsReportUtil:genarateDeviceUUID	(Landroid/content/Context;)Ljava/lang/String;
-        //   68: astore_1
-        //   69: aload_1
-        //   70: invokestatic 378	com/jingdong/common/utils/StatisticsReportUtil:isValidDeviceUUID	(Ljava/lang/String;)Z
-        //   73: ifeq +39 -> 112
-        //   76: getstatic 85	com/jingdong/common/utils/Log:D	Z
-        //   79: ifeq +11 -> 90
-        //   82: ldc 87
-        //   84: ldc_w 413
-        //   87: invokestatic 93	com/jingdong/common/utils/Log:d	(Ljava/lang/String;Ljava/lang/String;)V
-        //   90: invokestatic 369	com/jingdong/common/utils/CommonUtil:getJdSharedPreferences	()Landroid/content/SharedPreferences;
-        //   93: invokeinterface 396 1 0
-        //   98: ldc 8
-        //   100: aload_1
-        //   101: invokeinterface 402 3 0
-        //   106: invokeinterface 405 1 0
-        //   111: pop
-        //   112: aload_1
-        //   113: astore_0
-        //   114: getstatic 85	com/jingdong/common/utils/Log:D	Z
-        //   117: ifeq -74 -> 43
-        //   120: ldc 87
-        //   122: new 50	java/lang/StringBuilder
-        //   125: dup
-        //   126: ldc_w 415
-        //   129: invokespecial 175	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-        //   132: aload_1
-        //   133: invokevirtual 104	java/lang/StringBuilder:append	(Ljava/lang/String;)Ljava/lang/StringBuilder;
-        //   136: invokevirtual 107	java/lang/StringBuilder:toString	()Ljava/lang/String;
-        //   139: invokestatic 93	com/jingdong/common/utils/Log:d	(Ljava/lang/String;Ljava/lang/String;)V
-        //   142: aload_1
-        //   143: astore_0
-        //   144: goto -101 -> 43
-        //   147: astore_0
-        //   148: ldc 2
-        //   150: monitorexit
-        //   151: aload_0
-        //   152: athrow
-        //   153: astore_0
-        //   154: getstatic 85	com/jingdong/common/utils/Log:D	Z
-        //   157: ifeq -45 -> 112
-        //   160: aload_0
-        //   161: invokevirtual 125	java/lang/Exception:printStackTrace	()V
-        //   164: goto -52 -> 112
-        //
-        // Exception table:
-        //   from	to	target	type
-        //   3	7	147	finally
-        //   13	41	147	finally
-        //   48	62	147	finally
-        //   62	90	147	finally
-        //   90	112	147	finally
-        //   114	142	147	finally
-        //   154	164	147	finally
-        //   90	112	153	java/lang/Exception
+    public static synchronized String readDeviceUUID() {
+        String v0 = getValidDeviceUUIDByInstant();
+        if (v0 != null) {//if-eqz v0, :cond_1
+            if (Log.D)
+                Log.d("Temp", "readDeviceUUID() read deivceUUID -->> " + v0);
+        } else {//:cond_1
+            try {
+                if (Log.D)
+                    Log.d("Temp", "readDeviceUUID() create -->> ");
+                String uuid = StatisticsReportUtil.genarateDeviceUUID(BaseApplication.getInstance());
+                if (StatisticsReportUtil.isValidDeviceUUID(uuid)) {//if-eqz v1, :cond_4
+                    if (Log.D)
+                        Log.d("Temp", "readDeviceUUID() write -->> ");
+                    SharedPreferences.Editor edit = CommonUtil.getJdSharedPreferences().edit();
+                    edit.putString("uuid", uuid);
+                    edit.commit();
+                }
+                if (Log.D)
+                    Log.d("Temp", "readDeviceUUID() create deivceUUID -->> " + v0);
+            } catch (Exception e) {
+                if (Log.D)
+                    e.printStackTrace();
+            }
+        }
+        return v0;
     }
 
-    private static String spilitSubString(String paramString, int paramInt)
-    {
+    private static String spilitSubString(String paramString, int paramInt) {
         String str = paramString;
         if (str != null) {
 
@@ -427,7 +320,7 @@ public class StatisticsReportUtil {
                     str = str.substring(0, paramInt);
             } catch (Exception e) {
                 if (Log.E)
-                e.printStackTrace();
+                    e.printStackTrace();
             }
         }
         return str;
