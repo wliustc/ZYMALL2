@@ -25,6 +25,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jingdong.app.mall.category.fragment.ConjoinedCategoryFragment;
+import com.jingdong.app.mall.category.fragment.L2CategoryFragment;
+import com.jingdong.app.mall.category.fragment.OrdinaryL2CategoryFragment;
+import com.jingdong.app.mall.category.fragment.RecommendL2CategoryFragment;
 import com.jingdong.app.mall.color.CameraActivity;
 import com.jingdong.app.mall.more.VoiceSearchActivity;
 import com.jingdong.app.mall.more.VoiceSearchLayout;
@@ -35,9 +39,10 @@ import com.jingdong.app.mall.search.CameraPurchaseActivity;
 import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.app.mall.utils.LoginUser;
 import com.jingdong.common.BaseActivity;
+import com.jingdong.common.config.Configuration;
 import com.jingdong.common.login.LoginUserBase;
+import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.JDFrescoUtils;
-import com.jingdong.common.utils.StatisticsReportUtil;
 import com.jingdong.jdma.model.UserInfoModel;
 import com.jingdong.lib.zxing.client.android.CaptureActivity;
 import com.zy.app.mall.R;
@@ -56,10 +61,12 @@ import com.zy.common.entity.Catelogy;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.FileUtils;
+import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.ImageUtil;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
 import com.zy.common.utils.Log;
+import com.zy.common.utils.StatisticsReportUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,15 +89,15 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     private int F;
     private String G = null;
     private String H;
-    private View I;
-    private Button J;
-    private ImageView K;
-    private View L;
-    private View M;
-    private Button N;
-    private ImageView O;
-    private BaseActivity P;
-    private View Q;
+    private View sublist_loading_error_tips; //I
+    private Button jd_tip_button;   //J
+    private ImageView jd_tip_image;    //K
+    private View L; //L
+    private View M; //M
+    private Button N;   //N
+    private ImageView O;    //O
+    private BaseActivity P; //P
+    private View mCategoryFragmentLayout;
     private boolean r1 = false;
     private boolean S = false;
     private List<String> T = new ArrayList();
@@ -104,11 +111,11 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     private boolean aa;
     private Fragment ab = null;
     private String ac = null;
-    AutoCompleteTextView b;
-    RelativeLayout c;
-    TextView d;
-    SimpleDraweeView e;
-    ImageView f;
+    AutoCompleteTextView search_text; //b
+    RelativeLayout c;   //c
+    TextView d; //d
+    SimpleDraweeView e; //e
+    ImageView f;    //f
     HashMap<String, ArrayList<com.zy.app.mall.category.b.RightColumnBase>> g;
     BroadcastReceiver h;
     protected String i = "";
@@ -259,7 +266,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         {
             ConjoinedCategoryFragment conjoinedCategoryFragment = new ConjoinedCategoryFragment();
             conjoinedCategoryFragment.a(this.L);
-            conjoinedCategoryFragment.a(this.I, this.K);
+            conjoinedCategoryFragment.a(this.sublist_loading_error_tips, this.jd_tip_image);
             conjoinedCategoryFragment.a(this.H, this.D, this.w);
             conjoinedCategoryFragment.a(this.P);
             conjoinedCategoryFragment.a((List)localObject2);
@@ -268,9 +275,15 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         }else {
             OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = OrdinaryL2CategoryFragment.b(paramString, this.D, this.w);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.L);
-            ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.I, this.K);
+            ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.sublist_loading_error_tips, this.jd_tip_image);
             ((L2CategoryFragment) ordinaryL2CategoryFragment).thisActivity = this.P;
-            ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(new e(this));
+            ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(new OrdinaryL2CategoryFragment._U(){//e(this)
+                @Override
+                public void a(List<String> paramList) {
+                    JDNewCategoryFragment.this.T.clear();
+                    JDNewCategoryFragment.this.T = paramList;
+                }
+            });
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).d(paramString);
             a(ordinaryL2CategoryFragment);
         }
@@ -323,9 +336,19 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         {
             localRecommendL2CategoryFragment = (RecommendL2CategoryFragment)RecommendL2CategoryFragment.a(this.p, this.q);
             localRecommendL2CategoryFragment.a(this.L);
-            localRecommendL2CategoryFragment.a(this.I, this.K);
+            localRecommendL2CategoryFragment.a(this.sublist_loading_error_tips, this.jd_tip_image);
             localRecommendL2CategoryFragment.thisActivity = this.P;
-            localRecommendL2CategoryFragment.a(new m(this));
+            localRecommendL2CategoryFragment.a(new RecommendL2CategoryFragment._AF(){//m(this)
+                @Override
+                public void a(boolean paramBoolean1, boolean paramBoolean2, List<String> paramList, boolean paramBoolean3) {
+                    JDNewCategoryFragment.this.v = paramBoolean2;
+                    JDNewCategoryFragment.this.k = paramBoolean3;
+                    if ((paramBoolean1) || (!paramBoolean3))
+                        JDNewCategoryFragment.synthetic_a(JDNewCategoryFragment.this, paramBoolean3, false);
+                    JDNewCategoryFragment.this.T.clear();
+                    JDNewCategoryFragment.this.T = paramList;
+                }
+            });
         }
         else
         {
@@ -415,27 +438,27 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     @Override
     public View onCreateViews(LayoutInflater paramLayoutInflater, Bundle paramBundle)
     {
-        this.Q = paramLayoutInflater.inflate(R.layout.category_new_activity, null);//2130903255
+        this.mCategoryFragmentLayout = paramLayoutInflater.inflate(R.layout.category_new_activity, null);//2130903255
         //paramLayoutInflater = this.Q;
-        this.left_list = ((ListView)this.Q.findViewById(R.id.left_list));//2131166227
-        this.I = this.Q.findViewById(R.id.sublist_loading_error_tips);//2131166230
-        this.J = ((Button)this.I.findViewById(R.id.jd_tip_button));//2131165236
-        this.J.setText(R.string.loading_error_again);//2131232396
-        this.K = ((ImageView)this.I.findViewById(R.id.jd_tip_image));//2131165239
-        this.K.setBackgroundResource(R.drawable.y_03);//2130837707
-        ((TextView)this.I.findViewById(R.id.jd_tip_tv1)).setText(R.string.cart_error_fail);//2131165240//2131231071
-        ((TextView)this.I.findViewById(R.id.jd_tip_tv2)).setText(R.string.cart_error_fail_check);//2131165241//2131231073
-        this.c = ((RelativeLayout)this.Q.findViewById(R.id.category_message));//2131165804
-        this.d = ((TextView)this.Q.findViewById(R.id.home_message_number));//2131165807
-        this.e = ((SimpleDraweeView)this.Q.findViewById(R.id.home_message_red_dot));//2131165806
-        this.r = this.Q.findViewById(R.id.mainlayout);//2131165737
-        this.L = this.Q.findViewById(R.id.progress_bar);//2131166231
-        this.M = this.Q.findViewById(R.id.main_loading_error_tips);//2131166232
+        this.left_list = ((ListView)this.mCategoryFragmentLayout.findViewById(R.id.left_list));//2131166227
+        this.sublist_loading_error_tips = this.mCategoryFragmentLayout.findViewById(R.id.sublist_loading_error_tips);//2131166230
+        this.jd_tip_button = ((Button)this.sublist_loading_error_tips.findViewById(R.id.jd_tip_button));//2131165236
+        this.jd_tip_button.setText(R.string.loading_error_again);//2131232396
+        this.jd_tip_image = ((ImageView)this.sublist_loading_error_tips.findViewById(R.id.jd_tip_image));//2131165239
+        this.jd_tip_image.setBackgroundResource(R.drawable.y_03);//2130837707
+        ((TextView)this.sublist_loading_error_tips.findViewById(R.id.jd_tip_tv1)).setText(R.string.cart_error_fail);//2131165240//2131231071
+        ((TextView)this.sublist_loading_error_tips.findViewById(R.id.jd_tip_tv2)).setText(R.string.cart_error_fail_check);//2131165241//2131231073
+        this.c = ((RelativeLayout)this.mCategoryFragmentLayout.findViewById(R.id.category_message));//2131165804
+        this.d = ((TextView)this.mCategoryFragmentLayout.findViewById(R.id.home_message_number));//2131165807
+        this.e = ((SimpleDraweeView)this.mCategoryFragmentLayout.findViewById(R.id.home_message_red_dot));//2131165806
+        this.r = this.mCategoryFragmentLayout.findViewById(R.id.mainlayout);//2131165737
+        this.L = this.mCategoryFragmentLayout.findViewById(R.id.progress_bar);//2131166231
+        this.M = this.mCategoryFragmentLayout.findViewById(R.id.main_loading_error_tips);//2131166232
         this.N = ((Button)this.M.findViewById(R.id.jd_tip_button));//2131165236
         this.N.setText(R.string.loading_error_again);//2131232396
         this.O = ((ImageView)this.M.findViewById(R.id.jd_tip_image));//2131165239
         this.O.setBackgroundResource(R.drawable.y_03);//2130837707
-        this.f = ((ImageView)this.Q.findViewById(R.id.catagory_list_to_top));//2131166229
+        this.f = ((ImageView)this.mCategoryFragmentLayout.findViewById(R.id.catagory_list_to_top));//2131166229
         ((TextView)this.M.findViewById(R.id.jd_tip_tv1)).setText(R.string.cart_error_fail);//2131165240//2131231071
         ((TextView)this.M.findViewById(R.id.jd_tip_tv2)).setText(R.string.cart_error_fail_check);//2131165241//2131231073
         this.g = new HashMap();
@@ -444,13 +467,13 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             this.p = "";
         this.q = StatisticsReportUtil.genarateDeviceUUID(this.P);
         //paramLayoutInflater = this.Q;
-        this.a = this.Q.findViewById(R.id.common_title_2);//2131166226
+        this.a = this.mCategoryFragmentLayout.findViewById(R.id.common_title_2);//2131166226
         this.a.setVisibility(View.VISIBLE);//0
-        this.b = ((AutoCompleteTextView)this.Q.findViewById(R.id.search_text));//2131166399
-        this.b.setFocusable(false);
-        this.b.setOnTouchListener(this.l);
-        this.Q.findViewById(R.id.search_box_layout).setOnTouchListener(this.l);//2131166397
-        this.Q.findViewById(R.id.category_saoasao_button).setOnClickListener(new View.OnClickListener(){//2131165803 //o(this)
+        this.search_text = ((AutoCompleteTextView)this.mCategoryFragmentLayout.findViewById(R.id.search_text));//2131166399
+        this.search_text.setFocusable(false);
+        this.search_text.setOnTouchListener(this.l);
+        this.mCategoryFragmentLayout.findViewById(R.id.search_box_layout).setOnTouchListener(this.l);//2131166397
+        this.mCategoryFragmentLayout.findViewById(R.id.category_saoasao_button).setOnClickListener(new View.OnClickListener(){//2131165803 //o(this)
             @Override
             public void onClick(View view) {
                 if (CatelogyUtil.a(JDNewCategoryFragment.this.P))
@@ -462,7 +485,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.c.setOnClickListener(new View.OnClickListener(){//b(this)
             @Override
             public void onClick(View view) {
-                if (JDNewCategoryFragment.q(this.a))
+                if (JDNewCategoryFragment.synthetic_q(JDNewCategoryFragment.this))
                     return;
                 JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.P, "Classification_MyMessage", "", "", JDNewCategoryFragment.this, "", "", "");
                 JDNewCategoryFragment.this.e.setVisibility(View.GONE);
@@ -500,7 +523,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             a(ConfigUtil.a(14, false), view.findViewById(R.id.search_camera_btn));//2131165521
             view.findViewById(R.id.search_barcode_btn).setOnClickListener(this.z);//2131165520
             view.findViewById(R.id.color_shopping_btn).setOnClickListener(this.z);//2131165523
-            this.Q.findViewById(R.id.search_voice).setOnClickListener(this.z);//2131168592
+            this.mCategoryFragmentLayout.findViewById(R.id.search_voice).setOnClickListener(this.z);//2131168592
             this.y.setContentView(view);
         }
         IntentFilter intentFilter = new IntentFilter("refresh_recommedData");
@@ -568,9 +591,9 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                     JDNewCategoryFragment.this.post(new Runnable(){//h(this)
                         @Override
                         public void run() {
-                            JDNewCategoryFragment.this.I.setVisibility(View.GONE);
+                            JDNewCategoryFragment.this.sublist_loading_error_tips.setVisibility(View.GONE);
                             if (JDNewCategoryFragment.this.isAdded())
-                                JDNewCategoryFragment.this.K.setBackgroundResource(R.drawable.category_kongbai);//2130838448
+                                JDNewCategoryFragment.this.jd_tip_image.setBackgroundResource(R.drawable.category_kongbai);//2130838448
                         }
                     });
                     JDNewCategoryFragment.this.a(false, false, true, false);
@@ -599,7 +622,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 JDNewCategoryFragment.this.u = view;
             }
         });
-        this.J.setOnClickListener(new View.OnClickListener(){//j(this)
+        this.jd_tip_button.setOnClickListener(new View.OnClickListener(){//j(this)
             @Override
             public void onClick(View view) {
                 JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.o);
@@ -618,7 +641,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
 
             }
         });
-        return this.Q;
+        return this.mCategoryFragmentLayout;
     }
 
     public void onDetach()
@@ -693,16 +716,16 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             PersonalMessageManager.a(LoginUserBase.getLoginUserName());
             PersonalMessageManager.a(this.P.getHttpGroupWithNPSGroup());
         }
-        if ((this.b != null) && (!isAdded())){
+        if ((this.search_text != null) && (!isAdded())){
             if (!LoginUserBase.hasLogin())
             {
                 this.e.setVisibility(View.GONE);//8;//8
                 this.d.setVisibility(View.GONE);//8;//8
             }
-            this.b.setHint(R.string.homeActivity_autoComplete);//2131231773
+            this.search_text.setHint(R.string.homeActivity_autoComplete);//2131231773
             this.V = CommonUtil.getJdSharedPreferences().getString("hintKeyWord", "");
             if (!TextUtils.isEmpty(this.V))
-                this.b.setHint(this.V);
+                this.search_text.setHint(this.V);
             NavigationOptHelper.getInstance();
             NavigationOptHelper.c(1);
             if ((this.v) && (!this.r1) && (this.left_list.getHeaderViewsCount() == 0))
@@ -725,6 +748,113 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.j = paramString;
     }
 
+    static void synthetic_a(final JDNewCategoryFragment paramJDNewCategoryFragment, boolean paramBoolean1, boolean paramBoolean2)
+    {
+        paramJDNewCategoryFragment.post(new Runnable(){//d(paramJDNewCategoryFragment)
+            @Override
+            public void run() {
+                paramJDNewCategoryFragment.L.setVisibility(View.GONE);
+                paramJDNewCategoryFragment.r.setVisibility(View.VISIBLE);
+                paramJDNewCategoryFragment.M.setVisibility(View.GONE);
+                if (paramJDNewCategoryFragment.isAdded())
+                    paramJDNewCategoryFragment.O.setBackgroundResource(R.drawable.category_kongbai);//2130838448
+            }
+        });
+        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+        localHttpSetting.setListener(new HttpGroup.OnCommonListener(){// r(paramJDNewCategoryFragment, new ExceptionReporter(localHttpSetting), paramBoolean1, paramBoolean2)
+            private void a()
+            {
+                paramJDNewCategoryFragment.post(new Runnable(){//t(this)
+                    @Override
+                    public void run() {
+                        paramJDNewCategoryFragment.r.setVisibility(View.GONE);
+                        paramJDNewCategoryFragment.M.setVisibility(View.VISIBLE);
+                        if (paramJDNewCategoryFragment.isAdded())
+                            paramJDNewCategoryFragment.O.setBackgroundResource(R.drawable.y_03);//2130837707
+                    }
+                });
+            }
+            @Override
+            public void onReady(HttpGroup.HttpSettingParams paramHttpSettingParams) {
+
+            }
+
+            @Override
+            public void onError(HttpGroup.HttpError paramHttpError) {
+                a();
+            }
+
+            @Override
+            public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
+                if (!this.c)
+                {
+                    if (!this.d)
+                        JDNewCategoryFragment.a(this.a, true, true);
+                    JDNewCategoryFragment.f(this.a, paramHttpResponse.getJSONObject().optString("catalogSortEventId"));
+                    JDNewCategoryFragment.g(this.a, paramHttpResponse.getJSONObject().optString("catalogTopNum"));
+                    JDNewCategoryFragment.a(this.a, paramHttpResponse.getJSONObject().getJSONArrayOrNull("catelogyList"));
+                    if (!TextUtils.isEmpty(JDNewCategoryFragment.w(this.a)))
+                        break label142;
+                    JDNewCategoryFragment.h(this.a, "null");
+                    JDNewCategoryFragment.b(this.a, 0);
+                }
+                while ((JDNewCategoryFragment.x(this.a) == null) || (JDNewCategoryFragment.x(this.a).length() == 0))
+                {
+                    this.b.reportHttpBusinessException(paramHttpResponse);
+                    a();
+                    return;
+                    label142: JDNewCategoryFragment.b(this.a, Integer.parseInt(JDNewCategoryFragment.w(this.a)));
+                    JDNewCategoryFragment.h(this.a, Catelogy.getCmsTotalCid(Catelogy.toList(JDNewCategoryFragment.x(this.a), 0), JDNewCategoryFragment.y(this.a)));
+                }
+                paramJDNewCategoryFragment.post(new Runnable(){//s(this)
+                    @Override
+                    public void run() {
+                        JDNewCategoryFragment.i(this.a.a).clear();
+                        JDNewCategoryFragment.i(this.a.a).addAll(Catelogy.toList(JDNewCategoryFragment.x(this.a.a), 0));
+                        if (!JDNewCategoryFragment.d(this.a.a))
+                        {
+                            JDNewCategoryFragment.z(this.a.a);
+                            JDNewCategoryFragment.o(this.a.a).notifyDataSetChanged();
+                            return;
+                        }
+                        paramJDNewCategoryFragment.b();
+                        JDNewCategoryFragment.o(this.a.a).notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+        localHttpSetting.setFunctionId("entranceCatalog");
+        localHttpSetting.setHost(Configuration.getPortalHost());
+        if (paramBoolean1)
+        {
+            localHttpSetting.setLocalFileCache(true);
+            localHttpSetting.setLocalFileCacheTime(86400000L);
+            if (!paramBoolean2)
+                break label118;
+            localHttpSetting.setCacheMode(4);
+        }
+        while (true)
+        {
+            localHttpSetting.setBussinessId(300);
+            if (paramJDNewCategoryFragment.U)
+            {
+                localHttpSetting.setCacheMode(2);
+                paramJDNewCategoryFragment.U = false;
+            }
+            paramJDNewCategoryFragment.P.getHttpGroupaAsynPool().add(localHttpSetting);
+            return;
+            label118: localHttpSetting.setCacheMode(0);
+        }
+    }
+
+    static boolean synthetic_q(JDNewCategoryFragment paramJDNewCategoryFragment)
+    {
+        long l1 = System.currentTimeMillis();
+        if (l1 - paramJDNewCategoryFragment.x < 800L)
+            return true;
+        paramJDNewCategoryFragment.x = l1;
+        return false;
+    }
 
     public static class JDNewCategoryTM extends JDTaskModule
     {

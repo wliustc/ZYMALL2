@@ -1,5 +1,6 @@
 package com.jingdong.app.mall.utils;
 
+import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.home.JDHomeFragment;
 import com.zy.common.frame.IMyActivity;
 
@@ -22,5 +23,8 @@ public class LoginUser {
     }
 
     public void homeAutoLogin(IMyActivity thisActivity, JDHomeFragment jdHomeFragment, int i1) {
+    }
+
+    public void executeLoginRunnable(BaseActivity p, Runnable title) {
     }
 }
