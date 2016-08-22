@@ -47,29 +47,29 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private final ViewPager.OnPageChangeListener f = new ViewPager.OnPageChangeListener(){
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            PagerSlidingTabStrip.a(this.a, paramInt1);
-            PagerSlidingTabStrip.a(this.a, paramFloat);
-            if ((paramInt1 >= 0) && (paramInt1 <= PagerSlidingTabStrip.c(this.a) - 1) && (PagerSlidingTabStrip.d(this.a) != null) && (PagerSlidingTabStrip.d(this.a).getChildAt(paramInt1) != null))
-                PagerSlidingTabStrip.a(this.a, paramInt1, (int)(PagerSlidingTabStrip.d(this.a).getChildAt(paramInt1).getWidth() * paramFloat));
-            this.a.invalidate();
-            if (this.a.a != null)
-                this.a.a.onPageScrolled(paramInt1, paramFloat, paramInt2);
+            PagerSlidingTabStrip.this.j = position;
+            PagerSlidingTabStrip.this.l = positionOffset;
+            if ((position >= 0) && (position <= PagerSlidingTabStrip.this.i - 1) && (PagerSlidingTabStrip.this.g != null) && (PagerSlidingTabStrip.this.g.getChildAt(position) != null))
+                PagerSlidingTabStrip.this.synthetic_a(position, (int)(PagerSlidingTabStrip.this.g.getChildAt(position).getWidth() * positionOffset));
+            PagerSlidingTabStrip.this.invalidate();
+            if (PagerSlidingTabStrip.this.a != null)
+                PagerSlidingTabStrip.this.a.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
 
         @Override
         public void onPageSelected(int position) {
-            PagerSlidingTabStrip.b(this.a, paramInt);
-            PagerSlidingTabStrip.e(this.a);
-            if (this.a.a != null)
-                this.a.a.onPageSelected(paramInt);
+            PagerSlidingTabStrip.this.k = position;
+            PagerSlidingTabStrip.this.b();
+            if (PagerSlidingTabStrip.this.a != null)
+                PagerSlidingTabStrip.this.a.onPageSelected(position);
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            if (paramInt == 0)
-                PagerSlidingTabStrip.a(this.a, PagerSlidingTabStrip.a(this.a).getCurrentItem(), 0);
-            if (this.a.a != null)
-                this.a.a.onPageScrollStateChanged(paramInt);
+            if (state == 0)
+                PagerSlidingTabStrip.this.synthetic_a(PagerSlidingTabStrip.this.h.getCurrentItem(), 0);
+            if (PagerSlidingTabStrip.this.a != null)
+                PagerSlidingTabStrip.this.a.onPageScrollStateChanged(state);
         }
     };
     private LinearLayout g;
