@@ -9,7 +9,8 @@ import android.content.Context;
 public class CatelogyUtil {
     public static boolean a(Context paramContext)
     {
-
+        if (fe.b())
+            return com.jingdong.common.ui.a.a(paramContext);
         return true;
     }
 }
