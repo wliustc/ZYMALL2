@@ -1313,7 +1313,7 @@
     <dimen name="a8y">34.69998dip</dimen>
     <dimen name="a8z">100.0dip</dimen>
     <dimen name="a90">160.0dip</dimen>
-    <dimen name="a91">135.0dip</dimen>
+    <dimen name="header_height">135.0dip</dimen><!-- "a91" -->
     <dimen name="a92">16.0sp</dimen>
     <dimen name="a93">10.0dip</dimen>
     <dimen name="a94">18.0sp</dimen>

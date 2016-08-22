@@ -254,7 +254,7 @@ public class Catelogy implements Serializable {
         }
     }
 
-    private List<CatelogyLevelFour> getLevelFourList(JSONArrayPoxy paramJSONArrayPoxy)
+    private List<CatelogyLevelFour> getLevelFourList(JSONArrayProxy paramJSONArrayPoxy)
     {
         if (Log.D)
         {
