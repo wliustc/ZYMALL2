@@ -15,12 +15,14 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jingdong.app.mall.faxian.view.view.AuthorPageView;
 import com.zy.app.mall.R;
 
 import java.util.Locale;
@@ -31,12 +33,12 @@ import java.util.Locale;
 public class PagerSlidingTabStrip extends HorizontalScrollView {
     private static String b = PagerSlidingTabStrip.class.getSimpleName();
     private static final int[] c = { 16842901, 16842904 };
-    private int A = -10066330;
-    private int B = -10066330;
+    private int A = 0xFF666666;//-10066330;
+    private int B = 0xFF666666;//-10066330;
     private Typeface C = null;
     private int D = 0;
     private int E = 0;
-    private int F = 17170445;
+    private int F = android.R.color.transparent;//17170445;
     private Locale G;
     private ViewGroup H;
     public ViewPager.OnPageChangeListener a;
@@ -78,9 +80,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private float l = 0.0F;
     private Paint m;
     private Paint n;
-    private int o = -10066330;
-    private int p = 436207616;
-    private int q = 436207616;
+    private int o = 0xFF666666;//-10066330;
+    private int p = 0x1A000000;//436207616;
+    private int q = 0x1A000000;//436207616;
     private boolean r = false;
     private boolean s = false;
     private int t = 52;
@@ -173,23 +175,40 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             //:goto_1
         }
         b();
-        getViewTreeObserver().addOnGlobalLayoutListener(new View.OnClickListener(){//c(this)
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){//c(this)
             @Override
-            public void onClick(View view) {
-                ParallaxHeaderHelper.a = 3;
-                PagerSlidingTabStrip.a(this.b).setCurrentItem(this.a);
+            public void onGlobalLayout() {
+                PagerSlidingTabStrip.this.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                PagerSlidingTabStrip.this.j = PagerSlidingTabStrip.this.h.getCurrentItem();
+                PagerSlidingTabStrip.this.synthetic_a(PagerSlidingTabStrip.this.j, 0);
             }
         });
     }
 
-    private void a(int paramInt, View paramView)
+     void synthetic_a( int paramInt1, int paramInt2)
+    {
+        if (this.i != 0){//if-eqz v0, :cond_2
+            int i1 = 0;
+            if ((paramInt1 >= 0) && (paramInt1 <= this.i - 1) && (this.g != null) && (this.g.getChildAt(paramInt1) != null))
+                i1 = this.g.getChildAt(paramInt1).getLeft() + paramInt2;
+            if (paramInt1 > 0 || paramInt2 > 0) //if-gtz p1, :cond_0
+                i1 = i1 - this.t;
+            if (i1 != this.E) {
+                this.E = i1;
+                this.scrollTo(i1, 0);
+            }
+        }
+        return;
+    }
+
+    private void a(final int paramInt, View paramView)
     {
         paramView.setFocusable(true);
-        paramView.setOnClickListener(new View.OnClickListener(){
+        paramView.setOnClickListener(new View.OnClickListener(){//d(this, paramInt)
             @Override
             public void onClick(View view) {
                 ParallaxHeaderHelper.a = 3;
-                PagerSlidingTabStrip.a(this.b).setCurrentItem(this.a);
+                PagerSlidingTabStrip.this.h.setCurrentItem(paramInt);
             }
         });
         paramView.setPadding(this.x, 0, this.x, 0);
@@ -203,34 +222,27 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
     }
 
-    private void b()
-    {
-        int i1 = 0;
-        if (i1 < this.i)
-        {
+    private void b() {
+
+        //:goto_0
+        for (int i1 = 0; i1 < this.i; i1++) {
             Object localObject = this.g.getChildAt(i1);
-            ((View)localObject).setBackgroundResource(this.F);
-            if ((localObject instanceof TextView))
-            {
-                localObject = (TextView)localObject;
-                ((TextView)localObject).setTextSize(0, this.z);
-                ((TextView)localObject).setTypeface(this.C, this.D);
-                ((TextView)localObject).setTextColor(this.A);
-                if (this.s)
-                {
-                    if (Build.VERSION.SDK_INT < 14)
-                        break label112;
-                    ((TextView)localObject).setAllCaps(true);
+            ((View) localObject).setBackgroundResource(this.F);
+            if ((localObject instanceof TextView)) {//if-eqz v3, :cond_1
+                localObject = (TextView) localObject;
+                ((TextView) localObject).setTextSize(0, this.z);
+                ((TextView) localObject).setTypeface(this.C, this.D);
+                ((TextView) localObject).setTextColor(this.A);
+                if (this.s) {//if-eqz v3, :cond_0
+                    if (Build.VERSION.SDK_INT >= 14)//if-lt v3, v4, :cond_2
+                        ((TextView) localObject).setAllCaps(true);
+                    else
+                        ((TextView) localObject).setText(((TextView) localObject).getText().toString().toUpperCase(this.G));
                 }
             }
-            while (true)
-            {
-                if (i1 == this.k)
-                    ((TextView)localObject).setTextColor(this.B);
-                i1 += 1;
-                break;
-                label112: ((TextView)localObject).setText(((TextView)localObject).getText().toString().toUpperCase(this.G));
-            }
+            //:goto_1
+            if (i1 == this.k)
+                ((TextView) localObject).setTextColor(this.B);
         }
     }
 
@@ -243,8 +255,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         paramViewPager.setOnPageChangeListener(this.f);
     }
 
-    protected void onDraw(Canvas paramCanvas)
-    {
+    protected void onDraw(Canvas paramCanvas) {
         super.onDraw(paramCanvas);
         if ((isInEditMode()) || (this.i == 0))
             return;
@@ -254,65 +265,57 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         this.m.setColor(this.o);
         View localView = this.g.getChildAt(this.j);
         float f1 = localView.getLeft();
-        float f2 = localView.getRight();
-        if ((this.l > 0.0F) && (this.j < this.i - 1))
-        {
+        float f2 = localView.getRight();    //v1
+        if ((this.l > 0.0F) && (this.j < this.i - 1)) {//if-ge v1, v2, :cond_2
             localView = this.g.getChildAt(this.j + 1);
             float f4 = localView.getLeft();
             float f3 = localView.getRight();
             f1 = this.l * f4 + f1 * (1.0F - this.l);
             f2 = this.l * f3 + (1.0F - this.l) * f2;
-        }
-        while (true)
-        {
-            paramCanvas.drawRect(f1, i2 - this.u, f2, i2, this.m);
-            this.n.setColor(this.q);
-            int i1 = 0;
-            while (i1 < this.i - 1)
-            {
-                localView = this.g.getChildAt(i1);
-                paramCanvas.drawLine(localView.getRight(), this.w, localView.getRight(), i2 - this.w, this.n);
-                i1 += 1;
-            }
-            break;
+        }//else move v1, v0
+        //:goto_0
+
+        paramCanvas.drawRect(f1, i2 - this.u, f2, i2, this.m);
+        this.n.setColor(this.q);
+
+        //:goto_1
+        for (int i1 = 0; i1 < this.i - 1; i1++) {
+            localView = this.g.getChildAt(i1);
+            paramCanvas.drawLine(localView.getRight(), this.w, localView.getRight(), i2 - this.w, this.n);
         }
     }
 
     public boolean onInterceptTouchEvent(MotionEvent paramMotionEvent)
     {
         switch (paramMotionEvent.getAction())
-        {
+        {//pswitch_data_0
             default:
-                if ((this.H == null) || (!(this.H instanceof AuthorPageView)))
-                    break;
-                this.H.requestDisallowInterceptTouchEvent(true);
-            case 0:
-            case 2:
-            case 1:
-            case 3:
+                if ((this.H != null) && (this.H instanceof AuthorPageView))
+                    this.H.requestDisallowInterceptTouchEvent(true);
+                break;
+            case 0: //pswitch_0
+                if ((this.H != null) && (this.H instanceof AuthorPageView))
+                    this.H.requestDisallowInterceptTouchEvent(true);
+                break;
+
+            case 2: //pswitch_1
+                if ((this.H != null) && (this.H instanceof AuthorPageView) && (AuthorPageView.isShow))
+                    this.H.requestDisallowInterceptTouchEvent(false);
+                break;
+            case 1: //pswitch_2
+            case 3: //pswitch_2
+                if ((this.H != null) && (this.H instanceof AuthorPageView))
+                    this.H.requestDisallowInterceptTouchEvent(false);
+                break;
         }
-        while (true)
-        {
-            return super.onInterceptTouchEvent(paramMotionEvent);
-            if ((this.H == null) || (!(this.H instanceof AuthorPageView)))
-                continue;
-            this.H.requestDisallowInterceptTouchEvent(true);
-            continue;
-            if ((this.H == null) || (!(this.H instanceof AuthorPageView)) || (!AuthorPageView.isShow))
-                continue;
-            this.H.requestDisallowInterceptTouchEvent(false);
-            continue;
-            if ((this.H == null) || (!(this.H instanceof AuthorPageView)))
-                continue;
-            this.H.requestDisallowInterceptTouchEvent(false);
-        }
+        return super.onInterceptTouchEvent(paramMotionEvent);
     }
 
     public void onRestoreInstanceState(Parcelable paramParcelable)
     {
-        paramParcelable = (PagerSlidingTabStrip.SavedState)paramParcelable;
-        super.onRestoreInstanceState(paramParcelable.getSuperState());
-        this.j = paramParcelable.a;
+        PagerSlidingTabStrip.SavedState savedState = (PagerSlidingTabStrip.SavedState)paramParcelable;
+        super.onRestoreInstanceState(savedState.getSuperState());
+        this.j = savedState.a;
         requestLayout();
     }
 
