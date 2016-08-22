@@ -110,7 +110,7 @@ public class HomeProductHeadView extends LinearLayout {
             if ((!this.mInLoading) && (!this.mHasData))
             {
                 this.mInLoading = true;
-                ////initNextPageLoader();
+                initNextPageLoader();
             }
             try
             {
