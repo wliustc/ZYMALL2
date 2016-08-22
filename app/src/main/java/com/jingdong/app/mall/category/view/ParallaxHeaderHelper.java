@@ -9,6 +9,8 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 
 import com.jingdong.common.deeplinkhelper._B;
+import com.zy.app.mall.category.adapter.ScrollTabHolderPagerAdapter;
+import com.zy.app.mall.category.view.NestedViewPager;
 
 /**
  * Created by robin on 16-8-22.
@@ -168,11 +170,11 @@ public class ParallaxHeaderHelper implements ViewPager.OnPageChangeListener, Nes
         }
         label70: for (Object localObject = (i)((SparseArrayCompat)localObject).valueAt(paramInt1); b; localObject = (i)((SparseArrayCompat)localObject).valueAt(paramInt1 + 1))
         {
-            ((i)localObject).b(this.d.getHeight() - this.l);
+            ((ScrollTabHolder._I)localObject).b(this.d.getHeight() - this.l);
             this.d.postInvalidate();
             return;
         }
-        ((i)localObject).b((int)(this.d.getHeight() + this.d.getTranslationY()));
+        ((ScrollTabHolder._I)localObject).b((int)(this.d.getHeight() + this.d.getTranslationY()));
     }
 
     public void onPageSelected(int paramInt)
@@ -182,7 +184,7 @@ public class ParallaxHeaderHelper implements ViewPager.OnPageChangeListener, Nes
             this.n.a(paramInt, a);
             a = 1;
         }
-        i locali = (i)this.j.a().valueAt(paramInt);
+        ScrollTabHolder._I locali = (ScrollTabHolder._I)this.j.a().valueAt(paramInt);
         if (locali != null)
         {
             if (b)

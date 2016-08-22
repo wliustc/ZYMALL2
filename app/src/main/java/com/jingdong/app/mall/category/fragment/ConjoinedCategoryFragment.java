@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.jingdong.app.mall.category.view.NestedViewPager;
 import com.jingdong.app.mall.category.view.ParallaxHeaderHelper;
 import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.category.JDNewCategoryFragment;
@@ -92,17 +94,16 @@ public class ConjoinedCategoryFragment extends BaseFragment implements NestedOrd
 
     public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
     {
-        paramLayoutInflater = paramLayoutInflater.inflate(2130903318, paramViewGroup, false);
+        this.rootView = paramLayoutInflater.inflate(2130903318, paramViewGroup, false);   //2130903318
         this.i = new ParallaxHeaderHelper();
-        this.i.a(paramLayoutInflater.findViewById(2131165802), paramLayoutInflater.getResources().getDimensionPixelSize(2131035570));
-        this.g = ((ViewPager)paramLayoutInflater.findViewById(2131165258));
+        this.i.a(this.rootView.findViewById(2131165802), this.rootView.getResources().getDimensionPixelSize(2131035570));   //2131165802    //2131035570
+        this.g = ((ViewPager)this.rootView.findViewById(2131165258)); //2131165258
         this.i.a((NestedViewPager)this.g, new ConjoinedCategoryFragment.PagerAdapter(this, getChildFragmentManager()));
-        this.i.a((PagerSlidingTabStrip)paramLayoutInflater.findViewById(2131166626), paramLayoutInflater.getResources().getDimensionPixelSize(2131035875), true);
-        this.i.a((TextView)paramLayoutInflater.findViewById(2131166627));
-        this.h = ((ImageView)paramLayoutInflater.findViewById(2131166625));
+        this.i.a((PagerSlidingTabStrip)this.rootView.findViewById(2131166626), this.rootView.getResources().getDimensionPixelSize(2131035875), true);   //2131166626    //2131035875
+        this.i.a((TextView)this.rootView.findViewById(2131166627));   //2131166627
+        this.h = ((ImageView)this.rootView.findViewById(2131166625)); //2131166625
         this.i.a(this);
-        this.rootView = paramLayoutInflater;
-        return paramLayoutInflater;
+        return this.rootView;
     }
 
     public View onCreateViews(LayoutInflater paramLayoutInflater, Bundle paramBundle)
