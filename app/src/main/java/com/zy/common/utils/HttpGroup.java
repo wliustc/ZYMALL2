@@ -125,6 +125,19 @@ public abstract class HttpGroup implements IDestroyListener {
     }
 
     public static class HttpSetting {
+        public static final int CACHE_MODE_ASSETS = 3;
+        public static final int CACHE_MODE_AUTO = 0;
+        public static final int CACHE_MODE_BOTH = 4;
+        public static final int CACHE_MODE_ONLY_CACHE = 1;
+        public static final int CACHE_MODE_ONLY_NET = 2;
+        public static final int EFFECT_DEFAULT = 1;
+        public static final int EFFECT_NO = 0;
+        public static final int EFFECT_STATE_NO = 0;
+        public static final int EFFECT_STATE_YES = 1;
+        public static final int ERROR_DIALOG_TYPE_BACK_RETRY = 2;
+        public static final int ERROR_DIALOG_TYPE_DEFAULT = 0;
+        public static final int ERROR_DIALOG_TYPE_ONLY_CANCEL = 1;
+        public static final int ERROR_DIALOG_TYPE_SETUP_CANCEL = 3;
         private String functionId;
         private JSONObject jsonParams;
         private ListViewNextPageLoader listener;
@@ -136,6 +149,8 @@ public abstract class HttpGroup implements IDestroyListener {
         private boolean localFileCache;
         private long localFileCacheTime;
         private String url;
+        private int bussinessId = -1;
+        private int cacheMode = 0;
         private long connectTimeout;
         private long readTimeout;
         private OnErrorListener onErrorListener;
@@ -217,6 +232,14 @@ public abstract class HttpGroup implements IDestroyListener {
 
         public void setReadTimeout(long readTimeout) {
             this.readTimeout = readTimeout;
+        }
+
+        public void setCacheMode(int cacheMode) {
+            this.cacheMode = cacheMode;
+        }
+
+        public void setBussinessId(int bussinessId) {
+            this.bussinessId = bussinessId;
         }
     }
 

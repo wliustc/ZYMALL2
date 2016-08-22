@@ -29,11 +29,11 @@ public class ExceptionReporter {
     private static final String WEBVIEW_ERROR_HOST_ERRCODE = "904";
     private HttpGroup.HttpSetting mHttpSetting;
 
-//    public ExceptionReporter(HttpGroup.HttpSetting paramHttpSetting)
-//    {
-//        attachHttpSetting(paramHttpSetting);
-//    }
-//
+    public ExceptionReporter(HttpGroup.HttpSetting paramHttpSetting)
+    {
+        attachHttpSetting(paramHttpSetting);
+    }
+
 //    private static byte[] compressException(String paramString)
 //            throws IOException
 //    {
@@ -351,8 +351,8 @@ public class ExceptionReporter {
         this.mHttpSetting = paramHttpSetting;
     }
 
-//    public void reportHttpBusinessException(HttpGroup.HttpResponse paramHttpResponse)
-//    {
+    public void reportHttpBusinessException(HttpGroup.HttpResponse paramHttpResponse)
+    {
 //        if (this.mHttpSetting == null)
 //            return;
 //        String str1;
@@ -402,5 +402,5 @@ public class ExceptionReporter {
 //            label271: int i = paramHttpResponse.getCode();
 //            paramHttpResponse = Integer.valueOf(i);
 //        }
-//    }
+    }
 }

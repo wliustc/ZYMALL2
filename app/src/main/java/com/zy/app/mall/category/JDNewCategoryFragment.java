@@ -748,7 +748,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.j = paramString;
     }
 
-    static void synthetic_a(final JDNewCategoryFragment paramJDNewCategoryFragment, boolean paramBoolean1, boolean paramBoolean2)
+    static void synthetic_a(final JDNewCategoryFragment paramJDNewCategoryFragment, final boolean paramBoolean1, final boolean paramBoolean2)
     {
         paramJDNewCategoryFragment.post(new Runnable(){//d(paramJDNewCategoryFragment)
             @Override
@@ -760,7 +760,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                     paramJDNewCategoryFragment.O.setBackgroundResource(R.drawable.category_kongbai);//2130838448
             }
         });
-        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+        final HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
         localHttpSetting.setListener(new HttpGroup.OnCommonListener(){// r(paramJDNewCategoryFragment, new ExceptionReporter(localHttpSetting), paramBoolean1, paramBoolean2)
             private void a()
             {
@@ -786,41 +786,47 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
 
             @Override
             public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
-                if (!this.c)
+                if (!paramBoolean2)//this.c //if-nez v0, :cond_2
                 {
-                    if (!this.d)
-                        JDNewCategoryFragment.a(this.a, true, true);
-                    JDNewCategoryFragment.f(this.a, paramHttpResponse.getJSONObject().optString("catalogSortEventId"));
-                    JDNewCategoryFragment.g(this.a, paramHttpResponse.getJSONObject().optString("catalogTopNum"));
-                    JDNewCategoryFragment.a(this.a, paramHttpResponse.getJSONObject().getJSONArrayOrNull("catelogyList"));
-                    if (!TextUtils.isEmpty(JDNewCategoryFragment.w(this.a)))
-                        break label142;
-                    JDNewCategoryFragment.h(this.a, "null");
-                    JDNewCategoryFragment.b(this.a, 0);
-                }
-                while ((JDNewCategoryFragment.x(this.a) == null) || (JDNewCategoryFragment.x(this.a).length() == 0))
-                {
-                    this.b.reportHttpBusinessException(paramHttpResponse);
-                    a();
-                    return;
-                    label142: JDNewCategoryFragment.b(this.a, Integer.parseInt(JDNewCategoryFragment.w(this.a)));
-                    JDNewCategoryFragment.h(this.a, Catelogy.getCmsTotalCid(Catelogy.toList(JDNewCategoryFragment.x(this.a), 0), JDNewCategoryFragment.y(this.a)));
-                }
-                paramJDNewCategoryFragment.post(new Runnable(){//s(this)
-                    @Override
-                    public void run() {
-                        JDNewCategoryFragment.i(this.a.a).clear();
-                        JDNewCategoryFragment.i(this.a.a).addAll(Catelogy.toList(JDNewCategoryFragment.x(this.a.a), 0));
-                        if (!JDNewCategoryFragment.d(this.a.a))
-                        {
-                            JDNewCategoryFragment.z(this.a.a);
-                            JDNewCategoryFragment.o(this.a.a).notifyDataSetChanged();
-                            return;
-                        }
-                        paramJDNewCategoryFragment.b();
-                        JDNewCategoryFragment.o(this.a.a).notifyDataSetChanged();
+                    if (!paramBoolean1)//this.d //if-nez v0, :cond_0
+                        JDNewCategoryFragment.synthetic_a(paramJDNewCategoryFragment, true, true);
+                    paramJDNewCategoryFragment.D = paramHttpResponse.getJSONObject().optString("catalogSortEventId");
+                    paramJDNewCategoryFragment.E = paramHttpResponse.getJSONObject().optString("catalogTopNum");
+                    paramJDNewCategoryFragment.C = paramHttpResponse.getJSONObject().getJSONArrayOrNull("catelogyList");
+                    if (TextUtils.isEmpty(paramJDNewCategoryFragment.E)) {//if-eqz v0, :cond_3
+                        paramJDNewCategoryFragment.G =  "null";
+                        paramJDNewCategoryFragment.F = 0;
+                    }else{
+                        paramJDNewCategoryFragment.F = Integer.parseInt(paramJDNewCategoryFragment.E);
+                        paramJDNewCategoryFragment.G = Catelogy.getCmsTotalCid(Catelogy.toList(paramJDNewCategoryFragment.C, 0), paramJDNewCategoryFragment.F);
                     }
-                });
+
+                    if ((paramJDNewCategoryFragment.C == null) || (paramJDNewCategoryFragment.C.length() == 0))
+                    {
+                        new ExceptionReporter(localHttpSetting).reportHttpBusinessException(paramHttpResponse);
+                        a();
+                    }else{
+                        paramJDNewCategoryFragment.post(new Runnable(){//s(this)
+                            @Override
+                            public void run() {
+                                paramJDNewCategoryFragment.A.clear();
+                                paramJDNewCategoryFragment.A.addAll(Catelogy.toList(paramJDNewCategoryFragment.C, 0));
+                                if (!paramJDNewCategoryFragment.v)
+                                {
+                                    paramJDNewCategoryFragment.synthetic_z(paramJDNewCategoryFragment);
+                                    paramJDNewCategoryFragment.t.notifyDataSetChanged();
+                                }else {
+                                    paramJDNewCategoryFragment.b();
+                                    paramJDNewCategoryFragment.t.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                    }
+
+                }
+                //:cond_2
+                //:goto_1
+                return;
             }
         });
         localHttpSetting.setFunctionId("entranceCatalog");
@@ -829,12 +835,12 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         {
             localHttpSetting.setLocalFileCache(true);
             localHttpSetting.setLocalFileCacheTime(86400000L);
-            if (!paramBoolean2)
-                break label118;
-            localHttpSetting.setCacheMode(4);
+            if (paramBoolean2)//if-eqz p2, :cond_2
+                localHttpSetting.setCacheMode(4);
+            else
+                localHttpSetting.setCacheMode(0);
         }
-        while (true)
-        {
+
             localHttpSetting.setBussinessId(300);
             if (paramJDNewCategoryFragment.U)
             {
@@ -843,8 +849,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             }
             paramJDNewCategoryFragment.P.getHttpGroupaAsynPool().add(localHttpSetting);
             return;
-            label118: localHttpSetting.setCacheMode(0);
-        }
+
     }
 
     static boolean synthetic_q(JDNewCategoryFragment paramJDNewCategoryFragment)
@@ -854,6 +859,14 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             return true;
         paramJDNewCategoryFragment.x = l1;
         return false;
+    }
+
+    static void synthetic_z(JDNewCategoryFragment paramJDNewCategoryFragment)
+    {
+        paramJDNewCategoryFragment.H = ((Catelogy)paramJDNewCategoryFragment.A.get(0)).getcId();
+        paramJDNewCategoryFragment.o = ((Catelogy)paramJDNewCategoryFragment.A.get(0)).getcId();
+        paramJDNewCategoryFragment.a(paramJDNewCategoryFragment.o);
+        paramJDNewCategoryFragment.S = true;
     }
 
     public static class JDNewCategoryTM extends JDTaskModule
