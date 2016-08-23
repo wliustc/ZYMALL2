@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.category.fragment;
+package com.zy.app.mall.category.fragment;
 
 import android.os.Bundle;
 import android.view.KeyEvent;

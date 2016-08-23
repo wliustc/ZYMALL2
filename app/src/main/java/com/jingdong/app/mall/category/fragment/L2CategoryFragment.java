@@ -14,6 +14,7 @@ import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.URLParamMap;
 import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.fragment.CategoryFragment;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.HttpGroup;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by Robin on 2016/8/20.
  */
-public class L2CategoryFragment extends CategoryFragment{
+public class L2CategoryFragment extends CategoryFragment {
     private long A = -1L;
     private String B = "";
     private ViewGroup C;
