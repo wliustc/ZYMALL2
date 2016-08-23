@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
-import com.jingdong.app.mall.category.fragment.ScrollTabHolderFragment;
 import com.jingdong.app.mall.category.view.ScrollTabHolder;
+import com.zy.app.mall.category.fragment.ScrollTabHolderFragment;
 
 /**
  * Created by robin on 16-8-22.

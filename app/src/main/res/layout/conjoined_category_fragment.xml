@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:strip="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.jingdong.app.mall.category.view.NestedViewPager
+        android:id="@+id/pager"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_height"
+        android:layout_gravity="top"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/a6_"
+        android:paddingRight="@dimen/a6_"
+        android:paddingTop="@dimen/a6g">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imageView"
+            android:layout_width="fill_parent"
+            android:layout_height="85.0dip"
+            android:background="@drawable/bg_pd_shop_icon"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/k7">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/a2x"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="2.0dip"
+                android:background="@color/ac" />
+
+            <com.jingdong.app.mall.category.view.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="35.0dip"
+                android:layout_centerInParent="true"
+                android:background="@android:color/transparent"
+                android:textColor="@color/b"
+                android:textSize="13.0sp"
+                strip:pstsDividerColor="@android:color/transparent"
+                strip:pstsIndicatorColor="@color/xo"
+                strip:pstsIndicatorHeight="2.0dip"
+                strip:pstsShouldExpand="true"
+                strip:pstsTabBackground="@android:color/transparent"
+                strip:pstsTabPaddingLeftRight="@dimen/a6d"
+                strip:pstsUnderlineHeight="0.0dip"
+                strip:selectedTabTextColor="@color/xo" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textColor="#ffff0000"
+        android:visibility="gone" />
+</FrameLayout>

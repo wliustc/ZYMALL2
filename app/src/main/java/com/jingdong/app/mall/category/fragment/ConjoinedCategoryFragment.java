@@ -1,6 +1,7 @@
 package com.jingdong.app.mall.category.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -9,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jingdong.app.mall.category.view.NestedViewPager;
 import com.jingdong.app.mall.category.view.ParallaxHeaderHelper;
 import com.jingdong.common.BaseActivity;
+import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.adapter.ScrollTabHolderPagerAdapter;
+import com.zy.app.mall.category.fragment.ScrollTabHolderFragment;
+import com.zy.app.mall.category.view.PagerSlidingTabStrip;
 import com.zy.cleanmvp.ui.BaseFragment;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.JDMtaUtils;
@@ -94,14 +98,14 @@ public class ConjoinedCategoryFragment extends BaseFragment implements NestedOrd
 
     public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle)
     {
-        this.rootView = paramLayoutInflater.inflate(2130903318, paramViewGroup, false);   //2130903318
+        this.rootView = paramLayoutInflater.inflate(R.layout.conjoined_category_fragment, paramViewGroup, false);   //2130903318
         this.i = new ParallaxHeaderHelper();
-        this.i.a(this.rootView.findViewById(2131165802), this.rootView.getResources().getDimensionPixelSize(2131035570));   //2131165802    //2131035570
-        this.g = ((ViewPager)this.rootView.findViewById(2131165258)); //2131165258
+        this.i.a(this.rootView.findViewById(R.id.header), this.rootView.getResources().getDimensionPixelSize(2131035570));   //2131165802    //2131035570
+        this.g = ((ViewPager)this.rootView.findViewById(R.id.pager)); //2131165258
         this.i.a((NestedViewPager)this.g, new ConjoinedCategoryFragment.PagerAdapter(this, getChildFragmentManager()));
-        this.i.a((PagerSlidingTabStrip)this.rootView.findViewById(2131166626), this.rootView.getResources().getDimensionPixelSize(2131035875), true);   //2131166626    //2131035875
-        this.i.a((TextView)this.rootView.findViewById(2131166627));   //2131166627
-        this.h = ((ImageView)this.rootView.findViewById(2131166625)); //2131166625
+        this.i.a((PagerSlidingTabStrip)this.rootView.findViewById(R.id.tabs), this.rootView.getResources().getDimensionPixelSize(2131035875), true);   //2131166626    //2131035875
+        this.i.a((TextView)this.rootView.findViewById(R.id.info));   //2131166627
+        this.h = ((ImageView)this.rootView.findViewById(R.id.imageView)); //2131166625
         this.i.a(this);
         return this.rootView;
     }
@@ -115,6 +119,90 @@ public class ConjoinedCategoryFragment extends BaseFragment implements NestedOrd
     public boolean onKeyDown(int paramInt, KeyEvent paramKeyEvent)
     {
         return false;
+    }
+
+    public class PagerAdapter extends ScrollTabHolderPagerAdapter
+    {
+        private NestedOrdinaryL2CategoryFragment b;
+        private final String[] c = new String[0];
+        private int d = -1;
+
+        public PagerAdapter(ConjoinedCategoryFragment paramConjoinedCategoryFragment, FragmentManager paramFragmentManager)
+        {
+            super(paramFragmentManager);
+        }
+
+        public final ScrollTabHolderFragment a(int paramInt)
+        {
+            Object localObject2 = "";
+            String str2 = "";
+            String str1 = str2;
+            Object localObject1 = localObject2;
+            if (paramInt >= 0)
+            {
+                str1 = str2;
+                localObject1 = localObject2;
+                if (paramInt < getCount())
+                {
+                    Catelogy.MergedCatelogy localMergedCatelogy = (Catelogy.MergedCatelogy)ConjoinedCategoryFragment.a(this.a).get(paramInt);
+                    str1 = str2;
+                    localObject1 = localObject2;
+                    if (localMergedCatelogy != null)
+                    {
+                        localObject1 = localMergedCatelogy.getId();
+                        str1 = localMergedCatelogy.getName();
+                    }
+                }
+            }
+            localObject2 = (NestedOrdinaryL2CategoryFragment)NestedOrdinaryL2CategoryFragment.a((String)localObject1, this.a.c, this.a.a, paramInt);
+            ((NestedOrdinaryL2CategoryFragment)localObject2).a(ConjoinedCategoryFragment.b(this.a));
+            ((NestedOrdinaryL2CategoryFragment)localObject2).a(ConjoinedCategoryFragment.c(this.a));
+            ((NestedOrdinaryL2CategoryFragment)localObject2).a(this.a.d, this.a.e);
+            ((L2CategoryFragment)localObject2).thisActivity = ConjoinedCategoryFragment.d(this.a);
+            ((NestedOrdinaryL2CategoryFragment)localObject2).a((String)localObject1, this.a.c, this.a.a);
+            ((NestedOrdinaryL2CategoryFragment)localObject2).b(str1);
+            paramInt += 1;
+            if ((paramInt >= 0) && (paramInt < getCount()))
+            {
+                localObject1 = (Catelogy.MergedCatelogy)ConjoinedCategoryFragment.a(this.a).get(paramInt);
+                if (localObject1 != null)
+                {
+                    ((NestedOrdinaryL2CategoryFragment)localObject2).c(((Catelogy.MergedCatelogy)localObject1).getName());
+                    ((NestedOrdinaryL2CategoryFragment)localObject2).a(this.a);
+                }
+            }
+            return (ScrollTabHolderFragment)(ScrollTabHolderFragment)localObject2;
+        }
+
+        public final void a(int paramInt, ScrollTabHolderFragment paramScrollTabHolderFragment)
+        {
+            if ((this.d != paramInt) && (paramInt >= 0) && (paramInt < getCount()) && (paramScrollTabHolderFragment != null))
+            {
+                Catelogy.MergedCatelogy localMergedCatelogy = (Catelogy.MergedCatelogy)ConjoinedCategoryFragment.a(this.a).get(paramInt);
+                if (localMergedCatelogy != null)
+                {
+                    ((NestedOrdinaryL2CategoryFragment)paramScrollTabHolderFragment).d(localMergedCatelogy.getId());
+                    if (this.b != null)
+                        this.b.c();
+                    this.b = ((NestedOrdinaryL2CategoryFragment)paramScrollTabHolderFragment);
+                    this.d = paramInt;
+                }
+            }
+        }
+
+        public int getCount()
+        {
+            if (ConjoinedCategoryFragment.a(this.a) != null)
+                return ConjoinedCategoryFragment.a(this.a).size();
+            return 0;
+        }
+
+        public CharSequence getPageTitle(int paramInt)
+        {
+            if (ConjoinedCategoryFragment.a(this.a) != null)
+                return ((Catelogy.MergedCatelogy)ConjoinedCategoryFragment.a(this.a).get(paramInt)).getName();
+            return "";
+        }
     }
 
 }

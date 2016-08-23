@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.category.fragment;
+package com.zy.app.mall.category.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -9,10 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.zy.app.mall.category.fragment.ScrollTabHolderFragment;
+
 /**
  * Created by Robin on 2016/8/20.
  */
-public abstract class ScrollTabHolderListFragment extends ScrollTabHolderFragment{
+public abstract class ScrollTabHolderListFragment extends ScrollTabHolderFragment {
     private static final boolean a = Integer.valueOf(Build.VERSION.SDK_INT).intValue() < 11 ? true: false;
     private boolean b = false;
     private boolean c = false;
@@ -38,7 +40,7 @@ public abstract class ScrollTabHolderListFragment extends ScrollTabHolderFragmen
             return;
         FrameLayout localFrameLayout = new FrameLayout(getContext());
         localFrameLayout.setPadding(0, paramInt, 0, 0);
-        localFrameLayout.setBackgroundColor(getResources().getColor(17170445));//17170445
+        localFrameLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));//17170445
         this.p.addHeaderView(localFrameLayout);
     }
 
@@ -75,21 +77,30 @@ public abstract class ScrollTabHolderListFragment extends ScrollTabHolderFragmen
 
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-                if (this.a.o != null)
-                    this.a.o.a(absListView, i, this.a.q);
-                ScrollTabHolderListFragment.a(this.a, absListView);
-                this.a.a(absListView, i, this.a.q);
+                if (ScrollTabHolderListFragment.this.o != null)
+                    ScrollTabHolderListFragment.this.o.a(absListView, i, ScrollTabHolderListFragment.this.q);
+                ScrollTabHolderListFragment.this.synthetic_a(absListView);
+                ScrollTabHolderListFragment.this.a(absListView, i, ScrollTabHolderListFragment.this.q);
             }
         });
         if (a)
             this.p.setOnTouchListener(new View.OnTouchListener(){//ag(this)
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (this.a.o != null)
-                        this.a.o.a(this.a.p, 0, this.a.q);
+                    if (ScrollTabHolderListFragment.this.o != null)
+                        ScrollTabHolderListFragment.this.o.a(ScrollTabHolderListFragment.this.p, 0, ScrollTabHolderListFragment.this.q);
                     return false;
                 }
             });
+    }
+
+    private void synthetic_a(AbsListView paramAbsListView)
+    {
+        View localView = paramAbsListView.getChildAt(0);
+        if (localView == null)
+            return;
+        this.e = localView.getTop();
+        this.d = paramAbsListView.getFirstVisiblePosition();
     }
 
     public void onDestroyView()

@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.category.fragment;
+package com.zy.app.mall.category.fragment;
 
 import com.jingdong.app.mall.category.view.ScrollTabHolder;
 import com.zy.cleanmvp.ui.BaseFragment;

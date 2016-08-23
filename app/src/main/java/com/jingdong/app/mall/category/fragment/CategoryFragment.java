@@ -9,11 +9,12 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 
 import com.zy.app.mall.R;
+import com.zy.app.mall.category.fragment.ScrollTabHolderListFragment;
 
 /**
  * Created by Robin on 2016/8/20.
  */
-public class CategoryFragment extends ScrollTabHolderListFragment{
+public class CategoryFragment extends ScrollTabHolderListFragment {
     protected BaseAdapter a = null;
     protected int b;
     private View c = null;
@@ -64,8 +65,8 @@ public class CategoryFragment extends ScrollTabHolderListFragment{
         this.c.setOnClickListener(new View.OnClickListener(){//a(this)
             @Override
             public void onClick(View view) {
-                if (this.a.p.getSelectedItemPosition() != 0)
-                    this.a.p.setSelection(0);
+                if (CategoryFragment.this.p.getSelectedItemPosition() != 0)
+                    CategoryFragment.this.p.setSelection(0);
             }
         });
         return view;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/q6"
+    android:id="@+id/header"
     android:layout_width="fill_parent"
     android:layout_height="49.0dip"
     android:background="@drawable/common_title_background"
