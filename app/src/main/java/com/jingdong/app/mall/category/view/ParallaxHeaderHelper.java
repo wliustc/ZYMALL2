@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.jingdong.common.deeplinkhelper._B;
 import com.zy.app.mall.category.adapter.ScrollTabHolderPagerAdapter;
 import com.zy.app.mall.category.view.NestedViewPager;
+import com.zy.app.mall.category.view.PagerSlidingTabStrip;
 
 /**
  * Created by robin on 16-8-22.
@@ -48,7 +49,7 @@ public class ParallaxHeaderHelper implements ViewPager.OnPageChangeListener, Nes
 
     public final void a()
     {
-        this.e.a(this.i);
+        this.e.setViewPager(this.i);
     }
 
     public final void a(View paramView, int paramInt)
@@ -141,7 +142,7 @@ public class ParallaxHeaderHelper implements ViewPager.OnPageChangeListener, Nes
     public final void a(PagerSlidingTabStrip paramPagerSlidingTabStrip, int paramInt, boolean paramBoolean)
     {
         this.e = paramPagerSlidingTabStrip;
-        this.e.a = this;
+        this.e.delegatePageListener = this;
         this.h = (-paramInt);
         this.f = true;
     }

@@ -1028,4 +1028,6 @@
     <color name="a1l">#ff6679b3</color>
     <color name="a1m">#ff5da8ed</color>
     <color name="a1n">#ffffff00</color>
+
+    <color name="background_tab_pressed">#6633B5E5</color>
 </resources>

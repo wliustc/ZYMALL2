@@ -1,8 +1,19 @@
 package com.jingdong.app.mall.category.fragment;
 
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
+import com.jingdong.common.config.Configuration;
+import com.jingdong.common.utils.ExceptionReporter;
+import com.jingdong.common.utils.JSONObjectProxy;
+import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.common.entity.Catelogy;
+import com.zy.common.utils.HttpGroup;
+import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
 
 import java.util.ArrayList;
@@ -335,8 +346,8 @@ public class OrdinaryL2CategoryFragment extends L2CategoryFragment{
         this.c = paramBundle.getInt("current_item");
     }
 
-    public abstract interface _U
+    public interface _U
     {
-        public abstract void a(List<String> paramList);
+        public void a(List<String> paramList);
     }
 }

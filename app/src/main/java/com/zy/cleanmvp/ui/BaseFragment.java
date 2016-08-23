@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -284,7 +285,7 @@ public abstract class BaseFragment extends Fragment {
         this.shop_id = paramString;
     }
 
-    public String getFragmentString(int paramInt)
+    public String getFragmentString(@StringRes int paramInt)
     {
         if (isAdded())
             return getString(paramInt);
