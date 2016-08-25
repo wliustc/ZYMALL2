@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by robin on 16-8-19.
  */
+//c
 public class RightListColumn extends RightColumnBase{
     private List<Catelogy> b = new ArrayList();
     private int c = 3;

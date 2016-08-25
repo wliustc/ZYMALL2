@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.jingdong.app.mall.category.adapter.RightListAdapter;
+import com.jingdong.app.mall.utils.ui.view.CarouselFigureView;
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.URLParamMap;
 import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.b.RightColumnBase;
+import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.fragment.CategoryFragment;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.DPIUtil;
@@ -24,6 +28,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,14 +43,14 @@ public class L2CategoryFragment extends CategoryFragment {
     protected int c = -1;
     protected String d;
     protected String e = null;
-    protected List<com.jingdong.app.mall.category.b.b> f = new ArrayList();
-    protected com.jingdong.app.mall.category.adapter.e g;
+    protected List<RightColumnBase> f = new ArrayList();
+    protected RightListAdapter g;
     protected View h;
     protected boolean i = true;
     protected View j;
     protected ImageView k;
     protected View l;
-    protected HashMap<String, ArrayList<com.jingdong.app.mall.category.b.b>> m = null;
+    protected HashMap<String, ArrayList<RightColumnBase>> m = null;
     protected String n;
     private String r = "-1";
     private String s = "";
@@ -56,27 +62,27 @@ public class L2CategoryFragment extends CategoryFragment {
     private String y = "";
     private long z = 0L;
 
-    protected static List<String> a(List<com.jingdong.app.mall.category.b.b> paramList)
+    protected static List<String> a(List<RightColumnBase> paramList)
     {
-        ArrayList localArrayList = new ArrayList();
-        paramList = paramList.iterator();
-        while (paramList.hasNext())
+        ArrayList<String> localArrayList = new ArrayList();
+        Iterator<RightColumnBase> iterator = paramList.iterator();
+        while (iterator.hasNext())
         {
-            Object localObject = (com.jingdong.app.mall.category.b.b)paramList.next();
-            if (((com.jingdong.app.mall.category.b.b)localObject).a != 1)
+            Object localObject = (RightListColumn)iterator.next();
+            if (((RightColumnBase)localObject).a != 1)
                 continue;
-            localObject = (com.jingdong.app.mall.category.b.c)localObject;
-            int i2 = ((com.jingdong.app.mall.category.b.c)localObject).c();
-            int i1 = 0;
-            while (i1 < i2)
+            localObject = (RightListColumn)localObject;
+            int i2 = ((RightListColumn)localObject).c();
+
+            for (int i1 = 0; i1 < i2; i1++)
             {
-                String str = ((com.jingdong.app.mall.category.b.c)localObject).a(i1).getImgUrl();
+                String str = ((RightListColumn)localObject).a(i1).getImgUrl();
                 if (!TextUtils.isEmpty(str))
                     localArrayList.add(str);
-                i1 += 1;
+
             }
         }
-        return (List<String>)localArrayList;
+        return localArrayList;
     }
 
     protected final BaseAdapter a()
@@ -111,33 +117,26 @@ public class L2CategoryFragment extends CategoryFragment {
     protected final void a(Catelogy paramCatelogy, View paramView)
     {
         if (paramCatelogy == null);
-        Object localObject1;
-        label116: label379:
-        do
-        {
-            while (true)
-            {
                 return;
-                Object localObject2;
+        Object localObject1, localObject2;
                 int i1;
                 int i2;
-                if ((this.m != null) && (this.m.containsKey(paramCatelogy.getLevel2Cid())))
-                {
-                    localObject1 = (ArrayList)this.m.get(paramCatelogy.getLevel2Cid());
-                    localObject2 = paramCatelogy.getAction();
-                    localObject4 = paramCatelogy.getLevel2Cid();
+        if ((this.m != null) && (this.m.containsKey(paramCatelogy.getLevel2Cid()))){//if-eqz v0, :cond_2
+                    localObject1 = (ArrayList)this.m.get(paramCatelogy.getLevel2Cid());//v8
+                    localObject2 = paramCatelogy.getAction();//v4
+                    localObject4 = paramCatelogy.getLevel2Cid();//v5
                     if ((this.f == null) || (this.f.size() <= 0))
                         break label379;
                     i1 = 0;
                     if (i1 >= this.f.size())
                         break label379;
-                    localObject5 = (com.jingdong.app.mall.category.b.b)this.f.get(i1);
-                    if (!(localObject5 instanceof com.jingdong.app.mall.category.b.c))
+                    localObject5 = (RightColumnBase)this.f.get(i1);
+                    if (!(localObject5 instanceof RightListColumn))
                         break label370;
                     i2 = 0;
-                    if (i2 >= ((com.jingdong.app.mall.category.b.c)localObject5).a().size())
+                    if (i2 >= ((RightListColumn)localObject5).a().size())
                         break label370;
-                    Catelogy localCatelogy = ((com.jingdong.app.mall.category.b.c)localObject5).a(i2);
+                    Catelogy localCatelogy = ((RightListColumn)localObject5).a(i2);
                     if ((!((String)localObject2).equals(localCatelogy.getAction())) || (!((String)localObject4).equals(localCatelogy.getLevel2Cid())))
                         break label361;
                     if (i1 != -1)
@@ -145,11 +144,11 @@ public class L2CategoryFragment extends CategoryFragment {
                         if (!"chSpreadAllData".equals(paramCatelogy.getAction()))
                             break label385;
                         JDMtaUtils.sendCommonData(getActivity(), "MCategory_MoreSCategory", "", "onClick", JDNewCategoryFragment.class.getName(), paramCatelogy.getLevel2Cid(), "", "");
-                        paramView = ((com.jingdong.app.mall.category.b.c)this.f.get(i1)).a();
+                        paramView = ((RightListColumn)this.f.get(i1)).a();
                         paramView.remove(paramView.size() - 1);
                         if ((localObject1 != null) && (((ArrayList)localObject1).size() > 0))
                         {
-                            paramView.add(((com.jingdong.app.mall.category.b.c)((ArrayList)localObject1).get(0)).a(0));
+                            paramView.add(((RightListColumn)((ArrayList)localObject1).get(0)).a(0));
                             paramView = new ArrayList();
                             paramView.addAll((Collection)localObject1);
                             paramView.remove(0);
@@ -190,7 +189,7 @@ public class L2CategoryFragment extends CategoryFragment {
                         if ((localObject1 == null) || (((ArrayList)localObject1).size() <= 0))
                             continue;
                         i2 = i1 - (((ArrayList)localObject1).size() - 1);
-                        localObject4 = ((com.jingdong.app.mall.category.b.c)this.f.get(i2)).a();
+                        localObject4 = ((RightListColumn)this.f.get(i2)).a();
                         ((List)localObject4).remove(2);
                         ((List)localObject4).add(localObject2);
                         localObject2 = new ArrayList();
@@ -213,7 +212,7 @@ public class L2CategoryFragment extends CategoryFragment {
                     }
                     if (!"enPackUpAllData".equals(paramCatelogy.getAction()))
                         continue;
-                    paramView = new com.jingdong.app.mall.category.b.c();
+                    paramView = new RightListColumn();
                     paramView.b(1);
                     paramView.a = 2;
                     localObject2 = new Catelogy();
@@ -384,10 +383,10 @@ public class L2CategoryFragment extends CategoryFragment {
                 bp.a(this.thisActivity, paramView, false);
                 a(paramCatelogy, "");
                 return;
-            }
+
             paramView = paramCatelogy.getcId();
             localObject1 = paramCatelogy.getName();
-        }
+
         while (TextUtils.isEmpty(paramView));
         label172: label361: label370: Object localObject3 = paramCatelogy.getLevel2Cid();
         label385: label848: Object localObject4 = new Intent(this.thisActivity, ProductListActivity.class);
