@@ -12,6 +12,6 @@
         <attr name="pstsTabBackground" format="reference" />
         <attr name="pstsShouldExpand" format="boolean" />
         <attr name="pstsTextAllCaps" format="boolean" />
-        <attr name="b" format="color" />
+        <attr name="selectedTabTextColor" format="color" />
     </declare-styleable>
 </resources>

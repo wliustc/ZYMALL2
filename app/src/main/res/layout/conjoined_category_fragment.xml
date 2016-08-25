@@ -39,7 +39,7 @@
                 android:layout_marginBottom="2.0dip"
                 android:background="@color/ac" />
 
-            <com.jingdong.app.mall.category.view.PagerSlidingTabStrip
+            <com.zy.app.mall.category.view.PagerSlidingTabStrip
                 android:id="@+id/tabs"
                 android:layout_width="wrap_content"
                 android:layout_height="35.0dip"
