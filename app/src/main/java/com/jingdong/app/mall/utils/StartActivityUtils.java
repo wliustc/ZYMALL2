@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.jingdong.app.mall.product.ProductDetailActivity;
 import com.jingdong.common.BaseActivity;
 import com.jingdong.common.jdtravel.FlightSearchActivity;
+import com.jingdong.common.movie.main.MovieActivity;
 import com.zy.app.mall.utils.MyActivity;
 import com.zy.common.entity.SourceEntity;
 
@@ -230,16 +231,16 @@ public class StartActivityUtils {
 //        localIntent.putExtra("source", paramSourceEntity);
 //        paramActivity.startActivity(localIntent);
 //    }
-//
-//    public static void b(BaseActivity paramBaseActivity)
-//    {
-//        if ((paramBaseActivity == null) || ((paramBaseActivity instanceof MovieActivity)))
-//            return;
-//        Intent localIntent = new Intent(paramBaseActivity.getApplicationContext(), MovieActivity.class);
-//        localIntent.putExtra("com.360buy:clearTopFlag", true);
-//        paramBaseActivity.startActivityInFrameWithNoNavigation(localIntent);
-//    }
-//
+
+    public static void b(BaseActivity paramBaseActivity)
+    {
+        if ((paramBaseActivity == null) || ((paramBaseActivity instanceof MovieActivity)))
+            return;
+        Intent localIntent = new Intent(paramBaseActivity.getApplicationContext(), MovieActivity.class);
+        localIntent.putExtra("com.360buy:clearTopFlag", true);
+        paramBaseActivity.startActivityInFrameWithNoNavigation(localIntent);
+    }
+
 //    public static void b(BaseActivity paramBaseActivity, int paramInt)
 //    {
 //        if (paramBaseActivity == null);

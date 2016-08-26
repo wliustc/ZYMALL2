@@ -1,4 +1,4 @@
-package com.zy.common.utils;
+package com.jingdong.common.utils;
 
 import android.view.ViewGroup;
 
@@ -17,6 +17,10 @@ import java.util.Map;
  * Created by Robin on 2016/4/14.
  */
 public abstract class HttpGroup implements IDestroyListener {
+
+    public static String getCookie() {
+        return null;
+    }
 
     public HttpRequest add(HttpSetting localHttpSetting) {
         return new HttpRequest();

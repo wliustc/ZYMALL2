@@ -13,7 +13,10 @@ import android.widget.ImageView;
 
 import com.jingdong.app.mall.category.adapter.RightListAdapter;
 import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
+import com.jingdong.app.mall.utils.JDEbookUtil;
 import com.jingdong.app.mall.utils.LoginUser;
+import com.jingdong.app.mall.utils.StartActivityUtils;
+import com.jingdong.app.mall.utils.ui.view.CarouseFigureImagePagerAdapter;
 import com.jingdong.app.mall.utils.ui.view.CarouselFigureView;
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.jdtravel.FlightSearchActivity;
@@ -22,16 +25,18 @@ import com.jingdong.common.phonecharge.PhoneChargeActivity;
 import com.jingdong.common.ranking.activity.RankingListActivity;
 import com.jingdong.common.sample.jshop.JshopMainShopActivity;
 import com.jingdong.common.utils.ExceptionReporter;
+import com.jingdong.common.utils.HttpGroup;
+import com.jingdong.common.utils.JDGameUtil;
 import com.jingdong.common.utils.URLParamMap;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.fragment.CategoryFragment;
+import com.zy.app.util.image.JDDisplayImageOptions;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.utils.CommonUtil;
 import com.zy.common.utils.DPIUtil;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JDMtaUtils;
 
 import org.json.JSONException;
@@ -132,42 +137,40 @@ public class L2CategoryFragment extends CategoryFragment {
         int i1 = 0, i2 = 0;
         if ((this.m != null) && (this.m.containsKey(paramCatelogy.getLevel2Cid()))) {//if-eqz v0, :cond_2
             list = (ArrayList) this.m.get(paramCatelogy.getLevel2Cid());//v8
-            localObject2 = paramCatelogy.getAction();//v4
-            localObject4 = paramCatelogy.getLevel2Cid();//v5
+            String action = paramCatelogy.getAction();//v4
+            String cid = paramCatelogy.getLevel2Cid();//v5
             if ((this.f != null) || (this.f.size() > 0)) {//if-lez v0, :cond_5
                 //v2
                 //:goto_1
-                for (i1 = 0; i1 < this.f.size(); i1++) {//if-ge v2, v0, :cond_5
-                    localObject5 = (RightColumnBase) this.f.get(i1);
-                    if (localObject5 instanceof RightListColumn) {//if-eqz v1, :cond_4
-                        i2 = 0;//v3
+                labe:for (i1 = 0; i1 < this.f.size(); i1++) {//if-ge v2, v0, :cond_5
+                    RightColumnBase rightColumn = (RightColumnBase) this.f.get(i1);
+                    if (rightColumn instanceof RightListColumn) {//if-eqz v1, :cond_4
+                        //v3
                         //:goto_2
-                        while (i2 < ((RightListColumn) localObject5).a().size()) {//if-ge v3, v1, :cond_4
-                            Catelogy localCatelogy = ((RightListColumn) localObject5).a(i2);
-                            if ((((String) localObject2).equals(localCatelogy.getAction())) && (((String) localObject4).equals(localCatelogy.getLevel2Cid()))) {//if-eqz v1, :cond_3
-                                move v9, v2
-                                //goto :goto_3
+                        for (i2 = 0; i2 < ((RightListColumn) rightColumn).a().size(); i2++) {//if-ge v3, v1, :cond_4
+                            Catelogy localCatelogy = ((RightListColumn) rightColumn).a(i2);
+                            if ((((String) action).equals(localCatelogy.getAction())) && (((String) cid).equals(localCatelogy.getLevel2Cid()))) {//if-eqz v1, :cond_3
+                                break labe;//goto :goto_3
                             }
                             //:cond_3
-                            i2++;
+
                         }
                     }//:cond_4
-
                 }
-            }//:cond_5
-            i1--;
+            }else//:cond_5
+                i1--;
             //:goto_3
             if (i1 != -1) {//if-eq v9, v0, :cond_2
                 if ("chSpreadAllData".equals(paramCatelogy.getAction())) {//if-eqz v0, :cond_6
                     JDMtaUtils.sendCommonData(getActivity(), "MCategory_MoreSCategory", "", "onClick", JDNewCategoryFragment.class.getName(), paramCatelogy.getLevel2Cid(), "", "");
-                    paramView = ((RightListColumn) this.f.get(i1)).a();
-                    paramView.remove(paramView.size() - 1);
+                    List<Catelogy> list1 = ((RightListColumn) this.f.get(i1)).a();
+                    list1.remove(list1.size() - 1);
                     if ((list != null) && (((ArrayList) list).size() > 0)) {//if-eqz v8, :cond_2
-                        paramView.add(((RightListColumn) ((ArrayList) list).get(0)).a(0));
-                        paramView = new ArrayList();
-                        paramView.addAll((Collection) list);
-                        paramView.remove(0);
-                        this.f.addAll(i1 + 1, paramView);
+                        list1.add(((RightListColumn) ((ArrayList) list).get(0)).a(0));
+                        List list2 = new ArrayList();
+                        list2.addAll((Collection) list);
+                        list2.remove(0);
+                        this.f.addAll(i1 + 1, list2);
                         this.g.notifyDataSetChanged();
                     }
                 } else if ("enSpreadAllData".equals(paramCatelogy.getAction())) {//if-eqz v0, :cond_7
@@ -179,7 +182,7 @@ public class L2CategoryFragment extends CategoryFragment {
                     }
                 } else if ("chPackUpAllData".equals(paramCatelogy.getAction())) {//if-eqz v0, :cond_8
                     Catelogy catelogy = new Catelogy();
-                    ((Catelogy) catelogy).setName(getFragmentString(2131233765));
+                    ((Catelogy) catelogy).setName(getFragmentString(2131233765));//2131233765
                     ((Catelogy) catelogy).setLevel2Cid(paramCatelogy.getLevel2Cid());
                     ((Catelogy) catelogy).setAction("chSpreadAllData");
                     if ((list != null) && (((ArrayList) list).size() > 0)) {
@@ -187,10 +190,10 @@ public class L2CategoryFragment extends CategoryFragment {
                         List<Catelogy> list1 = ((RightListColumn) this.f.get(i2)).a();
                         ((List) list1).remove(2);
                         ((List) list1).add(catelogy);
-                        list1 = new ArrayList();
-                        ((ArrayList) list1).addAll((Collection) list);
-                        ((ArrayList) list1).remove(0);
-                        this.f.removeAll((Collection) list1);
+                        List list2 = new ArrayList();
+                        ((ArrayList) list2).addAll((Collection) list);
+                        ((ArrayList) list2).remove(0);
+                        this.f.removeAll((Collection) list2);
                         this.g.notifyDataSetChanged();
                         Rect rect = new Rect();
                         getActivity().getWindow().getDecorView().getWindowVisibleDisplayFrame((Rect) rect);
@@ -209,7 +212,7 @@ public class L2CategoryFragment extends CategoryFragment {
                     rightListColumn.b(1);
                     rightListColumn.a = 2;
                     Catelogy catelogy = new Catelogy();
-                    ((Catelogy) catelogy).setName(getFragmentString(2131231468));
+                    ((Catelogy) catelogy).setName(getFragmentString(2131231468));//2131231468
                     ((Catelogy) catelogy).setLevel2Cid(paramCatelogy.getLevel2Cid());
                     ((Catelogy) catelogy).setAction("enSpreadAllData");
                     rightListColumn.a((Catelogy) catelogy);
@@ -228,7 +231,7 @@ public class L2CategoryFragment extends CategoryFragment {
         //:goto_4
         if ((paramCatelogy.isWantedToEbookM()) && (!TextUtils.isEmpty(paramCatelogy.getAction()))) {//if-nez v0, :cond_9
             a(paramCatelogy, "");
-            at.a(this.thisActivity, paramCatelogy.getAction());
+            JDEbookUtil.a(this.thisActivity, paramCatelogy.getAction());
             //goto/16 :goto_0
         } else if (paramCatelogy.isWantedToQqRecharge()) {//if-eqz v0, :cond_a
             Intent intent = new Intent(this.thisActivity, PhoneChargeActivity.class);
@@ -279,11 +282,11 @@ public class L2CategoryFragment extends CategoryFragment {
             return;
         } else if (paramCatelogy.isWantedToAirLine()) {//if-eqz v0, :cond_11
             a(paramCatelogy, FlightSearchActivity.class.getName());
-            bp.a(this.thisActivity, null);
+            StartActivityUtils.a(this.thisActivity, null);
             return;
         } else if (paramCatelogy.isGoToMoviePage()) {//if-eqz v0, :cond_12
             a(paramCatelogy, MovieActivity.class.getName());
-            bp.b(this.thisActivity);
+            StartActivityUtils.b(this.thisActivity);
             return;
         } else if (paramCatelogy.isGoToMWithAction()) {//if-eqz v0, :cond_13
             a(paramCatelogy, "");
@@ -301,7 +304,7 @@ public class L2CategoryFragment extends CategoryFragment {
                 if (packageInfo != null&& (((PackageInfo) packageInfo).versionCode > 4))//if-le v0, v6, :cond_14
                     hasApp = true;
 
-                urlParamMap.put("to", stringBuilder.append(hasApp).append("&loginName").append("=").append(LoginUser.getLoginName()).append("&loginCookie").append("=").append(ck.a(HttpGroup.getCookie())).toString());
+                urlParamMap.put("to", stringBuilder.append(hasApp).append("&loginName").append("=").append(LoginUser.getLoginName()).append("&loginCookie").append("=").append(JDGameUtil.a(HttpGroup.getCookie())).toString());
                 com.jingdong.app.mall.utils.CommonUtil.toBrowserInFrame(activity, "to", urlParamMap);
             }
             URLParamMap urlParamMap = new URLParamMap();
@@ -343,7 +346,7 @@ public class L2CategoryFragment extends CategoryFragment {
                 ((Bundle) bundle).putBoolean("firstToList", true);
                 intent.putExtras((Bundle) bundle);
                 intent.putExtra("source", new SourceEntity("catelogy", paramCatelogy.getLevel3Cid()));
-                bp.a(this.thisActivity, intent, false);
+                StartActivityUtils.a(this.thisActivity, intent, false);
                 a(paramCatelogy, "");
             }
             return;
@@ -364,7 +367,7 @@ public class L2CategoryFragment extends CategoryFragment {
                 ((Bundle) localObject5).putBoolean("firstToList", true);
                 ((Intent) localObject4).putExtras((Bundle) localObject5);
                 ((Intent) localObject4).putExtra("source", new SourceEntity("catelogy", cid));
-                bp.a(this.thisActivity, (Intent) localObject4, false);
+                StartActivityUtils.a(this.thisActivity, (Intent) localObject4, false);
                 JDMtaUtils.sendCommonData(this.thisActivity, "MCategory_SCategory", cid + "_" + this.e, "", JDNewCategoryFragment.class, this.d + "_" + (this.c + 1), ProductListActivity.class, "");
 
             }
@@ -376,12 +379,55 @@ public class L2CategoryFragment extends CategoryFragment {
     {
     }
 
-    protected void a(String paramString)
+    protected void a(final String paramString)
     {
         if ((paramString == null) || (paramString.equals(this.n)))
             return;
-        this.thisActivity.runOnUiThread(new b(this));
-        post(new c(this, paramString));
+        this.thisActivity.runOnUiThread(new Runnable(){//b(this)
+            @Override
+            public void run() {
+                try
+                {
+                    if (L2CategoryFragment.d(this.a) != null)
+                        this.a.p.removeHeaderView(L2CategoryFragment.d(this.a));
+                    L2CategoryFragment.a(this.a, L2CategoryFragment.a(this.a, this.a.p));
+                    L2CategoryFragment.a(this.a, L2CategoryFragment.b(this.a, L2CategoryFragment.d(this.a)));
+                    this.a.a(L2CategoryFragment.d(this.a), L2CategoryFragment.e(this.a));
+                    return;
+                }
+                catch (Exception localException)
+                {
+                    localException.printStackTrace();
+                }
+            }
+        });
+        post(new Runnable(){//c(this, paramString)
+            @Override
+            public void run() {
+                L2CategoryFragment.this.D.a(new CarouseFigureImagePagerAdapter.DataPresenter() {
+                    @Override
+                    public int size() {
+                        return 1;
+                    }
+
+                    @Override
+                    public String getImage(int paramInt) {
+                        return paramString;
+                    }
+
+                    @Override
+                    public JDDisplayImageOptions getDisplayImageOptions() {
+                        return null;
+                    }
+
+                    @Override
+                    public void onClick(int paramInt) {
+                        L2CategoryFragment.this.b();
+                    }
+                });
+
+            }
+        });
     }
 
     public final void a(String paramString, int paramInt)
@@ -507,4 +553,6 @@ public class L2CategoryFragment extends CategoryFragment {
     {
         super.onDestroy();
     }
+
+
 }

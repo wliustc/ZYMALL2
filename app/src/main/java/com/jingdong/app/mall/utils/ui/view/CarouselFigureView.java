@@ -1,10 +1,18 @@
 package com.jingdong.app.mall.utils.ui.view;
 
+import android.content.Context;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.jingdong.app.mall.home.floor.b.IFloorFigureView;
+import com.jingdong.common.BaseActivity;
+import com.zy.app.mall.utils.ui.view.CarouselFigureViewPager;
+import com.zy.common.utils.DPIUtil;
 
 /**
  * Created by robin on 16-8-25.
@@ -129,7 +137,7 @@ public class CarouselFigureView extends FrameLayout
         addView(this.c);
     }
 
-    public final void a(l paraml)
+    public final void a(CarouseFigureImagePagerAdapter.DataPresenter paraml)
     {
         if ((this.b != null) && (this.a != null) && (paraml != null))
             this.b.post(new n(this, paraml));
