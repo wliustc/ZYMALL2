@@ -388,11 +388,11 @@ public class L2CategoryFragment extends CategoryFragment {
             public void run() {
                 try
                 {
-                    if (L2CategoryFragment.d(this.a) != null)
-                        this.a.p.removeHeaderView(L2CategoryFragment.d(this.a));
-                    L2CategoryFragment.a(this.a, L2CategoryFragment.a(this.a, this.a.p));
-                    L2CategoryFragment.a(this.a, L2CategoryFragment.b(this.a, L2CategoryFragment.d(this.a)));
-                    this.a.a(L2CategoryFragment.d(this.a), L2CategoryFragment.e(this.a));
+                    if (L2CategoryFragment.this.C != null)
+                        L2CategoryFragment.this.p.removeHeaderView(L2CategoryFragment.this.C);
+                    L2CategoryFragment.this.C = L2CategoryFragment.a(this.a, L2CategoryFragment.this.p);
+                    L2CategoryFragment.a(this.a, L2CategoryFragment.b(this.a, L2CategoryFragment.this.C));
+                    L2CategoryFragment.this.a(L2CategoryFragment.this.C, L2CategoryFragment.e(this.a));
                     return;
                 }
                 catch (Exception localException)
