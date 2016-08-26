@@ -1,7 +1,10 @@
 package com.jingdong.app.mall.utils;
 
+import android.app.Activity;
+
 import com.jingdong.app.mall.MainFrameActivity;
 import com.jingdong.common.utils.CommonBase;
+import com.jingdong.common.utils.URLParamMap;
 import com.zy.common.frame.IMyActivity;
 
 import java.util.prefs.Preferences;
@@ -34,6 +37,10 @@ public class CommonUtil  extends CommonBase {
 
     @Override
     public void goToShoppingCartPageSingle(IMyActivity paramIMyActivity) {
+
+    }
+
+    public static void toBrowserInFrame(Activity activity, String to, URLParamMap urlParamMap) {
 
     }
 }

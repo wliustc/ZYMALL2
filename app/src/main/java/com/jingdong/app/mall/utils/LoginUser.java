@@ -9,6 +9,8 @@ import com.zy.common.frame.IMyActivity;
  */
 public class LoginUser {
     private static LoginUser loginUser;
+    private static String loginName;
+
     public static boolean hasLogin() {
         return false;
     }
@@ -20,6 +22,10 @@ public class LoginUser {
                     loginUser = new LoginUser();
             }
         return loginUser;
+    }
+
+    public static String getLoginName() {
+        return loginName;
     }
 
     public void homeAutoLogin(IMyActivity thisActivity, JDHomeFragment jdHomeFragment, int i1) {
