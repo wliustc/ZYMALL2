@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.jingdong.app.mall.home.floor.b.IFloorFigureView;
 import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.app.mall.utils.ui.view.CarouseFigureImagePagerAdapter;
+import com.jingdong.common.utils.HttpGroup;
 import com.zy.app.mall.R;
 import com.zy.app.mall.home.JDHomeFragment;
 import com.zy.app.mall.home.floor.a.a.Constants;
@@ -12,7 +13,6 @@ import com.zy.app.util.image.JDDisplayImageOptions;
 import com.zy.common.channel.common.utils.JumpUtil;
 import com.zy.common.entity.Commercial;
 import com.zy.common.entity.JumpEntity;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
 

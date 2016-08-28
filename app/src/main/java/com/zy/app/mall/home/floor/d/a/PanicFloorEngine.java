@@ -6,12 +6,12 @@ import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.entity.Product;
 import com.jingdong.common.utils.ExceptionReporter;
+import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
 import com.zy.app.mall.home.floor.a.a.MallFloorEvent;
 import com.zy.app.mall.home.floor.d.a.ListItemFloorEngine;
 import com.zy.app.mall.home.floor.model.entity.ListItemFloorEntity;
 import com.zy.app.mall.home.floor.model.entity.PanicFloorEntity;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JSONArrayProxy;
 import com.zy.common.utils.Log;
 

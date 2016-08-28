@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 
-import com.zy.common.utils.HttpGroup;
+import com.jingdong.common.utils.HttpGroup;
+
 
 /**
  * Created by Robin on 2016/4/6.

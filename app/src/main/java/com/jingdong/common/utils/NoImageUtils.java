@@ -7,7 +7,6 @@ import com.zy.app.mall.R;
 import com.zy.common.frame.IMyActivity;
 import com.zy.common.res.StringUtil;
 import com.zy.common.utils.CommonUtil;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.NetUtils;
 
 /**

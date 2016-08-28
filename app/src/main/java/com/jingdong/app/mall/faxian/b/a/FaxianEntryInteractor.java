@@ -6,7 +6,6 @@ import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.common.config.Configuration;
 import com.zy.app.mall.navigationbar.NavigationButton;
 import com.zy.cleanmvp.presenter.BaseInteractor;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;

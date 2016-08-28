@@ -7,7 +7,6 @@ import android.widget.ListView;
 
 import com.zy.common.frame.IDestroyListener;
 import com.zy.common.frame.IMyActivity;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.Log;
 
 import org.json.JSONException;

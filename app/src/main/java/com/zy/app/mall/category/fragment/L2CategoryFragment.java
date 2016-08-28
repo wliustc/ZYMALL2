@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.category.fragment;
+package com.zy.app.mall.category.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,10 +8,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.jingdong.app.mall.WebActivity;
 import com.jingdong.app.mall.category.adapter.RightListAdapter;
+import com.jingdong.app.mall.promotion.PromotionMessageActivity;
 import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
 import com.jingdong.app.mall.utils.JDEbookUtil;
 import com.jingdong.app.mall.utils.LoginUser;
@@ -27,7 +31,9 @@ import com.jingdong.common.sample.jshop.JshopMainShopActivity;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JDGameUtil;
+import com.jingdong.common.utils.JSONObjectProxy;
 import com.jingdong.common.utils.URLParamMap;
+import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
@@ -38,6 +44,7 @@ import com.zy.common.entity.SourceEntity;
 import com.zy.common.utils.CommonUtil;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.JDMtaUtils;
+import com.zy.common.utils.JSONArrayProxy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,21 +85,18 @@ public class L2CategoryFragment extends CategoryFragment {
     private String y = "";
     private long z = 0L;
 
-    protected static List<String> a(List<RightColumnBase> paramList)
-    {
+    protected static List<String> a(List<RightColumnBase> paramList) {
         ArrayList<String> localArrayList = new ArrayList();
         Iterator<RightColumnBase> iterator = paramList.iterator();
-        while (iterator.hasNext())
-        {
-            Object localObject = (RightListColumn)iterator.next();
-            if (((RightColumnBase)localObject).a != 1)
+        while (iterator.hasNext()) {
+            Object localObject = (RightListColumn) iterator.next();
+            if (((RightColumnBase) localObject).a != 1)
                 continue;
-            localObject = (RightListColumn)localObject;
-            int i2 = ((RightListColumn)localObject).c();
+            localObject = (RightListColumn) localObject;
+            int i2 = ((RightListColumn) localObject).c();
 
-            for (int i1 = 0; i1 < i2; i1++)
-            {
-                String str = ((RightListColumn)localObject).a(i1).getImgUrl();
+            for (int i1 = 0; i1 < i2; i1++) {
+                String str = ((RightListColumn) localObject).a(i1).getImgUrl();
                 if (!TextUtils.isEmpty(str))
                     localArrayList.add(str);
 
@@ -101,27 +105,22 @@ public class L2CategoryFragment extends CategoryFragment {
         return localArrayList;
     }
 
-    protected final BaseAdapter a()
-    {
+    protected final BaseAdapter a() {
         return this.g;
     }
 
-    public final void a(View paramView)
-    {
+    public final void a(View paramView) {
         this.l = paramView;
     }
 
-    public final void a(View paramView, ImageView paramImageView)
-    {
+    public final void a(View paramView, ImageView paramImageView) {
         this.j = paramView;
         this.k = paramImageView;
     }
 
-    protected final void a(ViewGroup paramViewGroup, View paramView)
-    {
+    protected final void a(ViewGroup paramViewGroup, View paramView) {
         paramViewGroup.addView(paramView);
-        if (this.p.getAdapter() == null)
-        {
+        if (this.p.getAdapter() == null) {
             this.p.addHeaderView(paramViewGroup);
             return;
         }
@@ -142,7 +141,8 @@ public class L2CategoryFragment extends CategoryFragment {
             if ((this.f != null) || (this.f.size() > 0)) {//if-lez v0, :cond_5
                 //v2
                 //:goto_1
-                labe:for (i1 = 0; i1 < this.f.size(); i1++) {//if-ge v2, v0, :cond_5
+                labe:
+                for (i1 = 0; i1 < this.f.size(); i1++) {//if-ge v2, v0, :cond_5
                     RightColumnBase rightColumn = (RightColumnBase) this.f.get(i1);
                     if (rightColumn instanceof RightListColumn) {//if-eqz v1, :cond_4
                         //v3
@@ -157,7 +157,7 @@ public class L2CategoryFragment extends CategoryFragment {
                         }
                     }//:cond_4
                 }
-            }else//:cond_5
+            } else//:cond_5
                 i1--;
             //:goto_3
             if (i1 != -1) {//if-eq v9, v0, :cond_2
@@ -182,7 +182,7 @@ public class L2CategoryFragment extends CategoryFragment {
                     }
                 } else if ("chPackUpAllData".equals(paramCatelogy.getAction())) {//if-eqz v0, :cond_8
                     Catelogy catelogy = new Catelogy();
-                    ((Catelogy) catelogy).setName(getFragmentString(2131233765));//2131233765
+                    ((Catelogy) catelogy).setName(getFragmentString(R.string.spread_all_data));//2131233765
                     ((Catelogy) catelogy).setLevel2Cid(paramCatelogy.getLevel2Cid());
                     ((Catelogy) catelogy).setAction("chSpreadAllData");
                     if ((list != null) && (((ArrayList) list).size() > 0)) {
@@ -212,7 +212,7 @@ public class L2CategoryFragment extends CategoryFragment {
                     rightListColumn.b(1);
                     rightListColumn.a = 2;
                     Catelogy catelogy = new Catelogy();
-                    ((Catelogy) catelogy).setName(getFragmentString(2131231468));//2131231468
+                    ((Catelogy) catelogy).setName(getFragmentString(R.string.en_spread_all_data));//2131231468
                     ((Catelogy) catelogy).setLevel2Cid(paramCatelogy.getLevel2Cid());
                     ((Catelogy) catelogy).setAction("enSpreadAllData");
                     rightListColumn.a((Catelogy) catelogy);
@@ -266,7 +266,7 @@ public class L2CategoryFragment extends CategoryFragment {
                 a(paramCatelogy, JshopMainShopActivity.class.getName());
                 this.thisActivity.startActivityInFrameWithNoNavigation(intent);
             } catch (JSONException localJSONException) {
-                    localJSONException.printStackTrace();
+                localJSONException.printStackTrace();
             }
             return;
         } else if (paramCatelogy.isWantedToSearchProduct()) {//if-eqz v0, :cond_f
@@ -301,7 +301,7 @@ public class L2CategoryFragment extends CategoryFragment {
                 StringBuilder stringBuilder = new StringBuilder().append((String) action).append("?hasApp=");
                 PackageInfo packageInfo = CommonUtil.getPackageInfo(activity, "com.jingdong.jgame");
                 boolean hasApp = false;
-                if (packageInfo != null&& (((PackageInfo) packageInfo).versionCode > 4))//if-le v0, v6, :cond_14
+                if (packageInfo != null && (((PackageInfo) packageInfo).versionCode > 4))//if-le v0, v6, :cond_14
                     hasApp = true;
 
                 urlParamMap.put("to", stringBuilder.append(hasApp).append("&loginName").append("=").append(LoginUser.getLoginName()).append("&loginCookie").append("=").append(JDGameUtil.a(HttpGroup.getCookie())).toString());
@@ -375,33 +375,28 @@ public class L2CategoryFragment extends CategoryFragment {
         }
     }
 
-    public void a(Catelogy paramCatelogy, String paramString)
-    {
+    public void a(Catelogy paramCatelogy, String paramString) {
     }
 
-    protected void a(final String paramString)
-    {
+    protected void a(final String paramString) {
         if ((paramString == null) || (paramString.equals(this.n)))
             return;
-        this.thisActivity.runOnUiThread(new Runnable(){//b(this)
+        this.thisActivity.runOnUiThread(new Runnable() {//b(this)
             @Override
             public void run() {
-                try
-                {
+                try {
                     if (L2CategoryFragment.this.C != null)
                         L2CategoryFragment.this.p.removeHeaderView(L2CategoryFragment.this.C);
-                    L2CategoryFragment.this.C = L2CategoryFragment.a(this.a, L2CategoryFragment.this.p);
-                    L2CategoryFragment.this.D = L2CategoryFragment.b(this.a, L2CategoryFragment.this.C);
+                    L2CategoryFragment.this.C = L2CategoryFragment.this.synthetic_a(L2CategoryFragment.this.p);
+                    L2CategoryFragment.this.D = L2CategoryFragment.this.synthetic_b(L2CategoryFragment.this.C);
                     L2CategoryFragment.this.a(L2CategoryFragment.this.C, L2CategoryFragment.this.D);
                     return;
-                }
-                catch (Exception localException)
-                {
+                } catch (Exception localException) {
                     localException.printStackTrace();
                 }
             }
         });
-        post(new Runnable(){//c(this, paramString)
+        post(new Runnable() {//c(this, paramString)
             @Override
             public void run() {
                 L2CategoryFragment.this.D.a(new CarouseFigureImagePagerAdapter.DataPresenter() {
@@ -430,11 +425,59 @@ public class L2CategoryFragment extends CategoryFragment {
         });
     }
 
-    public final void a(String paramString, int paramInt)
-    {
+    public final void a(final String paramString, int paramInt) {
         this.r = paramString;
-        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
-        localHttpSetting.setListener(new e(this, paramString, new ExceptionReporter(localHttpSetting)));
+        final HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+        localHttpSetting.setListener(new HttpGroup.OnCommonListener(){//e(this, paramString, new ExceptionReporter(localHttpSetting))
+            private ExceptionReporter c = new ExceptionReporter(localHttpSetting);
+            @Override
+            public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
+                if ((!paramString.equals(L2CategoryFragment.this.r)) && (!paramString.equals("-1")))
+                    return;
+                JSONArrayProxy cmsPromotionsList = paramHttpResponse.getJSONObject().getJSONArrayOrNull("cmsPromotionsList");
+                L2CategoryFragment.this.u = paramHttpResponse.getJSONObject().optString("mPageAddress");
+                L2CategoryFragment.this.v = paramHttpResponse.getJSONObject().optString("bannerSource");
+                L2CategoryFragment.this.B = paramHttpResponse.getJSONObject().optString("target");
+                L2CategoryFragment.this.w = paramHttpResponse.getJSONObject().optString("promotionLogUrl");
+                L2CategoryFragment.this.x = paramHttpResponse.getJSONObject().optString("destination");
+                L2CategoryFragment.this.y = paramHttpResponse.getJSONObject().optString("jumpFlag");
+                L2CategoryFragment.this.z = paramHttpResponse.getJSONObject().optLong("modified");
+                if ((L2CategoryFragment.this.A != L2CategoryFragment.this.z) && (L2CategoryFragment.this.A != -1L) && (L2CategoryFragment.this.z != 0L))
+                    L2CategoryFragment.this.a(false);
+                else
+                    L2CategoryFragment.this.a(true);
+
+                L2CategoryFragment.this.A = L2CategoryFragment.this.z;
+                if ((cmsPromotionsList != null) && ( cmsPromotionsList.length() > 0)) {
+                    JSONObjectProxy objectProxy = cmsPromotionsList.getJSONObjectOrNull(0);
+
+                    if (objectProxy != null) {
+                        L2CategoryFragment.this.t = objectProxy.getStringOrNull("promotion_id");
+                        L2CategoryFragment.this.s = objectProxy.getStringOrNull("promotion_name");
+                        String imageUrl = objectProxy.getStringOrNull("imageUrl");
+                        if (imageUrl != null)
+                            L2CategoryFragment.this.synthetic_a(imageUrl, paramString);
+                        else
+                            this.c.reportHttpBusinessException(paramHttpResponse);
+                    }
+
+                }
+
+                this.c.reportHttpBusinessException(paramHttpResponse);
+                return;
+            }
+
+            @Override
+            public void onReady(HttpGroup.HttpSettingParams paramHttpSettingParams) {
+
+            }
+
+            @Override
+            public void onError(HttpGroup.HttpError paramHttpError) {
+
+            }
+
+        });
         localHttpSetting.setFunctionId("getCmsPromotionsListByCatelogyID");
         localHttpSetting.setHost(Configuration.getPortalHost());
         localHttpSetting.putJsonParam("catelogyID", paramString);
@@ -444,93 +487,77 @@ public class L2CategoryFragment extends CategoryFragment {
         this.thisActivity.getHttpGroupaAsynPool().add(localHttpSetting);
     }
 
-    public void a(String paramString1, String paramString2, int paramInt)
-    {
+    public void a(String paramString1, String paramString2, int paramInt) {
         this.d = paramString1;
         this.e = paramString2;
         this.c = paramInt;
     }
 
-    public final void a(boolean paramBoolean)
-    {
+    public final void a(boolean paramBoolean) {
         this.i = paramBoolean;
     }
 
-    protected final void b()
-    {
-        if (!this.t.equals("0"))
-        {
-            if (TextUtils.isEmpty(this.v))
-                break label586;
-            if (!this.v.equals("ads"))
-                break label184;
-        }
-        label184: label586: for (Object localObject1 = "1"; ; localObject1 = "0")
-        {
-            while (true)
-            {
-                Object localObject2 = new HttpGroup.HttpSetting();
-                ((HttpGroup.HttpSetting)localObject2).setFunctionId("adsPromotionLog");
-                ((HttpGroup.HttpSetting)localObject2).setHost(Configuration.getPortalHost());
-                ((HttpGroup.HttpSetting)localObject2).putJsonParam("bannerSource", this.v);
-                ((HttpGroup.HttpSetting)localObject2).putJsonParam("promotionLogUrl", this.w);
-                this.thisActivity.getHttpGroupaAsynPool().add((HttpGroup.HttpSetting)localObject2);
-                if ((!TextUtils.isEmpty(this.y)) && (this.y.equals("1")))
-                {
-                    localObject1 = new Intent(this.thisActivity, JshopMainShopActivity.class);
-                    try
-                    {
-                        localObject2 = new JSONObject();
-                        ((JSONObject)localObject2).put("shopId", this.B);
-                        localBundle = new Bundle();
-                        localBundle.putString("brand.json", ((JSONObject)localObject2).toString());
-                        ((Intent)localObject1).putExtras(localBundle);
-                        startActivity((Intent)localObject1);
-                        return;
-                        localObject1 = "0";
-                    }
-                    catch (JSONException localJSONException)
-                    {
-                        while (true)
-                            localJSONException.printStackTrace();
-                    }
-                }
+    protected final void b() {
+        String localObject1 = "0";
+        if (!this.t.equals("0")) {//if-nez v0, :cond_0
+            if (!TextUtils.isEmpty(this.v) && this.v.equals("ads")) {//if-eqz v0, :cond_1
+                localObject1 = "1";
             }
-            if (!TextUtils.isEmpty(this.u))
-            {
-                localObject3 = new URLParamMap();
-                ((URLParamMap)localObject3).put("to", this.u);
-                com.jingdong.app.mall.utils.CommonUtil.toBrowserInFrame(this.thisActivity, "to", (URLParamMap)localObject3);
-                if (this.c == -1)
-                {
-                    JDMtaUtils.sendCommonData(this.thisActivity, "Classification_activityid", "", "", JDNewCategoryFragment.class, this.r + "_" + (String)localObject1, WebActivity.class, "");
+
+            HttpGroup.HttpSetting httpSetting = new HttpGroup.HttpSetting();
+            ((HttpGroup.HttpSetting) httpSetting).setFunctionId("adsPromotionLog");
+            ((HttpGroup.HttpSetting) httpSetting).setHost(Configuration.getPortalHost());
+            ((HttpGroup.HttpSetting) httpSetting).putJsonParam("bannerSource", this.v);
+            ((HttpGroup.HttpSetting) httpSetting).putJsonParam("promotionLogUrl", this.w);
+            this.thisActivity.getHttpGroupaAsynPool().add((HttpGroup.HttpSetting) httpSetting);
+            if ((!TextUtils.isEmpty(this.y)) && (this.y.equals("1"))) {//if-eqz v0, :cond_2
+                Intent intent = new Intent(this.thisActivity, JshopMainShopActivity.class);
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("shopId", this.B);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("brand.json", jsonObject.toString());
+                    intent.putExtras(bundle);
+
+                } catch (JSONException localJSONException) {
+                    localJSONException.printStackTrace();
+                }
+                startActivity(intent);
+                return;
+            } else if (!TextUtils.isEmpty(this.u)) {//if-nez v0, :cond_4
+                URLParamMap urlParamMap = new URLParamMap();
+                urlParamMap.put("to", this.u);
+                com.jingdong.app.mall.utils.CommonUtil.toBrowserInFrame(this.thisActivity, "to", urlParamMap);
+                if (this.c == -1) {//if-ne v0, v4, :cond_3
+                    JDMtaUtils.sendCommonData(this.thisActivity, "Classification_activityid", "", "", JDNewCategoryFragment.class, this.r + "_" + (String) localObject1, WebActivity.class, "");
+                    return;
+                } else {
+                    JDMtaUtils.sendCommonData(this.thisActivity, "BCategory_activityid", "", "", JDNewCategoryFragment.class, this.r + "_" + (String) localObject1, WebActivity.class, "");
                     return;
                 }
-                JDMtaUtils.sendCommonData(this.thisActivity, "BCategory_activityid", "", "", JDNewCategoryFragment.class, this.r + "_" + (String)localObject1, WebActivity.class, "");
-                return;
+            } else {
+                Intent intent = new Intent(this.thisActivity, PromotionMessageActivity.class);
+                Bundle localBundle = new Bundle();
+                if ((this.s == null) || ("".equals(this.s)))
+                    this.s = "促销专题";
+                localBundle.putString("comeFrom", "category");
+                localBundle.putString("name", this.s);
+                localBundle.putString("promotion_id", this.t);
+                intent.putExtras(localBundle);
+                intent.putExtra("com.360buy:navigationDisplayFlag", -1);
+                startActivity(intent);
+                if (this.c == -1) {
+                    JDMtaUtils.sendCommonData(this.thisActivity, "Classification_activityid", this.t, "", JDNewCategoryFragment.class, this.r + "_" + (String) localObject1, PromotionMessageActivity.class, "");
+                    return;
+                } else {
+                    JDMtaUtils.sendCommonData(this.thisActivity, "BCategory_activityid", this.t, "", JDNewCategoryFragment.class, this.r + "_" + (String) localObject1, PromotionMessageActivity.class, "");
+                    return;
+                }
             }
-            Object localObject3 = new Intent(this.thisActivity, PromotionMessageActivity.class);
-            Bundle localBundle = new Bundle();
-            if ((this.s == null) || ("".equals(this.s)))
-                this.s = "促销专题";
-            localBundle.putString("comeFrom", "category");
-            localBundle.putString("name", this.s);
-            localBundle.putString("promotion_id", this.t);
-            ((Intent)localObject3).putExtras(localBundle);
-            ((Intent)localObject3).putExtra("com.360buy:navigationDisplayFlag", -1);
-            startActivity((Intent)localObject3);
-            if (this.c == -1)
-            {
-                JDMtaUtils.sendCommonData(this.thisActivity, "Classification_activityid", this.t, "", JDNewCategoryFragment.class, this.r + "_" + (String)localObject1, PromotionMessageActivity.class, "");
-                return;
-            }
-            JDMtaUtils.sendCommonData(this.thisActivity, "BCategory_activityid", this.t, "", JDNewCategoryFragment.class, this.r + "_" + (String)localObject1, PromotionMessageActivity.class, "");
-            return;
         }
     }
 
-    protected final void b(boolean paramBoolean)
-    {
+    protected final void b(boolean paramBoolean) {
         String str = this.n;
         if (paramBoolean)
             this.n = null;
@@ -540,8 +567,8 @@ public class L2CategoryFragment extends CategoryFragment {
         super.b(paramBoolean);
     }
 
-    public void onCreate(Bundle paramBundle)
-    {
+    @Override
+    public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
         paramBundle = getArguments();
         this.d = paramBundle.getString("level_first");
@@ -549,10 +576,33 @@ public class L2CategoryFragment extends CategoryFragment {
         this.c = paramBundle.getInt("current_item");
     }
 
-    public void onDestroy()
-    {
+    @Override
+    public void onDestroy() {
         super.onDestroy();
     }
 
+    ViewGroup synthetic_a(View paramView)
+    {
+        FrameLayout frameLayout = new FrameLayout(paramView.getContext());
+        frameLayout.setLayoutParams(new AbsListView.LayoutParams(-1, -2));
+        frameLayout.setPadding(0, DPIUtil.dip2px(15.0F), 0, 0);
+        frameLayout.setBackgroundResource(R.drawable.category_list_row);//2130838451
+        return frameLayout;
+    }
 
+    void synthetic_a( String paramString1, String paramString2)
+    {
+        if ((paramString2.equals(this.r)) || (paramString2.equals("-1")))
+        {
+            this.a(paramString1);
+            this.n = paramString1;
+        }
+    }
+
+    CarouselFigureView synthetic_b(ViewGroup paramViewGroup)
+    {
+        CarouselFigureView localCarouselFigureView = new CarouselFigureView(this.thisActivity.getBaseContext());
+        localCarouselFigureView.a(this.thisActivity, paramViewGroup, DPIUtil.dip2px(85.0F), true, true, 5);
+        return localCarouselFigureView;
+    }
 }

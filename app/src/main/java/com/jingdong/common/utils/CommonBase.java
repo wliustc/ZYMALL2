@@ -32,7 +32,6 @@ import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.c.PayMD5Util;
 import com.zy.common.e.ConfigUtil;
 import com.zy.common.frame.IMainActivity;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.ICommon;
 import com.zy.common.utils.Log;
 import com.zy.common.utils.NetUtils;

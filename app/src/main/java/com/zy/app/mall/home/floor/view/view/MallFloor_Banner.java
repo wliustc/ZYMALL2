@@ -20,6 +20,7 @@ import android.widget.Scroller;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jingdong.app.mall.home.floor.b.IFloorFigureView;
 import com.jingdong.app.mall.utils.ui.view.CarouseFigureImagePagerAdapter;
+import com.jingdong.common.utils.HttpGroup;
 import com.zy.app.mall.home.JDHomeFragment;
 import com.zy.app.mall.home.floor.a.b.MallFloorClickUtil;
 import com.zy.app.mall.home.floor.b.NewCarouselFigureViewCtrl;
@@ -35,7 +36,6 @@ import com.zy.app.mall.utils.ui.view.CarouselFigureViewPager;
 import com.zy.common.entity.HomeFloorNewElement;
 import com.zy.common.entity.HomeFloorNewElements;
 import com.zy.common.entity.HomeFloorNewModel;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.Log;
 
 import java.lang.reflect.Field;

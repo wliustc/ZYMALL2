@@ -46,7 +46,6 @@ import com.zy.common.entity.HomeFloorNewModel;
 import com.zy.common.entity.HomeLayerParamEntity;
 import com.zy.common.frame.IDestroyListener;
 import com.zy.common.utils.DPIUtil;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.ImageUtil;
 import com.zy.common.utils.JDImageUtils;
 import com.zy.common.utils.JDMtaUtils;

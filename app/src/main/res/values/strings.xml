@@ -777,7 +777,7 @@
     <string name="th">电子</string>
     <string name="ti">暂无搜索历史</string>
     <string name="tj">收起更多分类</string>
-    <string name="tk">展开更多分类</string>
+    <string name="en_spread_all_data">展开更多分类</string><!-- tk -->
     <string name="tl">至</string>
     <string name="tm">进入收银台失败，请重试</string>
     <string name="tn">进入</string>
@@ -3131,7 +3131,7 @@
     <string name="bhm">新品</string>
     <string name="bhn">jd_sparse_image_switch</string>
     <string name="bho">省流量模式</string>
-    <string name="bhp">展开</string>
+    <string name="spread_all_data">展开</string><!-- bhp -->
     <string name="bhq">星</string>
     <string name="bhr">星及以上</string>
     <string name="bhs">开始</string>

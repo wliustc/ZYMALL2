@@ -3,7 +3,6 @@ package com.jingdong.app.mall.home;
 import android.content.Context;
 
 import com.jingdong.common.utils.JSONObjectProxy;
-import com.zy.common.utils.HttpGroup;
 
 import org.json.JSONException;
 import org.json.JSONObject;

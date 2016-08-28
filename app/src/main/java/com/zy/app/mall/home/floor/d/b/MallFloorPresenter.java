@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.jingdong.common.utils.HttpGroup;
 import com.zy.app.mall.home.floor.a.a.Constants;
 import com.zy.app.mall.home.floor.a.a.MallFloorEvent;
 import com.zy.app.mall.home.floor.d.a.FloorEngine;
@@ -18,7 +19,6 @@ import com.zy.common.entity.HomeFloorNewElement;
 import com.zy.common.entity.HomeFloorNewElements;
 import com.zy.common.entity.HomeFloorNewModel;
 import com.zy.common.utils.DPIUtil;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.Log;
 
 import org.greenrobot.eventbus.Subscribe;

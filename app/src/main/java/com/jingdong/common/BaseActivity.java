@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.jingdong.common.BaseApplication;
+import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JDFrescoUtils;
 import com.zy.common.frame.IDestroyListener;
 import com.zy.common.frame.ILogoutListener;
@@ -28,7 +29,6 @@ import com.zy.common.frame.IPauseListener;
 import com.zy.common.frame.IResumeListener;
 import com.zy.common.frame.JDHandler;
 import com.zy.common.utils.CommonUtil;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.Log;
 

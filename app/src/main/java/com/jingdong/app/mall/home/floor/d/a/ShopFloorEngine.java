@@ -7,7 +7,6 @@ import com.zy.app.mall.home.floor.model.entity.ShopFloorEntity;
 import com.zy.common.entity.GoodShopModel;
 import com.zy.common.entity.HomeFloorNewElement;
 import com.zy.common.entity.JumpEntity;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JSONArrayProxy;
 import com.zy.common.utils.Log;
 

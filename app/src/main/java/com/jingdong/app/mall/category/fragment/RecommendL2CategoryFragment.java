@@ -10,10 +10,11 @@ import android.widget.ListView;
 
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.ExceptionReporter;
+import com.jingdong.common.utils.HttpGroup;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.b.RightColumnBase;
+import com.zy.app.mall.category.fragment.L2CategoryFragment;
 import com.zy.common.entity.Catelogy;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
 
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by Robin on 2016/8/20.
  */
-public class RecommendL2CategoryFragment extends L2CategoryFragment{
+public class RecommendL2CategoryFragment extends L2CategoryFragment {
 
 
     private static String s;

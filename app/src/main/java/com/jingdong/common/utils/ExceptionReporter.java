@@ -3,7 +3,6 @@ import android.text.TextUtils;
 
 import com.jingdong.common.BaseApplication;
 import com.zy.app.util.image.assist.JDFailReason;
-import com.zy.common.utils.HttpGroup;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.Log;
 
@@ -28,6 +27,10 @@ public class ExceptionReporter {
     private static final String UPGRADE_ERRCODE = "951";
     private static final String WEBVIEW_ERROR_HOST_ERRCODE = "904";
     private HttpGroup.HttpSetting mHttpSetting;
+
+    public ExceptionReporter()
+    {
+    }
 
     public ExceptionReporter(HttpGroup.HttpSetting paramHttpSetting)
     {
