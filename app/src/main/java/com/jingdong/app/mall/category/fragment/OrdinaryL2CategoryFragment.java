@@ -1,7 +1,8 @@
 package com.jingdong.app.mall.category.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -67,12 +68,12 @@ public class OrdinaryL2CategoryFragment extends L2CategoryFragment {
                 break label1170;
                 localObject4 = new d((String)localObject4, str, bool1);
                 ((d)localObject4).a(bool2);
-                if ((localObject3 == null) || (TextUtils.isEmpty(((JSONArrayPoxy)localObject3).toString())))
+                if ((localObject3 == null) || (TextUtils.isEmpty(((JSONArrayProxy)localObject3).toString())))
                     continue;
-                m = ((JSONArrayPoxy)localObject3).toString().length();
-                ((d)localObject4).a(((JSONArrayPoxy)localObject3).toString().substring(1, m - 1));
+                m = ((JSONArrayProxy)localObject3).toString().length();
+                ((d)localObject4).a(((JSONArrayProxy)localObject3).toString().substring(1, m - 1));
                 localArrayList1.add(localObject4);
-                JSONArrayPoxy localJSONArrayPoxy = ((JSONObjectProxy)localObject1).getJSONArray("catelogyList");
+                JSONArrayProxy localJSONArrayPoxy = ((JSONObjectProxy)localObject1).getJSONArray("catelogyList");
                 i4 = localJSONArrayPoxy.length();
                 int i1 = 1;
                 n = 0;

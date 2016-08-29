@@ -273,7 +273,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             a(conjoinedCategoryFragment);
             return;
         }else {
-            OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = OrdinaryL2CategoryFragment.b(paramString, this.D, this.w);
+            OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = (OrdinaryL2CategoryFragment) OrdinaryL2CategoryFragment.b(paramString, this.D, this.w);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.L);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.sublist_loading_error_tips, this.jd_tip_image);
             ((L2CategoryFragment) ordinaryL2CategoryFragment).thisActivity = this.P;
