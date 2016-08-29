@@ -5,17 +5,20 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.ExceptionReporter;
+import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
+import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.fragment.L2CategoryFragment;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -293,10 +296,10 @@ public class OrdinaryL2CategoryFragment extends L2CategoryFragment {
 
     protected View a(LayoutInflater paramLayoutInflater)
     {
-        paramLayoutInflater = paramLayoutInflater.inflate(2130903251, null);
-        this.p = ((ListView)paramLayoutInflater.findViewById(2131165251));
-        this.p.setSelector(17170445);
-        return paramLayoutInflater;
+        View view = paramLayoutInflater.inflate(R.layout.category_level_2_fragment, null);//2130903251
+        this.p = ((ListView)view.findViewById(R.id.listView));//2131165251
+        this.p.setSelector(android.R.color.transparent);//17170445
+        return view;
     }
 
     public final void a(_U paramu)
@@ -324,7 +327,12 @@ public class OrdinaryL2CategoryFragment extends L2CategoryFragment {
 
     public void d(String paramString)
     {
-        post(new o(this));
+        post(new Runnable(){
+            @Override
+            public void run() {
+
+            }
+        });
         HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
         localHttpSetting.setListener(new p(this, paramString, new ExceptionReporter(localHttpSetting)));
         localHttpSetting.setFunctionId("newSubCatalog");
