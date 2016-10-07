@@ -1618,7 +1618,7 @@
     <dimen name="ag7">10.0dip</dimen>
     <dimen name="ag8">10.0dip</dimen>
     <dimen name="ag9">10.0dip</dimen>
-    <dimen name="ag_">100.0dip</dimen>
+    <dimen name="min_header_height">100.0dip</dimen><!-- "ag_" -->
     <dimen name="aga">14.0sp</dimen>
     <dimen name="agb">112.0dip</dimen>
     <dimen name="agc">17.0sp</dimen>

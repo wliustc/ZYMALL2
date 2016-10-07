@@ -47,16 +47,13 @@ import com.zy.common.entity.HomeLayerParamEntity;
 import com.zy.common.frame.IDestroyListener;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.ImageUtil;
-import com.zy.common.utils.JDImageUtils;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
 import com.zy.common.utils.Log;
 import com.zy.common.utils.NetUtils;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -650,7 +647,7 @@ public class JDHomeFragment extends TabFragment
                 }
                 JDHomeFragment.this.a(0);
                 floorFigureViewCtrl.d();
-                JDMtaUtils.onClick(JDHomeFragment.this.thisActivity.getBaseContext(), "Home_ReturntoTop", getClass().getName());
+                JDMtaUtils.onClick(JDHomeFragment.this.thisActivity.getBaseContext(), "Classification_CoCategory_Tab", "Home_ReturntoTop", getClass().getName());
             }
         });
         this.mHomeTitle = ((HomeTitle) this.view.findViewById(R.id.home_common_title));//2131172360
