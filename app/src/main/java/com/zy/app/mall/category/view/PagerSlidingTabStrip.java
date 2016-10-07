@@ -22,7 +22,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jingdong.app.mall.category.view.ParallaxHeaderHelper;
 import com.jingdong.app.mall.faxian.view.view.AuthorPageView;
 import com.zy.app.mall.R;
 

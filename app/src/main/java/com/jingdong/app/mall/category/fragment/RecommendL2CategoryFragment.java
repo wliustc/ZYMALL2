@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.HttpGroup;
+import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.fragment.L2CategoryFragment;
@@ -38,55 +39,43 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
 
     private static int a(JSONArrayProxy paramJSONArrayPoxy)
     {
-        int j = 0;
-        if ((paramJSONArrayPoxy != null) && (paramJSONArrayPoxy.length() > 0))
-        {
+        int v1 = 0;
+        if ((paramJSONArrayPoxy != null) && (paramJSONArrayPoxy.length() > 0)) {//if-eqz p0, :cond_1
             int i = 0;
-            while (true)
-            {
-                k = i;
-                if (j >= paramJSONArrayPoxy.length())
-                    break label107;
+
+            for (int j = 0; j < paramJSONArrayPoxy.length(); j++){//if-ge v0, v2, :cond_2
                 try
                 {
                     Catelogy localCatelogy = new Catelogy(paramJSONArrayPoxy.getJSONObject(j), 4);
-                    k = i;
+                    //v1 = i;
                     if (localCatelogy.getSensitiveFlag() == 0)
-                    {
-                        k = i;
+                    {//if-nez v2, :cond_0
+                       // v1 = i;
                         if (!TextUtils.isEmpty(localCatelogy.getImgUrl()))
-                        {
+                        {//if-nez v2, :cond_0
                             int m = localCatelogy.getColumNum();
-                            k = i;
-                            if (m != 1)
-                                k = i + 1;
+                            if (m != 1)//if-eq v2, v3, :cond_0
+                                v1++;
                         }
                     }
-                    j += 1;
-                    i = k;
                 }
                 catch (JSONException localJSONException)
                 {
-                    while (true)
-                    {
                         localJSONException.printStackTrace();
-                        k = i;
-                    }
                 }
             }
         }
-        int k = 0;
-        label107: return k;
+        return v1;
     }
 
-    public static Fragment a(String paramString1, String paramString2)
+    public static Fragment a(String uid, String guid)
     {
         RecommendL2CategoryFragment localRecommendL2CategoryFragment = new RecommendL2CategoryFragment();
         Bundle localBundle = new Bundle();
-        s = paramString1;
-        t = paramString2;
-        localBundle.putCharSequence("uid", paramString1);
-        localBundle.putCharSequence("guid", paramString2);
+        s = uid;
+        t = guid;
+        localBundle.putCharSequence("uid", uid);
+        localBundle.putCharSequence("guid", guid);
         a(localBundle, -1);
         localRecommendL2CategoryFragment.setArguments(localBundle);
         return localRecommendL2CategoryFragment;
@@ -618,53 +607,37 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
 
     private static int b(JSONArrayProxy paramJSONArrayPoxy)
     {
-        int j = 0;
-        if ((paramJSONArrayPoxy != null) && (paramJSONArrayPoxy.length() > 0))
-        {
-            int i = 0;
-            while (true)
-            {
-                k = i;
-                if (j >= paramJSONArrayPoxy.length())
-                    break label107;
+        int k = 0;
+        if ((paramJSONArrayPoxy != null) && (paramJSONArrayPoxy.length() > 0)) {//if-eqz p0, :cond_1   if-lez v1, :cond_1
+            for (int j = 0; j < paramJSONArrayPoxy.length(); j++) {//if-ge v0, v2, :cond_2
                 try
                 {
                     Catelogy localCatelogy = new Catelogy(paramJSONArrayPoxy.getJSONObject(j), 4);
-                    k = i;
                     if (localCatelogy.getSensitiveFlag() == 0)
                     {
-                        k = i;
                         if (TextUtils.isEmpty(localCatelogy.getImgUrl()))
                         {
                             int m = localCatelogy.getColumNum();
-                            k = i;
                             if (m != 1)
-                                k = i + 1;
+                                k++;
                         }
                     }
-                    j += 1;
-                    i = k;
                 }
                 catch (JSONException localJSONException)
                 {
-                    while (true)
-                    {
-                        localJSONException.printStackTrace();
-                        k = i;
-                    }
+                    localJSONException.printStackTrace();
                 }
             }
         }
-        int k = 0;
-        label107: return k;
+        return k;
     }
 
-    protected final View a(LayoutInflater paramLayoutInflater)
+    protected final View a(LayoutInflater layoutInflater)
     {
-        paramLayoutInflater = paramLayoutInflater.inflate(2130903251, null);
-        this.p = ((ListView)paramLayoutInflater.findViewById(2131165251));
-        this.p.setSelector(17170445);
-        return paramLayoutInflater;
+        View inflate = layoutInflater.inflate(R.layout.category_level_2_fragment, null);//2130903251
+        this.p = ((ListView)inflate.findViewById(R.id.listView));//2131165251
+        this.p.setSelector(android.R.color.transparent);//17170445
+        return inflate;
     }
 
     public final void a(_AF paramaf)
@@ -676,16 +649,10 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
     {
         if (paramCatelogy.getLevel2Cid().equals("99994444"))
             JDMtaUtils.sendCommonData(this.thisActivity, "CateCustomize_Scategory_Favor", paramCatelogy.getLevel3Cid() + "_" + paramCatelogy.getNum(), "", JDNewCategoryFragment.class, "", paramString, "");
-        do
-        {
-            return;
-            if (!paramCatelogy.getLevel2Cid().equals("44449999"))
-                continue;
+        else if (paramCatelogy.getLevel2Cid().equals("44449999"))
             JDMtaUtils.sendCommonData(this.thisActivity, "CateCustomize_Scategory_Hot", paramCatelogy.getLevel3Cid(), "", JDNewCategoryFragment.class, "", paramString, "");
-            return;
-        }
-        while (!paramCatelogy.getLevel2Cid().equals("99999999"));
-        JDMtaUtils.sendCommonData(this.thisActivity, "CateCustomize_Scategory_Special", paramCatelogy.getAction(), "", JDNewCategoryFragment.class, "", paramString, "");
+        else if(paramCatelogy.getLevel2Cid().equals("99999999"));
+            JDMtaUtils.sendCommonData(this.thisActivity, "CateCustomize_Scategory_Special", paramCatelogy.getAction(), "", JDNewCategoryFragment.class, "", paramString, "");
     }
 
     public final void a(boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3, boolean paramBoolean4)
@@ -693,17 +660,65 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
         a(paramBoolean1, paramBoolean2, paramBoolean3, paramBoolean4, this.i);
     }
 
-    public final void a(boolean paramBoolean1, boolean paramBoolean2, boolean paramBoolean3, boolean paramBoolean4, boolean paramBoolean5)
+    public final void a(final boolean paramBoolean1, final boolean paramBoolean2, final boolean paramBoolean3, final boolean paramBoolean4, final boolean paramBoolean5)
     {
         post(new Runnable(){//v(this)
             @Override
             public void run() {
-                if (this.a.isAdded())
-                    this.a.l.setVisibility(0);
+                if (RecommendL2CategoryFragment.this.isAdded())
+                    RecommendL2CategoryFragment.this.l.setVisibility(View.VISIBLE);
             }
         });
-        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
-        localHttpSetting.setListener(new w(this, new ExceptionReporter(localHttpSetting), paramBoolean1, paramBoolean2, paramBoolean3, paramBoolean4, paramBoolean5));
+        final HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+        localHttpSetting.setListener(new HttpGroup.OnCommonListener(){//w(this, new ExceptionReporter(localHttpSetting), paramBoolean1, paramBoolean2, paramBoolean3, paramBoolean4, paramBoolean5)
+            private ExceptionReporter b = new ExceptionReporter(localHttpSetting);
+            private boolean c = paramBoolean1;
+            private boolean d = paramBoolean2;
+            private boolean e = paramBoolean3;
+            private boolean f = paramBoolean4;
+            private boolean g = paramBoolean5;
+            @Override
+            public void onReady(HttpGroup.HttpSettingParams paramHttpSettingParams) {
+                RecommendL2CategoryFragment.this.post(new x(this));
+            }
+
+
+            @Override
+            public void onError(HttpGroup.HttpError paramHttpError) {
+                RecommendL2CategoryFragment.this.post(new y(this));
+                if (RecommendL2CategoryFragment.this.w != null)
+                    RecommendL2CategoryFragment.this.w.a(this.d, RecommendL2CategoryFragment.this.v, RecommendL2CategoryFragment.a(RecommendL2CategoryFragment.this.u), this.g);
+                RecommendL2CategoryFragment.this.post(new z(this));
+            }
+
+            @Override
+            public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
+                if (!this.f)
+                {
+                    if ((this.c) || (!this.g))
+                        RecommendL2CategoryFragment.this.a(false, false, false, true, true);
+                    RecommendL2CategoryFragment.this.post(new aa(this));
+                    JSONArrayProxy data = paramHttpResponse.getJSONObject().getJSONArrayOrNull("data");
+                    if (((data == null) || (data.length() <= 0)) && (this.d))
+                    {
+                        if (RecommendL2CategoryFragment.this.w != null)
+                            RecommendL2CategoryFragment.this.w.a(this.d, RecommendL2CategoryFragment.this.v, RecommendL2CategoryFragment.a(RecommendL2CategoryFragment.this.u), this.g);
+                    }else{
+                        RecommendL2CategoryFragment.this.u = RecommendL2CategoryFragment.this.a(data, 4);
+                        if (RecommendL2CategoryFragment.this.u.size() == 0)//if-nez v0, :cond_8
+                            RecommendL2CategoryFragment.this.v = false;
+                        else
+                            RecommendL2CategoryFragment.this.v = true;
+                        if ((this.c) || (this.e))
+                            RecommendL2CategoryFragment.this.post(new ab(this));
+                        if (RecommendL2CategoryFragment.this.w != null)
+                            RecommendL2CategoryFragment.this.w.a(this.d, RecommendL2CategoryFragment.this.v, RecommendL2CategoryFragment.a(RecommendL2CategoryFragment.this.u), this.g);
+                        RecommendL2CategoryFragment.this.post(new ae(this));
+                    }
+
+                }
+            }
+        });
         localHttpSetting.setFunctionId("commonCatalogs");
         localHttpSetting.setHost(Configuration.getPortalHost());
         String str = "0";
@@ -714,25 +729,20 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
         localHttpSetting.putJsonParam("uid", s);
         localHttpSetting.putJsonParam("guid", t);
         localHttpSetting.putJsonParam("token", Md5Encrypt.md5(s + t + "81395f50b94bb4891a4ce4ffb6ccf64b"));
-        if (!paramBoolean1)
-        {
-            if (!paramBoolean5)
-                break label234;
-            localHttpSetting.setLocalFileCache(true);
-            localHttpSetting.setLocalFileCacheTime(3600000L);
-            if (!paramBoolean4)
-                break label225;
-            localHttpSetting.setCacheMode(4);
-        }
-        while (true)
-        {
+        if (paramBoolean1){//if-nez p1, :cond_1
+            if (paramBoolean5) {//if-eqz p5, :cond_3
+                localHttpSetting.setLocalFileCache(true);
+                localHttpSetting.setLocalFileCacheTime(3600000L);
+                if (paramBoolean4)//if-eqz p4, :cond_2
+                    localHttpSetting.setCacheMode(4);
+                else
+                    localHttpSetting.setCacheMode(0);
+            }else
+                a(true);
+        }else{
             localHttpSetting.setBussinessId(300);
             this.thisActivity.getHttpGroupaAsynPool().add(localHttpSetting);
             a("-1", 1);
-            return;
-            label225: localHttpSetting.setCacheMode(0);
-            continue;
-            label234: a(true);
         }
     }
 

@@ -6,22 +6,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
-import com.jingdong.app.mall.category.view.ScrollTabHolder;
 import com.zy.app.mall.category.fragment.ScrollTabHolderFragment;
+import com.zy.app.mall.category.view.ScrollTabHolder;
 
 /**
  * Created by robin on 16-8-22.
  */
 public abstract class ScrollTabHolderPagerAdapter extends FragmentPagerAdapter {
-    private SparseArrayCompat<ScrollTabHolder._I> a = new SparseArrayCompat();
-    private ScrollTabHolder._I b;
+    private SparseArrayCompat<ScrollTabHolder> a = new SparseArrayCompat();
+    private ScrollTabHolder b;
 
     public ScrollTabHolderPagerAdapter(FragmentManager paramFragmentManager)
     {
         super(paramFragmentManager);
     }
 
-    public final SparseArrayCompat<ScrollTabHolder._I> a()
+    public final SparseArrayCompat<ScrollTabHolder> a()
     {
         return this.a;
     }
@@ -32,7 +32,7 @@ public abstract class ScrollTabHolderPagerAdapter extends FragmentPagerAdapter {
     {
     }
 
-    public final void a(ScrollTabHolder._I parami)
+    public final void a(ScrollTabHolder parami)
     {
         this.b = parami;
     }
