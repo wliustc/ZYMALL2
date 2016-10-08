@@ -1,6 +1,20 @@
 package com.jingdong.app.mall.category.adapter;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.zy.common.entity.Catelogy;
+import com.zy.common.utils.DPIUtil;
+import com.zy.common.utils.JDImageUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by robin on 16-8-25.
