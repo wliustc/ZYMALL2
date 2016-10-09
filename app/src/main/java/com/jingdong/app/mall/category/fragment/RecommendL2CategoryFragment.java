@@ -327,7 +327,7 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
                             @Override
                             public void run() {
                                 if (RecommendL2CategoryFragment.this.isAdded())
-                                    RecommendL2CategoryFragment.this.l.setVisibility(8);
+                                    RecommendL2CategoryFragment.this.l.setVisibility(View.GONE);
                             }
                         });
                     }

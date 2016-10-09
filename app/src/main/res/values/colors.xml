@@ -209,7 +209,7 @@
     <color name="category_new__dark_font">#ff252525</color><!-- ff -->
     <color name="fg">#ffe5e5e5</color>
     <color name="fh">#ff232326</color>
-    <color name="fi">#ff686868</color>
+    <color name="category_new_level3_font">#ff686868</color><!-- fi -->
     <color name="category_new_red_font">#fff15353</color><!-- "fj" -->
     <color name="fk">#ff000000</color>
     <color name="fl">#ffc4c4c4</color>
@@ -798,7 +798,7 @@
     <color name="vd">#ff232326</color>
     <color name="ve">#fff23030</color>
     <color name="vf">#ff51545a</color>
-    <color name="vg">#ff999999</color>
+    <color name="pdn_gray">#ff999999</color><!-- vg -->
     <color name="vh">#fffb5e5e</color>
     <color name="vi">#4dffffff</color>
     <color name="vj">#fff0f2f5</color>
