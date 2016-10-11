@@ -6,7 +6,7 @@
     <string name="d">请选择照片</string>
     <string name="e">您的手机没有安装SD卡，请安装SD卡后重试！</string>
     <string name="f">打开相机失败</string>
-    <string name="g">取消</string>
+    <string name="cancel">取消</string><!--  -->
     <string name="h">暂时无法打开此页面，请稍后重试</string>
     <string name="i">载入失败 点击重试</string>
     <string name="j">@string/n</string>
@@ -478,7 +478,7 @@
     <string name="ln">请检查一下您的网络，重新加载吧</string>
     <string name="lo">查看订单</string>
     <string name="lp">查看商品详情</string>
-    <string name="lq">清空常用分类</string>
+    <string name="cleanCommonCatagory">清空常用分类</string><!-- lq -->
     <string name="lr">清空全部消息</string>
     <string name="ls">清空失败</string>
     <string name="lt">清空成功</string>
@@ -516,7 +516,7 @@
     <string name="mo">标题：</string>
     <string name="mp">评论</string>
     <string name="mq">京东活动</string>
-    <string name="mr">常用分类</string>
+    <string name="commonCatagory">常用分类</string><!-- "mr" -->
     <string name="ms">普通快递</string>
     <string name="mt">单位</string>
     <string name="mu">单位名称：</string>
@@ -2197,7 +2197,7 @@
     <string name="atp">匹配地图坐标</string>
     <string name="atq">就是这里</string>
     <string name="atr">请选择地图上的位置</string>
-    <string name="ats">确定</string>
+    <string name="ok">确定</string><!-- "ats" -->
     <string name="att">在线支付</string>
     <string name="atu">开启支付密码>></string>
     <string name="atv">您尚未开启支付密码,请点击\"开启支付密码\"</string>

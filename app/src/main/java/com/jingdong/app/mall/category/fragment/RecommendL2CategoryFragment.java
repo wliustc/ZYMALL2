@@ -14,6 +14,7 @@ import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.adapter.RightListAdapter;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.b.RightTitleColumn;
@@ -275,7 +276,7 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
                     @Override
                     public void run() {
                         if (RecommendL2CategoryFragment.this.isAdded())
-                            RecommendL2CategoryFragment.this.l.setVisibility(8);
+                            RecommendL2CategoryFragment.this.l.setVisibility(View.GONE);
                     }
                 });
             }
@@ -310,7 +311,7 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
                                 public void run() {
                                     if (RecommendL2CategoryFragment.this.g == null)
                                     {
-                                        RecommendL2CategoryFragment.this.g = new e(RecommendL2CategoryFragment.this.thisActivity);
+                                        RecommendL2CategoryFragment.this.g = new RightListAdapter(RecommendL2CategoryFragment.this.thisActivity);
                                         RecommendL2CategoryFragment.this.g.a(new ac(this));
                                     }
                                     RecommendL2CategoryFragment.this.f.clear();

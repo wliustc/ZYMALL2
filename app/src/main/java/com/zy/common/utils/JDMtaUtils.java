@@ -11,6 +11,10 @@ import com.zy.cleanmvp.ui.BaseFragment;
  * Created by Robin on 2016/5/8.
  */
 public class JDMtaUtils {
+    public static void onClick(Context paramContext, String paramString1, String paramString2) {
+        sendCommonData(paramContext, paramString1, "", "onClick", paramString2, "", "", "");
+    }
+
     public static void onClick(Context context, String paramString1, String paramString3, String paramString2) {
         sendCommonData(context, paramString1, paramString3, "onClick", paramString2, "", "", "");
     }
@@ -95,4 +99,5 @@ public class JDMtaUtils {
     public static void init(Context applicationContext) {
 
     }
+
 }

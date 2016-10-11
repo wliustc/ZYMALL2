@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.jingdong.app.mall.WebActivity;
-import com.jingdong.app.mall.category.adapter.RightListAdapter;
 import com.jingdong.app.mall.promotion.PromotionMessageActivity;
 import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
 import com.jingdong.app.mall.utils.JDEbookUtil;
@@ -35,6 +34,7 @@ import com.jingdong.common.utils.JSONObjectProxy;
 import com.jingdong.common.utils.URLParamMap;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.adapter.RightListAdapter;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.fragment.CategoryFragment;

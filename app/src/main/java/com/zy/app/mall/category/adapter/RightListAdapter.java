@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.category.adapter;
+package com.zy.app.mall.category.adapter;
 
 import android.content.Context;
 import android.os.Build;
@@ -11,8 +11,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jingdong.common.ranking.RankingController;
+import com.jingdong.common.ranking.activity.RankingListActivity;
+import com.jingdong.common.ui.JDDialog;
+import com.jingdong.common.ui.JDDialogFactory;
 import com.zy.app.mall.R;
+import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.a.BorderDrawable;
 import com.zy.app.mall.category.adapter.IRightAdapterListener;
+import com.zy.app.mall.category.b.CategoryConstants;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.b.RightTitleColumn;
@@ -20,6 +27,7 @@ import com.zy.app.mall.category.view.CategoryFooter;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.JDImageUtils;
+import com.zy.common.utils.JDMtaUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,57 +147,96 @@ public class RightListAdapter extends BaseAdapter {
     {
         int j = 0;
         Object localObject1 = (RightColumnBase)this.c.get(paramInt);//v0
-        this.a = getItemViewType(paramInt);
-        Object localObject2;
         Holder holder = null;
 
         switch (this.a) {
             case 0://:pswitch_0
-                String str1;
                 if (paramView == null) {//if-nez p2, :cond_1
-                    paramView = LayoutInflater.from(this.b).inflate(2130903259, null);
+                    paramView = LayoutInflater.from(this.b).inflate(R.layout.category_right_item_title, null);//2130903259
                     holder = new Holder();//v2
-                    holder.a = ((TextView) paramView.findViewById(2131166252));
-                    holder.e = ((LinearLayout) paramView.findViewById(2131166253));
-                    holder.f = ((LinearLayout) paramView.findViewById(2131166254));
+                    holder.a = ((TextView) paramView.findViewById(R.id.right_item_title));//2131166252
+                    holder.e = ((LinearLayout) paramView.findViewById(R.id.ll_delete));//2131166253
+                    holder.f = ((LinearLayout) paramView.findViewById(R.id.ll_right_item_goto_ranking_list));//2131166254
                     paramView.setTag(holder);
                 } else {
                     holder = (Holder) paramView.getTag();
                 }
                 //:goto_1
-                localObject2 = ((RightTitleColumn) localObject1).b();
-                str1 = ((RightTitleColumn) localObject1).d();
-                if (!TextUtils.isEmpty((CharSequence) localObject2)) {//if-nez v1, :cond_2
-                    holder.a.setText((CharSequence) localObject2);
+                final CharSequence str3 = ((RightTitleColumn) localObject1).b();
+                final String str1 = ((RightTitleColumn) localObject1).d();
+                if (!TextUtils.isEmpty((CharSequence) str3)) {//if-nez v1, :cond_2
+                    holder.a.setText((CharSequence) str3);
                 } else {//:cond_2
                     holder.a.setVisibility(View.GONE);
                 }
                 //:goto_2
-                if (this.b.getString(2131231218).equals(localObject2)) {//if-eqz v1, :cond_3
+                if (this.b.getString(R.string.commonCatagory).equals(str3.toString())) {//if-eqz v1, :cond_3    //2131231218
                     this.d.a(holder.e);
                     holder.e.setVisibility(View.VISIBLE);
-                    holder.e.setOnClickListener(new f(this));
+                    holder.e.setOnClickListener(new View.OnClickListener(){//f(this)
+                        @Override
+                        public void onClick(View v) {
+                            JDMtaUtils.onClick(RightListAdapter.this.b, "CateCustomize_Clear", JDNewCategoryFragment.class.getName());
+                            final JDDialog dialog = JDDialogFactory.getInstance().createJdDialogWithStyle2(RightListAdapter.this.b
+                                    , RightListAdapter.this.b.getString(R.string.cleanCommonCatagory) //2131231180
+                                    , RightListAdapter.this.b.getString(R.string.cancel) //2131230726
+                                    , RightListAdapter.this.b.getString(R.string.ok));//2131232844
+                            dialog.setOnLeftButtonClickListener(new View.OnClickListener(){//g(this, dialog)
+                                @Override
+                                public void onClick(View v) {
+                                    JDMtaUtils.onClick(RightListAdapter.this.b, "CateCustomize_ClearCancel", JDNewCategoryFragment.class.getName());
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.setOnRightButtonClickListener(new View.OnClickListener(){//h(this, dialog)
+                                @Override
+                                public void onClick(View v) {
+                                    JDMtaUtils.onClick(RightListAdapter.this.b, "CateCustomize_ClearConfirm", JDNewCategoryFragment.class.getName());
+                                    RightListAdapter.this.d.a();
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.show();
+                        }
+                    });
                 } else {
-                    holder.e.setVisibility(8);
+                    holder.e.setVisibility(View.GONE);
                 }
                 //:goto_3
                 boolean bool1 = ((RightTitleColumn) localObject1).c();
-                String str2 = ((RightTitleColumn) localObject1).e();
-                boolean bool2 = ((RightTitleColumn) localObject1).a();
+                final String str2 = ((RightTitleColumn) localObject1).e();
+                final boolean bool2 = ((RightTitleColumn) localObject1).a();
                 if (bool1) {//if-eqz v7, :cond_4
                     holder.f.setVisibility(View.VISIBLE);
-                    holder.f.setOnClickListener(new i(this, str1, bool2, str2, (String) localObject2));
+                    holder.f.setOnClickListener(new View.OnClickListener(){//i(this, str1, bool2, str2, (String) localObject2)
+                        @Override
+                        public void onClick(View v) {
+                            if ("44449999".equals(str1))
+                            {
+                                RankingController.a(RightListAdapter.this.b, CategoryConstants.a);
+                                JDMtaUtils.sendCommonData(RightListAdapter.this.b, "CateCustomize_ProcurementRanking", "hot", "", JDNewCategoryFragment.class.getName(), "", RankingListActivity.class.getName(), "");
+                                return;
+                            }
+                            if (bool2)
+                            {
+                                RankingController.a(RightListAdapter.this.b, "", str1, str2, str3.toString(), "Classification", "rank3008");
+                                return;
+                            }
+                            JDMtaUtils.sendCommonData(RightListAdapter.this.b, "CateCustomize_ProcurementRanking", str1, "", JDNewCategoryFragment.class.getName(), "", RankingListActivity.class.getName(), "");
+                            RankingController.a(RightListAdapter.this.b, "", str1, str2, str3.toString(), "Classification", "rank3001");
+                        }
+                    });
                 }else {
                     holder.f.setVisibility(View.GONE);
                 }
                 break;
             case 1://:pswitch_1
                 if (paramView == null) {//if-nez p2, :cond_7
-                    paramView = LayoutInflater.from(this.b).inflate(2130903257, null);
+                    paramView = LayoutInflater.from(this.b).inflate(R.layout.category_right_item_have_picture, null);//2130903257
                     holder = new Holder();
-                    holder.b = ((LinearLayout)paramView.findViewById(2131166234));
-                    holder.c = ((LinearLayout)paramView.findViewById(2131166237));
-                    holder.d = ((LinearLayout)paramView.findViewById(2131166240));
+                    holder.b = ((LinearLayout)paramView.findViewById(R.id.category_item_have_picture_ll_1));//2131166234
+                    holder.c = ((LinearLayout)paramView.findViewById(R.id.category_item_have_picture_ll_2));//2131166237
+                    holder.d = ((LinearLayout)paramView.findViewById(R.id.category_item_have_picture_ll_3));//2131166240
                     paramView.setTag(holder);
                 }else {
                     holder = (Holder)paramView.getTag();
@@ -226,11 +273,11 @@ public class RightListAdapter extends BaseAdapter {
             case 2://:pswitch_2
                 int m;
                 if (paramView == null) {//if-nez p2, :cond_b
-                    paramView = LayoutInflater.from(this.b).inflate(2130903258, null);
+                    paramView = LayoutInflater.from(this.b).inflate(R.layout.category_right_item_no_picture, null);//2130903258
                     holder = new Holder();
-                    holder.b = ((LinearLayout) paramView.findViewById(2131166243));
-                    holder.c = ((LinearLayout) paramView.findViewById(2131166246));
-                    holder.d = ((LinearLayout) paramView.findViewById(2131166249));
+                    holder.b = ((LinearLayout) paramView.findViewById(R.id.category_item_no_picture_ll_1));//2131166243
+                    holder.c = ((LinearLayout) paramView.findViewById(R.id.category_item_no_picture_ll_2));//2131166246
+                    holder.d = ((LinearLayout) paramView.findViewById(R.id.category_item_no_picture_ll_3));//2131166249
                     holder.g = false;
                     holder.h = false;
                     paramView.setTag(holder);
@@ -254,12 +301,12 @@ public class RightListAdapter extends BaseAdapter {
                     k = DPIUtil.dip2px(8.0F); ;
                 }
                 paramView.setPadding(0, j, 0, k);
-                localObject2 = new com.jingdong.app.mall.category.a.a[3];
+                BorderDrawable[] borderDrawables = new BorderDrawable[3];
 
                 for (j = 0; j < 3; j++){//if-ge v2, v4, :cond_d
-                    localObject2[j] = new com.jingdong.app.mall.category.a.a();
-                    localObject2[j].a(false, false, false, false);
-                    localObject2[j].a(-1841687, 1);
+                    borderDrawables[j] = new BorderDrawable();
+                    borderDrawables[j].a(false, false, false, false);
+                    borderDrawables[j].a(-1841687, 1);
                 }
                 if ((!holder.g) && (paramInt > 0)) {//if-nez v2, :cond_e if-gtz p1, :cond_12
                     holder.g = true;
@@ -281,13 +328,13 @@ public class RightListAdapter extends BaseAdapter {
                 //:cond_e
                 //:goto_b
                 if (holder.h) {//if-eqz v2, :cond_10
-                    localObject2[0].a(true);
+                    borderDrawables[0].a(true);
                     if (1 == m)
-                        localObject2[0].b(true);
+                        borderDrawables[0].b(true);
                     if (2 != i)
-                        localObject2[0].d(true);
+                        borderDrawables[0].d(true);
                 }
-                localObject2[0].c(true);
+                borderDrawables[0].c(true);
 
                 paramInt = ((RightListColumn) localObject1).c();
                 if (paramInt == 1) {//if-ne v2, v4, :cond_16
@@ -300,64 +347,64 @@ public class RightListAdapter extends BaseAdapter {
                     holder.d.setVisibility(View.INVISIBLE);
                     if (holder.h) {//if-eqz v2, :cond_18
                         if (1 == m)//if-ne v2, v6, :cond_17
-                            localObject2[1].b(true);
+                            borderDrawables[1].b(true);
                         if (2 != i) {//if-eq v2, v5, :cond_18
-                            localObject2[0].d(true);
-                            localObject2[1].d(true);
+                            borderDrawables[0].d(true);
+                            borderDrawables[1].d(true);
                         }
                     }//:cond_18
-                    localObject2[1].c(true);
+                    borderDrawables[1].c(true);
                 }else if (paramInt == 3){//if-ne v2, v4, :cond_11
                     a(((RightListColumn)localObject1).a(0), holder.b, false);
                     a(((RightListColumn)localObject1).a(1), holder.c, false);
                     a(((RightListColumn)localObject1).a(2), holder.d, false);
-                    localObject2[1].c(true);
+                    borderDrawables[1].c(true);
                     if (holder.h)
                     {//if-eqz v2, :cond_1c
                         if (1 == m)
                         {
-                            localObject2[1].b(true);
-                            localObject2[2].b(true);
+                            borderDrawables[1].b(true);
+                            borderDrawables[2].b(true);
                         }
                         if (2 != i)
                         {
-                            localObject2[0].d(true);
-                            localObject2[1].d(true);
-                            localObject2[2].d(true);
+                            borderDrawables[0].d(true);
+                            borderDrawables[1].d(true);
+                            borderDrawables[2].d(true);
                         }
-                        localObject2[2].c(true);
+                        borderDrawables[2].c(true);
                     }//:cond_1c
                     if (2 == i){//if-ne v2, v5, :cond_11
-                        localObject2[0].d(true);
-                        localObject2[1].d(true);
-                        localObject2[2].d(true);
+                        borderDrawables[0].d(true);
+                        borderDrawables[1].d(true);
+                        borderDrawables[2].d(true);
                     }
                 }
                 //:cond_11
                 //:goto_c
                 if (Build.VERSION.SDK_INT > 16) {//if-lt v2, v4, :cond_1d
-                    holder.b.setBackground(localObject2[0]);
-                    holder.c.setBackground(localObject2[1]);
-                    holder.d.setBackground(localObject2[2]);
+                    holder.b.setBackground(borderDrawables[0]);
+                    holder.c.setBackground(borderDrawables[1]);
+                    holder.d.setBackground(borderDrawables[2]);
                 } else {
-                    holder.b.setBackgroundDrawable(localObject2[0]);
-                    holder.c.setBackgroundDrawable(localObject2[1]);
-                    holder.d.setBackgroundDrawable(localObject2[2]);
+                    holder.b.setBackgroundDrawable(borderDrawables[0]);
+                    holder.c.setBackgroundDrawable(borderDrawables[1]);
+                    holder.d.setBackgroundDrawable(borderDrawables[2]);
                 }
                 //:goto_d
                 if (((RightListColumn)localObject1).b() != 1) {//if-ne v0, v2, :cond_1e
-                    holder.c.setVisibility(8);
-                    holder.d.setVisibility(8);
+                    holder.c.setVisibility(View.GONE);
+                    holder.d.setVisibility(View.GONE);
                     holder.b.setGravity(3);
-                    holder = (TextView)holder.b.getChildAt(0);
-                    holder.setGravity(16);
-                    holder.setPadding(16, 0, 16, 0);
+                    TextView textView = (TextView)holder.b.getChildAt(0);
+                    textView.setGravity(16);
+                    textView.setPadding(16, 0, 16, 0);
                 }else {
                     holder.b.setGravity(17);
                     localObject1 = (TextView)holder.b.getChildAt(0);
                     ((TextView)localObject1).setGravity(17);
-                    holder = (TextView)holder.c.getChildAt(0);
-                    ((TextView)localObject1).setPadding(holder.getPaddingLeft(), 0, holder.getPaddingRight(), 0);
+                    TextView textView = (TextView)holder.c.getChildAt(0);
+                    ((TextView)localObject1).setPadding(textView.getPaddingLeft(), 0, textView.getPaddingRight(), 0);
                 }
                 break;
             case -1://:pswitch_3
@@ -365,7 +412,7 @@ public class RightListAdapter extends BaseAdapter {
                     i = getCount();
                     paramInt = this.e.size() + (paramInt - i);
                     if (this.e.get(paramInt) != null)//if-eqz v0, :cond_0
-                        return ((CategoryFooter)this.e.get(paramInt)).a(paramInt, paramView, holder);
+                        return ((CategoryFooter)this.e.get(paramInt)).a(paramInt, paramView, paramViewGroup);
                 }
                     break;
 
