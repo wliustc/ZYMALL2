@@ -1,11 +1,13 @@
-package com.jingdong.app.mall.category.fragment;
+package com.zy.app.mall.category.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.jingdong.common.config.Configuration;
@@ -14,11 +16,13 @@ import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
+import com.zy.app.mall.category.adapter.IRightAdapterListener;
 import com.zy.app.mall.category.adapter.RightListAdapter;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.b.RightTitleColumn;
 import com.zy.app.mall.category.fragment.L2CategoryFragment;
+import com.zy.app.mall.category.view.CategoryFooter;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
@@ -312,12 +316,37 @@ public class RecommendL2CategoryFragment extends L2CategoryFragment {
                                     if (RecommendL2CategoryFragment.this.g == null)
                                     {
                                         RecommendL2CategoryFragment.this.g = new RightListAdapter(RecommendL2CategoryFragment.this.thisActivity);
-                                        RecommendL2CategoryFragment.this.g.a(new ac(this));
+                                        RecommendL2CategoryFragment.this.g.a(new IRightAdapterListener(){//ac(this)
+                                            @Override
+                                            public void a() {
+                                                RecommendL2CategoryFragment.this.a(true, false, false, false);
+                                            }
+
+                                            @Override
+                                            public void a(View paramView) {
+                                                RecommendL2CategoryFragment.this.h = paramView;
+                                            }
+
+                                            @Override
+                                            public void a(LinearLayout paramLinearLayout, final Catelogy paramCatelogy) {
+                                                paramLinearLayout.setOnClickListener(new View.OnClickListener(){//f(this.a.a.a, paramCatelogy)
+                                                    @Override
+                                                    public void onClick(View v) {
+                                                        RecommendL2CategoryFragment.this.a(paramCatelogy, v);
+                                                    }
+                                                });
+                                            }
+                                        });
                                     }
                                     RecommendL2CategoryFragment.this.f.clear();
-                                    RecommendL2CategoryFragment.this.f.addAll(RecommendL2CategoryFragment.c(this.a.a));
+                                    RecommendL2CategoryFragment.this.f.addAll(RecommendL2CategoryFragment.this.u);
                                     RecommendL2CategoryFragment.this.g.a(RecommendL2CategoryFragment.this.f);
-                                    RecommendL2CategoryFragment.this.g.a(new ad(this));
+                                    RecommendL2CategoryFragment.this.g.a(new CategoryFooter(){//ad(this)
+                                        @Override
+                                        public View a(int paramInt, View paramView, ViewGroup paramViewGroup) {
+                                            return LayoutInflater.from(RecommendL2CategoryFragment.this.thisActivity).inflate(R.layout.category_footer, null);
+                                        }
+                                    });
                                     RecommendL2CategoryFragment.this.p.setAdapter(RecommendL2CategoryFragment.this.g);
                                     RecommendL2CategoryFragment.this.g.notifyDataSetChanged();
                                 }

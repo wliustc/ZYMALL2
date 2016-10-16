@@ -776,7 +776,7 @@
     <string name="tg">另存新增地址</string>
     <string name="th">电子</string>
     <string name="ti">暂无搜索历史</string>
-    <string name="tj">收起更多分类</string>
+    <string name="en_pack_up_all_data">收起更多分类</string><!-- tj -->
     <string name="en_spread_all_data">展开更多分类</string><!-- tk -->
     <string name="tl">至</string>
     <string name="tm">进入收银台失败，请重试</string>
@@ -2299,7 +2299,7 @@
     <string name="awd">立即节省：</string>
     <string name="awe">原 价：</string>
     <string name="awf">套 装 价：</string>
-    <string name="awg">收起</string>
+    <string name="pack_up_all_data">收起</string><!-- "awg" -->
     <string name="awh">拍照购服务器</string>
     <string name="awi">解析失败</string>
     <string name="awj">您输入的密码不一致，请重新输入</string>
