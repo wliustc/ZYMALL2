@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/bx"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/bw"
+    android:paddingRight="@dimen/bw">
+
+    <Button
+        android:id="@+id/jd_dialog_neg_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/upgrade_dialog_close_selector" />
+
+    <TextView
+        android:id="@+id/jd_dialog_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/c5"
+        android:layout_marginRight="@dimen/c6"
+        android:textColor="@color/a"
+        android:textSize="@dimen/c7" />
+
+    <TextView
+        android:id="@+id/jd_dialog_second_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/c4"
+        android:textColor="@color/v"
+        android:textSize="@dimen/c0" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/jd_dialog_message1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bz"
+                android:lineSpacingExtra="@dimen/by"
+                android:textColor="@color/b"
+                android:textSize="@dimen/c0" />
+
+            <TextView
+                android:id="@+id/jd_dialog_message2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bz"
+                android:lineSpacingExtra="@dimen/by"
+                android:textColor="@color/f"
+                android:textSize="@dimen/c0" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/jd_dialog_pos_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/bt"
+        android:layout_marginTop="@dimen/bs"
+        android:background="@drawable/ay1"
+        android:paddingLeft="@dimen/c3"
+        android:paddingRight="@dimen/c3"
+        android:textColor="@color/x"
+        android:textSize="@dimen/bv" />
+</LinearLayout>

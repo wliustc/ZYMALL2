@@ -13,7 +13,7 @@
     <color name="k">#ffbfbfbf</color>
     <color name="l">#ffc7c7c7</color>
     <color name="m">#ffd7d7d7</color>
-    <color name="n">#ffdcdcdc</color>
+    <color name="c_DCDCDC">#ffdcdcdc</color><!-- n -->
     <color name="p">#ffe0e0e0</color>
     <color name="q">#ffe1e1e1</color>
     <color name="r">#ffe9321f</color>
@@ -21,8 +21,8 @@
     <color name="t">#fff15353</color>
     <color name="u">#fff3f5f7</color>
     <color name="v">#fff44764</color>
-    <color name="w">#fff8f8f8</color>
-    <color name="x">#ffffffff</color>
+    <color name="c_F8F8F8">#fff8f8f8</color><!-- w -->
+    <color name="c_FFFFFF">#ffffffff</color><!-- x -->
     <color name="y">#ffeaedf1</color>
     <color name="z">#ff232326</color>
     <color name="a0">#ff252525</color>

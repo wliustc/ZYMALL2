@@ -116,7 +116,7 @@
     <dimen name="cl">4.0px</dimen>
     <dimen name="cm">20.0px</dimen>
     <dimen name="cn">-8.0px</dimen>
-    <dimen name="co">230.0dip</dimen>
+    <dimen name="base_ui_jd_dialog_content_maxheight">230.0dip</dimen><!-- co -->
     <dimen name="cp">17.0dip</dimen>
     <dimen name="cq">22.5sp</dimen>
     <dimen name="cr">19.0dip</dimen>

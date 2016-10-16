@@ -1,13 +1,32 @@
-package com.jingdong.common.ui;
+package com.zy.common.ui;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.zy.app.mall.R;
 
 /**
  * Created by Robin on 2016/10/11.
  */
 public class JDDialog extends Dialog {
-    private View.OnClickListener cancelClickListener = new ai(this);
+    private View.OnClickListener cancelClickListener = new View.OnClickListener(){//ai(this)
+        @Override
+        public void onClick(View v) {
+            JDDialog.this.cancel();
+        }
+    };
     public EditText editText;
     public ImageView imageView;
     public LinearLayout inputLayout;
@@ -22,7 +41,7 @@ public class JDDialog extends Dialog {
 
     public JDDialog(Context paramContext)
     {
-        super(paramContext, R.style.JD_Dialog_Common);
+        super(paramContext, R.style.JD_Dialog_Common);//2131296257
         setCancelable(false);
     }
 
@@ -60,13 +79,13 @@ public class JDDialog extends Dialog {
         {
             if (!TextUtils.isEmpty(paramCharSequence))
             {
-                this.messageView.setVisibility(0);
+                this.messageView.setVisibility(View.VISIBLE);
                 this.messageView.setText(paramCharSequence);
-            }
+            }else
+                this.messageView.setVisibility(View.GONE);
         }
-        else
-            return;
-        this.messageView.setVisibility(8);
+        return;
+
     }
 
     public void setMessageColor(int paramInt)
@@ -108,10 +127,10 @@ public class JDDialog extends Dialog {
         {
             if (!TextUtils.isEmpty(paramString))
                 this.secondMessageView.setText(paramString);
+            else
+                this.secondMessageView.setVisibility(View.GONE);
         }
-        else
-            return;
-        this.secondMessageView.setVisibility(8);
+        return;
     }
 
     public void setSecondTitle(String paramString)
@@ -120,10 +139,10 @@ public class JDDialog extends Dialog {
         {
             if (!TextUtils.isEmpty(paramString))
                 this.secondTitleView.setText(paramString);
+            else
+                this.secondTitleView.setVisibility(View.GONE);
         }
-        else
-            return;
-        this.secondTitleView.setVisibility(8);
+        return;
     }
 
     public void setTipMessageClickListener(View.OnClickListener paramOnClickListener)
@@ -138,45 +157,36 @@ public class JDDialog extends Dialog {
         {
             if (!TextUtils.isEmpty(paramString))
             {
-                this.titleView.setVisibility(0);
+                this.titleView.setVisibility(View.VISIBLE);
                 this.titleView.setText(paramString);
             }
+            else
+                this.titleView.setVisibility(View.GONE);
         }
-        else
-            return;
-        this.titleView.setVisibility(8);
+        return;
     }
 
     protected void setTotalHeightofListView(ListView paramListView)
     {
         ListAdapter localListAdapter = paramListView.getAdapter();
-        if (localListAdapter == null);
-        int j;
-        int i;
-        Object localObject;
-        int k;
-        int m;
-        do
-        {
-            return;
-            j = 0;
-            i = 0;
-            while (j < localListAdapter.getCount())
-            {
-                localObject = localListAdapter.getView(j, null, paramListView);
-                ((View)localObject).measure(View.MeasureSpec.makeMeasureSpec(0, 0), View.MeasureSpec.makeMeasureSpec(0, 0));
-                i += ((View)localObject).getMeasuredHeight();
-                j += 1;
+        if (localListAdapter != null){
+            int listViewHeight = 0;
+            for (int j = 0; j < localListAdapter.getCount(); j++){//if-ge v0, v4, :cond_2
+                View localObject = localListAdapter.getView(j, null, paramListView);
+                ((View)localObject).measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                listViewHeight += ((View)localObject).getMeasuredHeight();
+            }//:cond_2
+            ViewGroup.LayoutParams localObject = paramListView.getLayoutParams();
+            int dividerHeight = paramListView.getDividerHeight();
+            int count = localListAdapter.getCount();
+            int maxheight = (int)getContext().getResources().getDimension(R.dimen.base_ui_jd_dialog_content_maxheight);
+            if (dividerHeight * (count - 1) + listViewHeight > maxheight) {
+                ((ViewGroup.LayoutParams) localObject).height = maxheight;
+                paramListView.setLayoutParams((ViewGroup.LayoutParams) localObject);
+                paramListView.requestLayout();
             }
-            localObject = paramListView.getLayoutParams();
-            j = paramListView.getDividerHeight();
-            k = localListAdapter.getCount();
-            m = (int)getContext().getResources().getDimension(R.dimen.base_ui_jd_dialog_content_maxheight);
         }
-        while (j * (k - 1) + i <= m);
-        ((ViewGroup.LayoutParams)localObject).height = m;
-        paramListView.setLayoutParams((ViewGroup.LayoutParams)localObject);
-        paramListView.requestLayout();
+        return;
     }
 
     public void useCancelClickEvent(View paramView)

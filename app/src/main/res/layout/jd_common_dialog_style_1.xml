@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/o"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="@dimen/a_"
+    android:layout_marginRight="@dimen/a_"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/aa"
+    android:paddingRight="@dimen/aa">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/jd_dialog_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/a8"
+            android:layout_marginTop="@dimen/a9"
+            android:gravity="center"
+            android:textColor="@color/b"
+            android:textSize="@dimen/n" />
+    </ScrollView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2.0px"
+        android:layout_marginTop="-1.0dip"
+        android:background="@drawable/jd_dialog_common_divider" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/u"
+        android:layout_marginBottom="@dimen/v"
+        android:layout_marginTop="@dimen/w"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/jd_dialog_pos_button"
+            android:layout_width="@dimen/t"
+            android:layout_height="@dimen/r"
+            android:layout_weight="1.0"
+            android:background="@drawable/button_dialog_pos"
+            android:textColor="@color/b"
+            android:textSize="@dimen/j" />
+    </LinearLayout>
+</LinearLayout>
