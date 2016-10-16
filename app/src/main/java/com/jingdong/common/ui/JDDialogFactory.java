@@ -121,7 +121,7 @@ public class JDDialogFactory {
         localJDDialog.posButton = ((Button)localJDDialog.findViewById(R.id.jd_dialog_pos_button));//2131165231
         localJDDialog.posButton.setText(paramString2);
         localJDDialog.posButton.setBackgroundResource(R.drawable.button_dialog_neg);
-        localJDDialog.posButton.setTextColor(paramContext.getResources().getColorStateList(R.color.button_dialog_neg_font_color));
+        localJDDialog.posButton.setTextColor(paramContext.getResources().getColorStateList(R.color.button_dialog_neg_font_color));//R.color.b0
         localJDDialog.useCancelClickEvent(localJDDialog.posButton);
         return localJDDialog;
     }

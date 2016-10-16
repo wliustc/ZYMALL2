@@ -17,7 +17,7 @@
             android:id="@+id/jd_dialog_message"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/aqa"
+            android:layout_marginBottom="@dimen/base_ui_jd_dialog4_textview_margin_bottom"
             android:layout_marginTop="@dimen/a9"
             android:gravity="center"
             android:textColor="@color/b"
