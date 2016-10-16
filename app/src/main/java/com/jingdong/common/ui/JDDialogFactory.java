@@ -163,15 +163,15 @@ public class JDDialogFactory {
             throw new IllegalArgumentException("the param rightButtonText can not be empty in this dialog style");
         JDDialog dialog = new JDDialog(paramContext);
         dialog.setContentView(R.layout.jd_common_dialog_style_3);
-        dialog.messageView = ((TextView)dialog.findViewById(R.id.jd_dialog_message));
+        dialog.messageView = ((TextView)dialog.findViewById(R.id.jd_dialog_message));//2131165227
         dialog.messageView.setText(paramString1);
-        dialog.posButton = ((Button)dialog.findViewById(R.id.jd_dialog_pos_button));
+        dialog.posButton = ((Button)dialog.findViewById(R.id.jd_dialog_pos_button));//2131165231
         dialog.posButton.setText(paramString4);
         dialog.useCancelClickEvent(dialog.posButton);
-        dialog.negButton = ((Button)dialog.findViewById(R.id.jd_dialog_neg_button));
+        dialog.negButton = ((Button)dialog.findViewById(R.id.jd_dialog_neg_button));//2131165230
         dialog.negButton.setText(paramString5);
         dialog.useCancelClickEvent(dialog.negButton);
-        dialog.editText = ((EditText)dialog.findViewById(R.id.jd_dialog_input_edit));
+        dialog.editText = ((EditText)dialog.findViewById(R.id.jd_dialog_input_edit));//2131165224
         dialog.imageView = ((ImageView)dialog.findViewById(R.id.jd_dialog_input_image));
         if (!TextUtils.isEmpty(paramString2))
             dialog.editText.setHint(paramString2);
@@ -195,12 +195,12 @@ public class JDDialogFactory {
             throw new IllegalArgumentException("the param items can not be empty in this dialog style");
         ad localad = new ad(paramContext);
         localad.setContentView(R.layout.jd_common_dialog_style_4);
-        localad.messageView = ((TextView)localad.findViewById(R.id.jd_dialog_message));
+        localad.messageView = ((TextView)localad.findViewById(R.id.jd_dialog_message));//2131165227
         localad.messageView.setText(paramString1);
-        localad.posButton = ((Button)localad.findViewById(R.id.jd_dialog_pos_button));
+        localad.posButton = ((Button)localad.findViewById(R.id.jd_dialog_pos_button));//2131165231
         localad.posButton.setText(paramString2);
         localad.useCancelClickEvent(localad.posButton);
-        localad.negButton = ((Button)localad.findViewById(R.id.jd_dialog_neg_button));
+        localad.negButton = ((Button)localad.findViewById(R.id.jd_dialog_neg_button));//2131165230
         localad.negButton.setText(paramString3);
         localad.useCancelClickEvent(localad.negButton);
         localad.a(paramContext, paramBaseAdapter, null);
@@ -247,11 +247,11 @@ public class JDDialogFactory {
             throw new IllegalArgumentException("the param buttonText can not be empty in this dialog style");
         JDDialog dialog = new JDDialog(paramContext);
         dialog.setContentView(R.layout.jd_common_dialog_style_5);
-        dialog.titleView = ((TextView)dialog.findViewById(R.id.jd_dialog_title));
+        dialog.titleView = ((TextView)dialog.findViewById(R.id.jd_dialog_title));//2131165235
         dialog.titleView.setText(paramString1);
-        dialog.messageView = ((TextView)dialog.findViewById(R.id.jd_dialog_message));
+        dialog.messageView = ((TextView)dialog.findViewById(R.id.jd_dialog_message));//2131165227
         dialog.messageView.setText(paramString2);
-        dialog.posButton = ((Button)dialog.findViewById(R.id.jd_dialog_pos_button));
+        dialog.posButton = ((Button)dialog.findViewById(R.id.jd_dialog_pos_button));//2131165231
         dialog.posButton.setText(paramString3);
         dialog.useCancelClickEvent(dialog.posButton);
         return dialog;
@@ -270,14 +270,14 @@ public class JDDialogFactory {
             throw new IllegalArgumentException("the param rightButtonText can not be empty in this dialog style");
         JDDialog dialog = new JDDialog(paramContext);
         dialog.setContentView(R.layout.jd_common_dialog_style_6);
-        dialog.titleView = ((TextView)dialog.findViewById(R.id.jd_dialog_title));
+        dialog.titleView = ((TextView)dialog.findViewById(R.id.jd_dialog_title));//2131165235
         dialog.titleView.setText(paramString1);
-        dialog.messageView = ((TextView)dialog.findViewById(R.id.jd_dialog_message));
+        dialog.messageView = ((TextView)dialog.findViewById(R.id.jd_dialog_message));//2131165227
         dialog.setMessage(paramCharSequence);
-        dialog.posButton = ((Button)dialog.findViewById(R.id.jd_dialog_pos_button));
+        dialog.posButton = ((Button)dialog.findViewById(R.id.jd_dialog_pos_button));//2131165231
         dialog.posButton.setText(paramString2);
         dialog.useCancelClickEvent(dialog.posButton);
-        dialog.negButton = ((Button)dialog.findViewById(R.id.jd_dialog_neg_button));
+        dialog.negButton = ((Button)dialog.findViewById(R.id.jd_dialog_neg_button));//2131165230
         dialog.negButton.setText(paramString3);
         dialog.useCancelClickEvent(dialog.negButton);
         return dialog;

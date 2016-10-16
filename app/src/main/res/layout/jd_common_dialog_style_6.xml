@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/o"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="@dimen/a_"
+    android:layout_marginRight="@dimen/a_"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/aa"
+    android:paddingRight="@dimen/aa">
+
+    <TextView
+        android:id="@+id/jd_dialog_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/a9"
+        android:gravity="center"
+        android:textColor="@color/b"
+        android:textSize="@dimen/ae" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/jd_dialog_message"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ac"
+            android:gravity="center"
+            android:textColor="@color/f"
+            android:textSize="@dimen/ad" />
+    </ScrollView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2.0px"
+        android:layout_marginTop="@dimen/a8"
+        android:background="@drawable/b5" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/v"
+        android:layout_marginTop="@dimen/w"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/jd_dialog_pos_button"
+            android:layout_width="@dimen/t"
+            android:layout_height="@dimen/r"
+            android:layout_marginRight="@dimen/s"
+            android:layout_weight="1.0"
+            android:background="@drawable/eh"
+            android:textColor="@color/b"
+            android:textSize="@dimen/j" />
+
+        <Button
+            android:id="@+id/jd_dialog_neg_button"
+            android:layout_width="@dimen/t"
+            android:layout_height="@dimen/r"
+            android:layout_marginLeft="@dimen/s"
+            android:layout_weight="1.0"
+            android:background="@drawable/ed"
+            android:textColor="@color/b0"
+            android:textSize="@dimen/j" />
+    </LinearLayout>
+</LinearLayout>
