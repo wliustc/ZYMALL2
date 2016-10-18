@@ -18,30 +18,28 @@ import java.util.ArrayList;
  */
 //c
 public class LeftListAdapter extends BaseAdapter {
-    private ArrayList<Catelogy> a;
-    private Context b;
-    private int c;
-    private ILeftAdapterListener d;
+    private ArrayList<Catelogy> mList;
+    private Context mContext;
+    private int mCurrentIndex;
+    private ILeftAdapterListener mLeftAdapterListener;
 
     public LeftListAdapter(ArrayList<Catelogy> paramArrayList, Context paramContext)
     {
-        this.a = paramArrayList;
-        this.b = paramContext;
+        this.mList = paramArrayList;
+        this.mContext = paramContext;
     }
 
-    public final void a(int paramInt)
-    {
-        this.c = paramInt;
+    public final void setCurrentIndex(int paramInt){//a
+        this.mCurrentIndex = paramInt;
     }
 
-    public final void a(ILeftAdapterListener parama)
-    {
-        this.d = parama;
+    public final void setmLeftAdapterListener(ILeftAdapterListener parama){//a
+        this.mLeftAdapterListener = parama;
     }
 
     public final int getCount()
     {
-        return this.a.size();
+        return this.mList.size();
     }
 
     public final Object getItem(int paramInt)
@@ -59,23 +57,23 @@ public class LeftListAdapter extends BaseAdapter {
         View localView = null;
         LeftListViewHolder holder = null;
         if (paramView == null) {//if-nez p2, :cond_0
-            localView = LayoutInflater.from(this.b).inflate(R.layout.category_new_text_item, null);//2130903256
+            localView = LayoutInflater.from(this.mContext).inflate(R.layout.category_new_text_item, null);//2130903256
             holder = new LeftListViewHolder();
             holder.mText = ((TextView) localView.findViewById(R.id.text));//2131166233
             localView.setTag(holder);
         } else
             holder = (LeftListViewHolder) paramView.getTag();
 
-        if (paramInt == this.c) {
-            this.d.a(localView);
+        if (paramInt == this.mCurrentIndex) {
+            this.mLeftAdapterListener.a(localView);
             localView.setBackgroundResource(R.drawable.category_new_left_facous);//2130838453
-            holder.mText.setTextColor(this.b.getResources().getColor(R.color.category_new_red_font));//2131099877
+            holder.mText.setTextColor(this.mContext.getResources().getColor(R.color.category_new_red_font));//2131099877
         } else {
             localView.setBackgroundResource(R.drawable.category_new_left_normal);//2130838454
-            holder.mText.setTextColor(this.b.getResources().getColor(R.color.category_new__dark_font));//2131099873
+            holder.mText.setTextColor(this.mContext.getResources().getColor(R.color.category_new__dark_font));//2131099873
         }
 
-        holder.mText.setText(((Catelogy) this.a.get(paramInt)).getName());
+        holder.mText.setText(((Catelogy) this.mList.get(paramInt)).getName());
         return localView;
 
     }
