@@ -67,9 +67,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/bt"
         android:layout_marginTop="@dimen/bs"
-        android:background="@drawable/ay1"
+        android:background="@drawable/dialog_upgrade_btbg"
         android:paddingLeft="@dimen/c3"
         android:paddingRight="@dimen/c3"
-        android:textColor="@color/x"
+        android:textColor="@color/c_FFFFFF"
         android:textSize="@dimen/bv" />
 </LinearLayout>
