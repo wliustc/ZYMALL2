@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.jingdong.app.mall.category.fragment.OrdinaryL2CategoryFragment;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.view.CategoryFooter;
 import com.zy.common.utils.JDImageUtils;
@@ -28,14 +27,14 @@ public class NestedOrdinaryL2CategoryFragment extends OrdinaryL2CategoryFragment
     private _M u = null;
 
     public static Fragment a(String paramString1, String paramString2, int paramInt1, int paramInt2) {
-        NestedOrdinaryL2CategoryFragment localNestedOrdinaryL2CategoryFragment = new NestedOrdinaryL2CategoryFragment();
+        NestedOrdinaryL2CategoryFragment nestedOrdinaryL2CategoryFragment = new NestedOrdinaryL2CategoryFragment();
         Bundle localBundle = new Bundle();
         localBundle.putCharSequence("level_first", paramString1);
         localBundle.putCharSequence("catalog_sort_event_id", paramString2);
         localBundle.putInt("current_item", paramInt1);
         a(localBundle, paramInt2);
-        localNestedOrdinaryL2CategoryFragment.setArguments(localBundle);
-        return localNestedOrdinaryL2CategoryFragment;
+        nestedOrdinaryL2CategoryFragment.setArguments(localBundle);
+        return nestedOrdinaryL2CategoryFragment;
     }
 
     protected final View a(LayoutInflater paramLayoutInflater) {

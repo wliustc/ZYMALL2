@@ -83,10 +83,10 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     private static final String TAG = JDNewCategoryFragment.class.getSimpleName();
     private ArrayList<Catelogy> mLeftCatelogList = new ArrayList();//
     private List<RightColumnBase> B = new ArrayList();
-    private JSONArrayProxy C = null;
-    private String D = null;
-    private String E = null;
-    private int F;
+    private JSONArrayProxy catelogyList = null;    //C
+    private String catalogSortEventId = null;    //D
+    private String StrcatalogTopNum = null;    //E
+    private int catalogTopNum;  //F
     private String G = null;
     private String H;
     private View sublist_loading_error_tips; //I
@@ -109,7 +109,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     private boolean Z;
     View mCommonTitle2;//a
     private boolean aa;
-    private Fragment ab = null;
+    private Fragment fragment = null;
     private String ac = null;
     AutoCompleteTextView search_text; //b
     RelativeLayout mCategoryMessage;   //c
@@ -133,15 +133,15 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             return false;
         }
     };
-    private String o = "-1";
+    private String mCurrentCatelogyCId = "-1";  //o
     private String p;
-    private String q;
+    private String mDeviceUUID;   //q
     private View mMainlayout;//r
     private ListView mLeftCatelogyListView;
     private LeftListAdapter mLeftListAdapter;//t
     private View u;
     private boolean v = false;
-    private int currentCatelogyIndex = 0;//w
+    private int mCurrentCatelogyIndex = 0;//w
     private long x = 0L;
     private PopupWindow y;
     private View.OnClickListener z = new View.OnClickListener(){//q(this, 0);
@@ -222,31 +222,32 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         return localArrayList;
     }
 
-    private void a(Fragment paramFragment)
+    //private void a(Fragment paramFragment)
+    private void replaceFragment(Fragment fragment)
     {
-        if ((paramFragment != null) && (isAdded()))
+        if ((fragment != null) && (isAdded()))
         {
             FragmentTransaction localFragmentTransaction = getChildFragmentManager().beginTransaction();
             if (localFragmentTransaction != null)
             {
-                localFragmentTransaction.replace(R.id.id_content, paramFragment);//2131166228
+                localFragmentTransaction.replace(R.id.id_content, fragment);//2131166228
                 localFragmentTransaction.commitAllowingStateLoss();
-                this.ab = paramFragment;
+                this.fragment = fragment;
             }
         }
     }
 
     private void a(String paramString)
     {
-        if (this.currentCatelogyIndex < 0)
+        if (this.mCurrentCatelogyIndex < 0)
         {
             Log.e(TAG, "Current Item is -1!!!");
             return;
         }
         this.ac = paramString;
-        List mergeCatalogsList = ((Catelogy)this.mLeftCatelogList.get(this.currentCatelogyIndex)).getMergeCatalogs();
+        List mergeCatalogsList = ((Catelogy)this.mLeftCatelogList.get(this.mCurrentCatelogyIndex)).getMergeCatalogs();
         if (FileUtils.b("/sdcard/jd_test_merged_category")){//exists
-            if (this.currentCatelogyIndex == 0)
+            if (this.mCurrentCatelogyIndex == 0)
             {
                 ArrayList localObject1 = new ArrayList();
                 for (int i1 = 0; i1 < 5; i1++)
@@ -266,14 +267,14 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             ConjoinedCategoryFragment conjoinedCategoryFragment = new ConjoinedCategoryFragment();
             conjoinedCategoryFragment.a(this.mProgressBar);
             conjoinedCategoryFragment.a(this.sublist_loading_error_tips, this.jd_tip_image);
-            conjoinedCategoryFragment.a(this.H, this.D, this.currentCatelogyIndex);
+            conjoinedCategoryFragment.a(this.H, this.catalogSortEventId, this.mCurrentCatelogyIndex);
             conjoinedCategoryFragment.a(this.mBaseActivity);
             conjoinedCategoryFragment.a((List)mergeCatalogsList);
-            a(conjoinedCategoryFragment);
+            replaceFragment(conjoinedCategoryFragment);
             return;
         }else {
             //普通二级分类
-            OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = (OrdinaryL2CategoryFragment) OrdinaryL2CategoryFragment.b(paramString, this.D, this.currentCatelogyIndex);
+            OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = (OrdinaryL2CategoryFragment) OrdinaryL2CategoryFragment.b(paramString, this.catalogSortEventId, this.mCurrentCatelogyIndex);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.mProgressBar);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.sublist_loading_error_tips, this.jd_tip_image);
             ((L2CategoryFragment) ordinaryL2CategoryFragment).thisActivity = this.mBaseActivity;
@@ -285,7 +286,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 }
             });
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).d(paramString);
-            a(ordinaryL2CategoryFragment);
+            replaceFragment(ordinaryL2CategoryFragment);
         }
     }
 
@@ -329,22 +330,22 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.Y = paramBoolean2;
         this.Z = paramBoolean3;
         this.aa = paramBoolean4;
-        RecommendL2CategoryFragment localRecommendL2CategoryFragment = null;
-        if ((this.ab instanceof RecommendL2CategoryFragment))
-            localRecommendL2CategoryFragment = (RecommendL2CategoryFragment)this.ab;
-        if (localRecommendL2CategoryFragment == null)
+        RecommendL2CategoryFragment recommendL2CategoryFragment = null;
+        if ((this.fragment instanceof RecommendL2CategoryFragment))
+            recommendL2CategoryFragment = (RecommendL2CategoryFragment)this.fragment;
+        if (recommendL2CategoryFragment == null)
         {
-            localRecommendL2CategoryFragment = (RecommendL2CategoryFragment)RecommendL2CategoryFragment.a(this.p, this.q);
-            localRecommendL2CategoryFragment.a(this.mProgressBar);
-            localRecommendL2CategoryFragment.a(this.sublist_loading_error_tips, this.jd_tip_image);
-            localRecommendL2CategoryFragment.thisActivity = this.mBaseActivity;
-            localRecommendL2CategoryFragment.a(new RecommendL2CategoryFragment._AF(){//m(this)
+            recommendL2CategoryFragment = (RecommendL2CategoryFragment)RecommendL2CategoryFragment.a(this.p, this.mDeviceUUID);
+            recommendL2CategoryFragment.a(this.mProgressBar);
+            recommendL2CategoryFragment.a(this.sublist_loading_error_tips, this.jd_tip_image);
+            recommendL2CategoryFragment.thisActivity = this.mBaseActivity;
+            recommendL2CategoryFragment.a(new RecommendL2CategoryFragment._AF(){//m(this)
                 @Override
                 public void a(boolean paramBoolean1, boolean paramBoolean2, List<String> paramList, boolean paramBoolean3) {
                     JDNewCategoryFragment.this.v = paramBoolean2;
                     JDNewCategoryFragment.this.k = paramBoolean3;
                     if ((paramBoolean1) || (!paramBoolean3))
-                        JDNewCategoryFragment.synthetic_a(JDNewCategoryFragment.this, paramBoolean3, false);
+                        JDNewCategoryFragment.this.entranceCatalog(paramBoolean3, false);
                     JDNewCategoryFragment.this.T.clear();
                     JDNewCategoryFragment.this.T = paramList;
                 }
@@ -352,10 +353,10 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         }
         else
         {
-            localRecommendL2CategoryFragment.b(this.p, this.q);
+            recommendL2CategoryFragment.b(this.p, this.mDeviceUUID);
         }
-        localRecommendL2CategoryFragment.a(paramBoolean1, paramBoolean2, paramBoolean3, paramBoolean4);
-        a(localRecommendL2CategoryFragment);
+        recommendL2CategoryFragment.a(paramBoolean1, paramBoolean2, paramBoolean3, paramBoolean4);
+        replaceFragment(recommendL2CategoryFragment);
         return;
     }
 
@@ -395,7 +396,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             this.u = localView;
             this.r1 = true;
         }
-        this.currentCatelogyIndex = -1;
+        this.mCurrentCatelogyIndex = -1;
         if (this.mLeftListAdapter != null)
             this.mLeftListAdapter.setCurrentIndex(-1);
         this.T.clear();
@@ -406,7 +407,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         int i3 = 0;
         String str;
 
-        if (TextUtils.isEmpty(this.E))
+        if (TextUtils.isEmpty(this.StrcatalogTopNum))
             str = "0";
         else
             str = "1";
@@ -465,7 +466,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.p = UserInfoModel.getEncryptLoginUserName(LoginUserBase.getLoginUserName());
         if (this.p == null)
             this.p = "";
-        this.q = StatisticsReportUtil.genarateDeviceUUID(this.mBaseActivity);
+        this.mDeviceUUID = StatisticsReportUtil.genarateDeviceUUID(this.mBaseActivity);
         //paramLayoutInflater = this.Q;
         this.mCommonTitle2 = this.mCategoryFragmentLayout.findViewById(R.id.common_title_2);//2131166226
         this.mCommonTitle2.setVisibility(View.VISIBLE);//0
@@ -535,8 +536,8 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                     JDNewCategoryFragment.this.p = UserInfoModel.getEncryptLoginUserName(LoginUserBase.getLoginUserName());
                     if (JDNewCategoryFragment.this.p == null)
                         JDNewCategoryFragment.this.p = "";
-                    JDNewCategoryFragment.this.q = StatisticsReportUtil.genarateDeviceUUID(JDNewCategoryFragment.this.mBaseActivity);
-                    if ((JDNewCategoryFragment.this.currentCatelogyIndex == -1) && (JDNewCategoryFragment.this.getActivity() != null) && (!JDNewCategoryFragment.this.getActivity().isFinishing()))
+                    JDNewCategoryFragment.this.mDeviceUUID = StatisticsReportUtil.genarateDeviceUUID(JDNewCategoryFragment.this.mBaseActivity);
+                    if ((JDNewCategoryFragment.this.mCurrentCatelogyIndex == -1) && (JDNewCategoryFragment.this.getActivity() != null) && (!JDNewCategoryFragment.this.getActivity().isFinishing()))
                     {
                         if (Log.D)
                             Log.d(JDNewCategoryFragment.TAG, "ActivityHasNotFinished");
@@ -559,7 +560,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.mLeftCatelogyListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){//g(this)
             @Override
             public void onItemClick(AdapterView<?> adapterView, final View view, int paramInt, long l) {
-                if (((JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.currentCatelogyIndex == paramInt - 1)) || ((!JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.currentCatelogyIndex == paramInt)))
+                if (((JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.mCurrentCatelogyIndex == paramInt - 1)) || ((!JDNewCategoryFragment.this.v) && (JDNewCategoryFragment.this.mCurrentCatelogyIndex == paramInt)))
                     return;
                 JDFrescoUtils.a(JDNewCategoryFragment.this.T);
                 if (JDNewCategoryFragment.this.S)
@@ -580,11 +581,11 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 if ((JDNewCategoryFragment.this.v) && (paramInt != 0))
                 {
                     Catelogy catelogy = (Catelogy)JDNewCategoryFragment.this.mLeftCatelogList.get(paramInt - 1);
-                    JDNewCategoryFragment.this.currentCatelogyIndex = paramInt - 1;
-                    JDNewCategoryFragment.this.o = catelogy.getcId();
-                    JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.o);
-                    JDNewCategoryFragment.this.H = JDNewCategoryFragment.this.o;
-                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.mBaseActivity, "Classification_BCategory", JDNewCategoryFragment.this.o + "_" + JDNewCategoryFragment.this.D + "_" + paramInt, "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.mBaseActivity.getClass(), "");
+                    JDNewCategoryFragment.this.mCurrentCatelogyIndex = paramInt - 1;
+                    JDNewCategoryFragment.this.mCurrentCatelogyCId = catelogy.getcId();
+                    JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.mCurrentCatelogyCId);
+                    JDNewCategoryFragment.this.H = JDNewCategoryFragment.this.mCurrentCatelogyCId;
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.mBaseActivity, "Classification_BCategory", JDNewCategoryFragment.this.mCurrentCatelogyCId + "_" + JDNewCategoryFragment.this.catalogSortEventId + "_" + paramInt, "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.mBaseActivity.getClass(), "");
                 }
                 if ((JDNewCategoryFragment.this.v) && (paramInt == 0))
                 {
@@ -597,7 +598,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                         }
                     });
                     JDNewCategoryFragment.this.a(false, false, true, false);
-                    JDNewCategoryFragment.this.currentCatelogyIndex = -1;
+                    JDNewCategoryFragment.this.mCurrentCatelogyIndex = -1;
                     JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.mBaseActivity, "Classification_CateCustomize", "", "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.mBaseActivity.getClass(), "");
                     JDNewCategoryFragment.this.T.clear();
                     JDNewCategoryFragment.this.T = JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.B);
@@ -605,14 +606,14 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 if (!JDNewCategoryFragment.this.v)
                 {
                     Catelogy catelogy = (Catelogy)JDNewCategoryFragment.this.mLeftCatelogList.get(paramInt);
-                    JDNewCategoryFragment.this.currentCatelogyIndex = paramInt;
-                    JDNewCategoryFragment.this.o = catelogy.getcId();
-                    JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.o);
-                    JDNewCategoryFragment.this.H = JDNewCategoryFragment.this.o;
-                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.mBaseActivity, "Classification_BCategory", JDNewCategoryFragment.this.o + "_" + JDNewCategoryFragment.this.D + "_" + (paramInt + 1), "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.mBaseActivity.getClass(), "");
+                    JDNewCategoryFragment.this.mCurrentCatelogyIndex = paramInt;
+                    JDNewCategoryFragment.this.mCurrentCatelogyCId = catelogy.getcId();
+                    JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.mCurrentCatelogyCId);
+                    JDNewCategoryFragment.this.H = JDNewCategoryFragment.this.mCurrentCatelogyCId;
+                    JDMtaUtils.sendCommonData(JDNewCategoryFragment.this.mBaseActivity, "Classification_BCategory", JDNewCategoryFragment.this.mCurrentCatelogyCId + "_" + JDNewCategoryFragment.this.catalogSortEventId + "_" + (paramInt + 1), "", JDNewCategoryFragment.this, "", JDNewCategoryFragment.this.mBaseActivity.getClass(), "");
                 }
                 if (JDNewCategoryFragment.this.mLeftListAdapter != null)
-                    JDNewCategoryFragment.this.mLeftListAdapter.setCurrentIndex(JDNewCategoryFragment.this.currentCatelogyIndex);
+                    JDNewCategoryFragment.this.mLeftListAdapter.setCurrentIndex(JDNewCategoryFragment.this.mCurrentCatelogyIndex);
                 JDNewCategoryFragment.this.post(new Runnable(){//i(this, view)
                     @Override
                     public void run() {
@@ -625,7 +626,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.jd_tip_button.setOnClickListener(new View.OnClickListener(){//j(this)
             @Override
             public void onClick(View view) {
-                JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.o);
+                JDNewCategoryFragment.this.a(JDNewCategoryFragment.this.mCurrentCatelogyCId);
             }
         });
         this.mJdTipButton.setOnClickListener(new View.OnClickListener(){//k(this)
@@ -731,7 +732,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             if ((this.v) && (!this.r1) && (this.mLeftCatelogyListView.getHeaderViewsCount() == 0))
                 b();
             if (this.W) {
-                a(this.ab);
+                replaceFragment(this.fragment);
                 this.W = false;
             }
         }
@@ -748,29 +749,30 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         this.j = paramString;
     }
 
-    static void synthetic_a(final JDNewCategoryFragment paramJDNewCategoryFragment, final boolean paramBoolean1, final boolean paramBoolean2)
+    //static void synthetic_a(final JDNewCategoryFragment paramJDNewCategoryFragment, final boolean paramBoolean1, final boolean paramBoolean2)
+    void entranceCatalog(final boolean paramBoolean1, final boolean paramBoolean2)
     {
-        paramJDNewCategoryFragment.post(new Runnable(){//d(paramJDNewCategoryFragment)
+        this.post(new Runnable(){//d(paramJDNewCategoryFragment)
             @Override
             public void run() {
-                paramJDNewCategoryFragment.mProgressBar.setVisibility(View.GONE);
-                paramJDNewCategoryFragment.mMainlayout.setVisibility(View.VISIBLE);
-                paramJDNewCategoryFragment.mMainLoadingErrorTips.setVisibility(View.GONE);
-                if (paramJDNewCategoryFragment.isAdded())
-                    paramJDNewCategoryFragment.mJdTipImage.setBackgroundResource(R.drawable.category_kongbai);//2130838448
+                JDNewCategoryFragment.this.mProgressBar.setVisibility(View.GONE);
+                JDNewCategoryFragment.this.mMainlayout.setVisibility(View.VISIBLE);
+                JDNewCategoryFragment.this.mMainLoadingErrorTips.setVisibility(View.GONE);
+                if (JDNewCategoryFragment.this.isAdded())
+                    JDNewCategoryFragment.this.mJdTipImage.setBackgroundResource(R.drawable.category_kongbai);//2130838448
             }
         });
         final HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
         localHttpSetting.setListener(new HttpGroup.OnCommonListener(){// r(paramJDNewCategoryFragment, new ExceptionReporter(localHttpSetting), paramBoolean1, paramBoolean2)
             private void a()
             {
-                paramJDNewCategoryFragment.post(new Runnable(){//t(this)
+                JDNewCategoryFragment.this.post(new Runnable(){//t(this)
                     @Override
                     public void run() {
-                        paramJDNewCategoryFragment.mMainlayout.setVisibility(View.GONE);
-                        paramJDNewCategoryFragment.mMainLoadingErrorTips.setVisibility(View.VISIBLE);
-                        if (paramJDNewCategoryFragment.isAdded())
-                            paramJDNewCategoryFragment.mJdTipImage.setBackgroundResource(R.drawable.y_03);//2130837707
+                        JDNewCategoryFragment.this.mMainlayout.setVisibility(View.GONE);
+                        JDNewCategoryFragment.this.mMainLoadingErrorTips.setVisibility(View.VISIBLE);
+                        if (JDNewCategoryFragment.this.isAdded())
+                            JDNewCategoryFragment.this.mJdTipImage.setBackgroundResource(R.drawable.y_03);//2130837707
                     }
                 });
             }
@@ -789,35 +791,35 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 if (!paramBoolean2)//this.c //if-nez v0, :cond_2
                 {
                     if (!paramBoolean1)//this.d //if-nez v0, :cond_0
-                        JDNewCategoryFragment.synthetic_a(paramJDNewCategoryFragment, true, true);
-                    paramJDNewCategoryFragment.D = paramHttpResponse.getJSONObject().optString("catalogSortEventId");
-                    paramJDNewCategoryFragment.E = paramHttpResponse.getJSONObject().optString("catalogTopNum");
-                    paramJDNewCategoryFragment.C = paramHttpResponse.getJSONObject().getJSONArrayOrNull("catelogyList");
-                    if (TextUtils.isEmpty(paramJDNewCategoryFragment.E)) {//if-eqz v0, :cond_3
-                        paramJDNewCategoryFragment.G =  "null";
-                        paramJDNewCategoryFragment.F = 0;
+                        JDNewCategoryFragment.this.entranceCatalog(true, true);
+                    JDNewCategoryFragment.this.catalogSortEventId = paramHttpResponse.getJSONObject().optString("catalogSortEventId");
+                    JDNewCategoryFragment.this.StrcatalogTopNum = paramHttpResponse.getJSONObject().optString("catalogTopNum");
+                    JDNewCategoryFragment.this.catelogyList = paramHttpResponse.getJSONObject().getJSONArrayOrNull("catelogyList");
+                    if (TextUtils.isEmpty(JDNewCategoryFragment.this.StrcatalogTopNum)) {//if-eqz v0, :cond_3
+                        JDNewCategoryFragment.this.G =  "null";
+                        JDNewCategoryFragment.this.catalogTopNum = 0;
                     }else{
-                        paramJDNewCategoryFragment.F = Integer.parseInt(paramJDNewCategoryFragment.E);
-                        paramJDNewCategoryFragment.G = Catelogy.getCmsTotalCid(Catelogy.toList(paramJDNewCategoryFragment.C, 0), paramJDNewCategoryFragment.F);
+                        JDNewCategoryFragment.this.catalogTopNum = Integer.parseInt(JDNewCategoryFragment.this.StrcatalogTopNum);
+                        JDNewCategoryFragment.this.G = Catelogy.getCmsTotalCid(Catelogy.toList(JDNewCategoryFragment.this.catelogyList, 0), JDNewCategoryFragment.this.catalogTopNum);
                     }
 
-                    if ((paramJDNewCategoryFragment.C == null) || (paramJDNewCategoryFragment.C.length() == 0))
+                    if ((JDNewCategoryFragment.this.catelogyList == null) || (JDNewCategoryFragment.this.catelogyList.length() == 0))
                     {
                         new ExceptionReporter(localHttpSetting).reportHttpBusinessException(paramHttpResponse);
                         a();
                     }else{
-                        paramJDNewCategoryFragment.post(new Runnable(){//s(this)
+                        JDNewCategoryFragment.this.post(new Runnable(){//s(this)
                             @Override
                             public void run() {
-                                paramJDNewCategoryFragment.mLeftCatelogList.clear();
-                                paramJDNewCategoryFragment.mLeftCatelogList.addAll(Catelogy.toList(paramJDNewCategoryFragment.C, 0));
-                                if (!paramJDNewCategoryFragment.v)
+                                JDNewCategoryFragment.this.mLeftCatelogList.clear();
+                                JDNewCategoryFragment.this.mLeftCatelogList.addAll(Catelogy.toList(JDNewCategoryFragment.this.catelogyList, 0));
+                                if (!JDNewCategoryFragment.this.v)
                                 {
-                                    paramJDNewCategoryFragment.synthetic_z(paramJDNewCategoryFragment);
-                                    paramJDNewCategoryFragment.mLeftListAdapter.notifyDataSetChanged();
+                                    JDNewCategoryFragment.this.synthetic_z(JDNewCategoryFragment.this);
+                                    JDNewCategoryFragment.this.mLeftListAdapter.notifyDataSetChanged();
                                 }else {
-                                    paramJDNewCategoryFragment.b();
-                                    paramJDNewCategoryFragment.mLeftListAdapter.notifyDataSetChanged();
+                                    JDNewCategoryFragment.this.b();
+                                    JDNewCategoryFragment.this.mLeftListAdapter.notifyDataSetChanged();
                                 }
                             }
                         });
@@ -841,14 +843,13 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 localHttpSetting.setCacheMode(0);
         }
 
-            localHttpSetting.setBussinessId(300);
-            if (paramJDNewCategoryFragment.U)
-            {
-                localHttpSetting.setCacheMode(2);
-                paramJDNewCategoryFragment.U = false;
-            }
-            paramJDNewCategoryFragment.mBaseActivity.getHttpGroupaAsynPool().add(localHttpSetting);
-            return;
+        localHttpSetting.setBussinessId(300);
+        if (this.U) {
+            localHttpSetting.setCacheMode(2);
+            this.U = false;
+        }
+        this.mBaseActivity.getHttpGroupaAsynPool().add(localHttpSetting);
+        return;
 
     }
 
@@ -864,8 +865,8 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
     static void synthetic_z(JDNewCategoryFragment paramJDNewCategoryFragment)
     {
         paramJDNewCategoryFragment.H = ((Catelogy)paramJDNewCategoryFragment.mLeftCatelogList.get(0)).getcId();
-        paramJDNewCategoryFragment.o = ((Catelogy)paramJDNewCategoryFragment.mLeftCatelogList.get(0)).getcId();
-        paramJDNewCategoryFragment.a(paramJDNewCategoryFragment.o);
+        paramJDNewCategoryFragment.mCurrentCatelogyCId = ((Catelogy)paramJDNewCategoryFragment.mLeftCatelogList.get(0)).getcId();
+        paramJDNewCategoryFragment.a(paramJDNewCategoryFragment.mCurrentCatelogyCId);
         paramJDNewCategoryFragment.S = true;
     }
 
