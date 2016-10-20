@@ -50,38 +50,40 @@ public class CarouselFigureView extends FrameLayout
         @Override
         public void handleMessage(Message msg) {
             if (CarouselFigureView.a(this.a)) {//if-eqz v0, :cond_1
-
-            }
-                return;
-                if ((this.a.a == null) || (this.a.a.getChildCount() <= 1) || (this.a.a.getAdapter() == null) || (this.a.a.getAdapter().getCount() < 2))
-                    continue;
-                try
-                {
-                    long l = ((Long)paramMessage.obj).longValue();
-                    if (CarouselFigureView.b(this.a) - l != 0L)
-                        continue;
-                    int i = paramMessage.what;
-                    if (CarouselFigureView.c(this.a))
+                if ((this.a.a != null) && (this.a.a.getChildCount() > 1) && (this.a.a.getAdapter() != null) || (this.a.a.getAdapter().getCount() >= 2)){//if-eqz v0, :cond_0    if-le v0, v1, :cond_0  if-eqz v0, :cond_0    if-lt v0, v4, :cond_0
+                    try
                     {
-                        if ((i == 0) && (this.a.a.getCurrentItem() != 0))
-                        {
-                            this.a.a.setCurrentItem(this.a.a.a() + 1);
-                            return;
+                        long l = ((Long)msg.obj).longValue();
+                        if (CarouselFigureView.b(this.a) - l == 0L){//if-nez v0, :cond_0
+                            int i = msg.what;
+                            if (CarouselFigureView.c(this.a))
+                            {//if-eqz v1, :cond_4
+                                if ((i == 0) && (this.a.a.getCurrentItem() != 0))
+                                {//if-nez v0, :cond_2   if-eqz v1, :cond_2
+                                    this.a.a.setCurrentItem(this.a.a.a() + 1);
+                                }else if (i == this.a.a.a() + 1)
+                                {//if-ne v0, v1, :cond_3
+                                    this.a.a.setCurrentItem(2);
+                                }
+
+                                this.a.a.setCurrentItem(i + 1);
+                                return;
+                            }
+                            this.a.a.setCurrentItem((i + 1) % this.a.a.getAdapter().getCount());
                         }
-                        if (i == this.a.a.a() + 1)
-                        {
-                            this.a.a.setCurrentItem(2);
-                            return;
-                        }
-                        this.a.a.setCurrentItem(i + 1);
+                            continue;
+
                         return;
                     }
-                    this.a.a.setCurrentItem((i + 1) % this.a.a.getAdapter().getCount());
-                    return;
+                    catch (java.lang.Exception paramMessage)
+                    {
+                    }
                 }
-                catch (java.lang.Exception paramMessage)
-                {
-                }
+            }
+                return;
+
+                    continue;
+
 
         }
     };
