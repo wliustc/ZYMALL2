@@ -58,7 +58,7 @@
             android:layout_height="@dimen/r"
             android:layout_marginRight="@dimen/s"
             android:layout_weight="1.0"
-            android:background="@drawable/eh"
+            android:background="@drawable/button_dialog_pos"
             android:textColor="@color/b"
             android:textSize="@dimen/j" />
 
@@ -68,7 +68,7 @@
             android:layout_height="@dimen/r"
             android:layout_marginLeft="@dimen/s"
             android:layout_weight="1.0"
-            android:background="@drawable/ed"
+            android:background="@drawable/button_dialog_neg"
             android:textColor="@color/b0"
             android:textSize="@dimen/j" />
     </LinearLayout>

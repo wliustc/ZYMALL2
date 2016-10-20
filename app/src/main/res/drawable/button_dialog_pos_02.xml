@@ -2,6 +2,6 @@
 <shape
   xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="4.0dip" />
-    <solid android:color="@drawable/button_dialog_pos_02_solid" /><!-- ep -->
-    <stroke android:width="1.0px" android:color="@drawable/button_dialog_pos_02_stroke" /><!-- eq -->
+    <solid android:color="@drawable/ep" /><!-- ep -->
+    <stroke android:width="1.0px" android:color="@drawable/eq" /><!-- eq -->
 </shape>
