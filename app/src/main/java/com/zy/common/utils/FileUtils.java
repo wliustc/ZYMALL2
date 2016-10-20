@@ -106,7 +106,7 @@ public class FileUtils {
         return (String) null;
     }
 
-    public static boolean b(String paramString) {
+    public static boolean b(String paramString) {//b
         if (Log.D)
             Log.d("FileUtils", "apkpath -->> " + paramString);
         return new File(paramString).exists();

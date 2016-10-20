@@ -1,4 +1,4 @@
-----10.20
+----10.20 有些资源文件无法找到
 /home/robin/Private/Demo/ZYMALL2/app/src/main/res/drawable/button_dialog_neg_01.xml
 Error:(5, 27) No resource found that matches the given name (at 'color' with value '@drawable/ek').
 /home/robin/Private/Demo/ZYMALL2/app/src/main/res/drawable/button_dialog_neg_02.xml

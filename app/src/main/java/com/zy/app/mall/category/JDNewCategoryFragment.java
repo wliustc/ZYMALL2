@@ -245,8 +245,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
         }
         this.ac = paramString;
         List mergeCatalogsList = ((Catelogy)this.mLeftCatelogList.get(this.currentCatelogyIndex)).getMergeCatalogs();
-        if (FileUtils.b("/sdcard/jd_test_merged_category"))
-        {
+        if (FileUtils.b("/sdcard/jd_test_merged_category")){//exists
             if (this.currentCatelogyIndex == 0)
             {
                 ArrayList localObject1 = new ArrayList();
@@ -262,8 +261,8 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 }
             }
         }
-        if (mergeCatalogsList != null)
-        {
+        if (mergeCatalogsList != null) {
+            //连体分类
             ConjoinedCategoryFragment conjoinedCategoryFragment = new ConjoinedCategoryFragment();
             conjoinedCategoryFragment.a(this.mProgressBar);
             conjoinedCategoryFragment.a(this.sublist_loading_error_tips, this.jd_tip_image);
@@ -273,6 +272,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
             a(conjoinedCategoryFragment);
             return;
         }else {
+            //普通二级分类
             OrdinaryL2CategoryFragment ordinaryL2CategoryFragment = (OrdinaryL2CategoryFragment) OrdinaryL2CategoryFragment.b(paramString, this.D, this.currentCatelogyIndex);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.mProgressBar);
             ((OrdinaryL2CategoryFragment) ordinaryL2CategoryFragment).a(this.sublist_loading_error_tips, this.jd_tip_image);
@@ -299,7 +299,7 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 Intent intent = new Intent(context, VoiceSearchActivity.class);
                 intent.putExtra("isFromHome", true);
                 intent.putExtra("source", new SourceEntity("Classification_VSearch", ""));
-                intent.setFlags(268435456);
+                intent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);//268435456
                 context.startActivity(intent);
                 JDMtaUtils.sendCommonData(this.mBaseActivity.getBaseContext(), "Classification_VSearch", "", "onClick", this, JDNewCategoryFragment.class.getSimpleName(), VoiceSearchActivity.class, "");
                 return;
@@ -309,9 +309,9 @@ public class JDNewCategoryFragment extends JDTabFragment implements PersonalMess
                 if ((!TextUtils.isEmpty(paramString1)) && (!TextUtils.isEmpty(paramString2)))
                     localIntent.putExtra(paramString1, paramString2);
                 localIntent.putExtra("isFromHome", true);
-                localIntent.addFlags(65536);
+                localIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);//65536
                 localIntent.putExtra("isNoAnimation", true);
-                localIntent.setFlags(268435456);
+                localIntent.setFlags(Intent.FLAG_RECEIVER_FOREGROUND);//268435456
                 localContext.startActivity(localIntent);
                 JDMtaUtils.sendCommonData(this.mBaseActivity, "Search_Search", "", "", this, "", SearchActivity.class, "");
                 return;
