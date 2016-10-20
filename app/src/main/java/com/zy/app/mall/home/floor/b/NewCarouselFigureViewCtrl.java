@@ -31,7 +31,7 @@ public class NewCarouselFigureViewCtrl {
         if (jSONArrayPoxy != null){
             final ArrayList<Commercial> list = Commercial.toList(jSONArrayPoxy, 0);
             if ((list != null) && (list.size() > 0))
-                floorFigureView.setFigureViewAdapterData(new CarouseFigureImagePagerAdapter.DataPresenter(){//f((this, list, paramJDHomeFragment)
+                floorFigureView.setFigureViewAdapterDataPresenter(new CarouseFigureImagePagerAdapter.DataPresenter(){//f((this, list, paramJDHomeFragment)
                     @Override
                     public int size() {
                         return list.size();

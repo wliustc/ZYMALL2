@@ -25,11 +25,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:support-annotations:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:support-annotations:+'
+    compile 'com.android.support:recyclerview-v7:+'
     compile project(':libraries/AndroidPullToRefresh')
-    compile 'com.alibaba:fastjson:latest.integration'
+    compile 'com.alibaba:fastjson:+'
     compile 'org.greenrobot:eventbus:+'
     compile 'com.facebook.fresco:fresco:+'
     compile 'com.facebook.fresco:animated-base:+'

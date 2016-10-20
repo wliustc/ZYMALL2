@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.jingdong.common.BaseActivity;
 import com.jingdong.common.config.Configuration;
+import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
 import com.jingdong.common.utils.ListViewNextPageLoader;
 import com.zy.app.mall.R;

@@ -164,6 +164,8 @@ public abstract class HttpGroup implements IDestroyListener {
         private OnEndListener onEndListener;
         private OnReadyListener onReadyListener;
         private OnPauseListener onPauseListener;
+        private boolean useCookies;
+        private int attempts;
 
         public void setFunctionId(String functionId) {
             this.functionId = functionId;
@@ -244,6 +246,14 @@ public abstract class HttpGroup implements IDestroyListener {
 
         public void setBussinessId(int bussinessId) {
             this.bussinessId = bussinessId;
+        }
+
+        public void setUseCookies(boolean useCookies) {
+            this.useCookies = useCookies;
+        }
+
+        public void setAttempts(int attempts) {
+            this.attempts = attempts;
         }
     }
 

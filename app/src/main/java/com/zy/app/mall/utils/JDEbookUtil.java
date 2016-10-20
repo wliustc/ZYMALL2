@@ -1,12 +1,14 @@
-package com.jingdong.app.mall.utils;
+package com.zy.app.mall.utils;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 
 import com.jingdong.app.mall.WebActivity;
+import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.common.BaseActivity;
 import com.jingdong.common.utils.URLParamMap;
 import com.zy.common.utils.DPIUtil;
+import com.zy.common.utils.SerializableContainer;
 
 /**
  * Created by robin on 16-8-26.

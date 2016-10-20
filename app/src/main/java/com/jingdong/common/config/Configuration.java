@@ -5,6 +5,8 @@ package com.jingdong.common.config;
  */
 public class Configuration {
     public static final String PARTNER = "partner";
+    private static String ngwHost;
+
     public static String getProperty(String partner) {
         return (String)null;
     }
@@ -34,5 +36,9 @@ public class Configuration {
          */
         ////throw new RuntimeException("Not Find getBooleanProperty(String paramString)");
         return s;
+    }
+
+    public static String getNgwHost() {
+        return ngwHost;
     }
 }

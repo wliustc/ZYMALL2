@@ -5,9 +5,9 @@ import android.view.View;
 import com.zy.app.mall.utils.MyActivity;
 
 /**
- * Created by robin on 16-8-26.
+ * Created by Robin on 2016/10/21.
  */
-public class RankingListActivity extends MyActivity
+public class RankHomeActivity extends MyActivity
         implements View.OnClickListener{
     @Override
     public void onClick(View v) {

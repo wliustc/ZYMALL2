@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.utils.ui.view;
+package com.zy.app.mall.utils.ui.view;
 
 import android.content.Context;
 import android.os.Handler;
@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jingdong.app.mall.home.floor.b.IFloorFigureView;
+import com.jingdong.app.mall.utils.ui.view.CarouseFigureImagePagerAdapter;
 import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.R;
 import com.zy.app.mall.utils.ui.view.CarouselFigureViewPager;
@@ -49,42 +50,38 @@ public class CarouselFigureView extends FrameLayout
     private Handler q = new Handler(){//m(this)
         @Override
         public void handleMessage(Message msg) {
-            if (CarouselFigureView.a(this.a)) {//if-eqz v0, :cond_1
-
+            if (!CarouselFigureView.this.o) {//if-eqz v0, :cond_1
+                if ((CarouselFigureView.this.a != null) && (CarouselFigureView.this.a.getChildCount() > 1) && (CarouselFigureView.this.a.getAdapter() != null) && (CarouselFigureView.this.a.getAdapter().getCount() >= 2)){
+                    long l = 0;
+                    try
+                    {
+                        l = ((Long)msg.obj).longValue();
+                    }
+                    catch (java.lang.Exception paramMessage)
+                    {
+                    }
+                    if (CarouselFigureView.this.j - l == 0L){
+                        int i = msg.what;
+                        if (CarouselFigureView.this.m)
+                        {
+                            if ((i == 0) && (CarouselFigureView.this.a.getCurrentItem() != 0))
+                            {
+                                CarouselFigureView.this.a.setCurrentItem(CarouselFigureView.this.a.a() + 1);
+                            }else if (i == CarouselFigureView.this.a.a() + 1)
+                            {
+                                CarouselFigureView.this.a.setCurrentItem(2);
+                            }else {
+                                CarouselFigureView.this.a.setCurrentItem(i + 1);
+                            }
+                        }
+                        CarouselFigureView.this.a.setCurrentItem((i + 1) % CarouselFigureView.this.a.getAdapter().getCount());
+                    }
+                }
             }
                 return;
-                if ((this.a.a == null) || (this.a.a.getChildCount() <= 1) || (this.a.a.getAdapter() == null) || (this.a.a.getAdapter().getCount() < 2))
-                    continue;
-                try
-                {
-                    long l = ((Long)paramMessage.obj).longValue();
-                    if (CarouselFigureView.b(this.a) - l != 0L)
-                        continue;
-                    int i = paramMessage.what;
-                    if (CarouselFigureView.c(this.a))
-                    {
-                        if ((i == 0) && (this.a.a.getCurrentItem() != 0))
-                        {
-                            this.a.a.setCurrentItem(this.a.a.a() + 1);
-                            return;
-                        }
-                        if (i == this.a.a.a() + 1)
-                        {
-                            this.a.a.setCurrentItem(2);
-                            return;
-                        }
-                        this.a.a.setCurrentItem(i + 1);
-                        return;
-                    }
-                    this.a.a.setCurrentItem((i + 1) % this.a.a.getAdapter().getCount());
-                    return;
-                }
-                catch (java.lang.Exception paramMessage)
-                {
-                }
-
         }
     };
+
     private boolean r = true;
     private View s;
 
@@ -168,7 +165,8 @@ public class CarouselFigureView extends FrameLayout
         return;
     }
 
-    public final void a(final CarouseFigureImagePagerAdapter.DataPresenter paraml)
+    @Override
+    public final void setFigureViewAdapterDataPresenter(final CarouseFigureImagePagerAdapter.DataPresenter paraml)
     {
         if ((this.b != null) && (this.a != null) && (paraml != null))
             this.b.post(new Runnable(){//n(this, paraml)
@@ -315,4 +313,6 @@ public class CarouselFigureView extends FrameLayout
         c(paramInt);
         b(4000);
     }
+
+
 }

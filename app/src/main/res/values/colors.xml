@@ -1032,5 +1032,5 @@
     <color name="background_tab_pressed">#6633B5E5</color>
 
     <!-- 下面未找到 -->
-    <color name="b0">#ff000000</color>
+    <color name="button_dialog_neg_font_color">#ff000000</color>
 </resources>

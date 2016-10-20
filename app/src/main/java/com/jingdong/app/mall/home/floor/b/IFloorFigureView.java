@@ -7,5 +7,5 @@ import com.jingdong.app.mall.utils.ui.view.CarouseFigureImagePagerAdapter;
  */
 //d
 public interface IFloorFigureView {
-    public abstract void setFigureViewAdapterData(CarouseFigureImagePagerAdapter.DataPresenter paraml);
+    public abstract void setFigureViewAdapterDataPresenter(CarouseFigureImagePagerAdapter.DataPresenter paraml);
 }
