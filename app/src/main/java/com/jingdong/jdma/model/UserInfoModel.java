@@ -1,11 +1,18 @@
 package com.jingdong.jdma.model;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
+import com.jingdong.jdma.common.utils.CommonUtil;
+import com.jingdong.jdma.common.utils.Md5Encrypt;
+import com.zy.common.utils.NetUtils;
+import com.zy.jdma.minterface.MaInitCommonInfo;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -68,21 +75,20 @@ public class UserInfoModel {
         setSdkVersion("2");
         setChannel(paramMaInitCommonInfo.channel);
         setApp_device(paramMaInitCommonInfo.app_device);
-        localObject = (TelephonyManager)paramContext.getSystemService("phone");
+        localObject = (TelephonyManager)paramContext.getSystemService(Context.TELEPHONY_SERVICE/*"phone"*/);
         setImei(((TelephonyManager)localObject).getDeviceId());
         setImsi(((TelephonyManager)localObject).getSubscriberId());
         setAppBuildVersion(paramMaInitCommonInfo.build);
         try
         {
-            paramContext = paramContext.getPackageManager().getPackageInfo(paramContext.getPackageName(), 0);
-            setAppver_code(paramContext.versionCode);
+            PackageInfo packageInfo = paramContext.getPackageManager().getPackageInfo(paramContext.getPackageName(), 0);
+            setAppver_code(packageInfo.versionCode);
             setSiteid(paramMaInitCommonInfo.site_id);
             return;
         }
-        catch (Exception paramContext)
+        catch (Exception e)
         {
-            while (true)
-                paramContext.printStackTrace();
+                e.printStackTrace();
         }
     }
 
@@ -174,14 +180,13 @@ public class UserInfoModel {
                 return localJSONObject;
             }
         }
-        catch (JSONException paramContext)
+        catch (JSONException e)
         {
-            paramContext.printStackTrace();
-            return localJSONObject;
+            e.printStackTrace();
         }
-        catch (ClassCastException paramContext)
+        catch (ClassCastException e)
         {
-            paramContext.printStackTrace();
+            e.printStackTrace();
         }
         return localJSONObject;
     }

@@ -238,7 +238,7 @@ public class MallFloor_Banner extends MallBaseFloor<MallBannerFloorPresenter>
 
     /*-- implements interface IFloorFigureView --*/
     @Override
-    public void setFigureViewAdapterData(CarouseFigureImagePagerAdapter.DataPresenter paraml) {
+    public void setFigureViewAdapterDataPresenter(CarouseFigureImagePagerAdapter.DataPresenter paraml) {
         if ((this.mCarouselFigureViewPager != null) && (paraml != null) && (paraml.size() > 0)) {
             MallBannerFloorPresenter localc = (MallBannerFloorPresenter) i();
             this.mCarouselFigureViewPager.setAdapter(new CarouseFigureImagePagerAdapter(getContext(), localc.e(), paraml));

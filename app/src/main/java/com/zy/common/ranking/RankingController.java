@@ -1,15 +1,28 @@
-package com.jingdong.common.ranking;
+package com.zy.common.ranking;
 
 import android.content.Context;
 import android.content.Intent;
 
+import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
+import com.jingdong.common.config.Configuration;
+import com.jingdong.common.login.LoginUserBase;
+import com.jingdong.common.ranking.RankConstants;
+import com.jingdong.common.ranking.activity.RankHomeActivity;
 import com.jingdong.common.ranking.activity.RankingListActivity;
+import com.jingdong.common.utils.HttpGroup;
 import com.zy.app.mall.utils.MyActivity;
+import com.zy.common.ranking.bean.RankAddress;
+import com.zy.common.ranking.bean.RankList;
 import com.zy.common.utils.Log;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Robin on 2016/10/11.
  */
+//c
 public class RankingController {
     public static void a(Context paramContext, String paramString)
     {
@@ -96,8 +109,8 @@ public class RankingController {
         localHttpSetting.setJsonParams(paramJSONObject);
         if (LoginUserBase.hasLogin())
             localHttpSetting.setUseCookies(true);
-        while (true)
-        {
+        else
+            localHttpSetting.setUseCookies(false);
             localHttpSetting.setNotifyUser(false);
             localHttpSetting.setReadTimeout(15000);
             localHttpSetting.setAttempts(3);
@@ -108,22 +121,21 @@ public class RankingController {
             localHttpSetting.setListener(paramOnCommonListener);
             paramMyActivity.getHttpGroupaAsynPool().add(localHttpSetting);
             return;
-            localHttpSetting.setUseCookies(false);
-        }
+
     }
 
     private static void a(String paramString, MyActivity paramMyActivity, JSONObject paramJSONObject, HttpGroup.OnCommonListener paramOnCommonListener)
     {
         HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
         if (Log.D)
-            Log.d("RankingController", "host = " + Configuration.getNgwHost() + "request times:" + b.a);
+            Log.d("RankingController", "host = " + Configuration.getNgwHost() + "request times:" + RankConstants.a);
         localHttpSetting.setHost(Configuration.getNgwHost());
         localHttpSetting.setFunctionId(paramString);
         localHttpSetting.setJsonParams(paramJSONObject);
         if (LoginUserBase.hasLogin())
             localHttpSetting.setUseCookies(true);
-        while (true)
-        {
+        else
+            localHttpSetting.setUseCookies(false);
             localHttpSetting.setNotifyUser(false);
             localHttpSetting.setReadTimeout(15000);
             localHttpSetting.setAttempts(3);
@@ -132,8 +144,6 @@ public class RankingController {
             localHttpSetting.setListener(paramOnCommonListener);
             paramMyActivity.getHttpGroupaAsynPool().add(localHttpSetting);
             return;
-            localHttpSetting.setUseCookies(false);
-        }
     }
 
     public static void b(Context paramContext, String paramString)

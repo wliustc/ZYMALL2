@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jingdong.common.ranking.RankingController;
 import com.jingdong.common.ranking.activity.RankingListActivity;
 import com.jingdong.common.ui.JDDialogFactory;
 import com.zy.app.mall.R;
@@ -24,6 +23,7 @@ import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.b.RightTitleColumn;
 import com.zy.app.mall.category.view.CategoryFooter;
 import com.zy.common.entity.Catelogy;
+import com.zy.common.ranking.RankingController;
 import com.zy.common.ui.JDDialog;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.JDImageUtils;

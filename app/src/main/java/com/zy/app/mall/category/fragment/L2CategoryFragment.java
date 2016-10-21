@@ -16,11 +16,9 @@ import android.widget.ImageView;
 import com.jingdong.app.mall.WebActivity;
 import com.jingdong.app.mall.promotion.PromotionMessageActivity;
 import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
-import com.jingdong.app.mall.utils.JDEbookUtil;
 import com.jingdong.app.mall.utils.LoginUser;
 import com.jingdong.app.mall.utils.StartActivityUtils;
 import com.jingdong.app.mall.utils.ui.view.CarouseFigureImagePagerAdapter;
-import com.jingdong.app.mall.utils.ui.view.CarouselFigureView;
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.jdtravel.FlightSearchActivity;
 import com.jingdong.common.movie.main.MovieActivity;
@@ -38,6 +36,8 @@ import com.zy.app.mall.category.adapter.RightListAdapter;
 import com.zy.app.mall.category.b.RightColumnBase;
 import com.zy.app.mall.category.b.RightListColumn;
 import com.zy.app.mall.category.fragment.CategoryFragment;
+import com.zy.app.mall.utils.JDEbookUtil;
+import com.zy.app.mall.utils.ui.view.CarouselFigureView;
 import com.zy.app.util.image.JDDisplayImageOptions;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.entity.SourceEntity;
@@ -399,7 +399,7 @@ public class L2CategoryFragment extends CategoryFragment {
         post(new Runnable() {//c(this, paramString)
             @Override
             public void run() {
-                L2CategoryFragment.this.D.a(new CarouseFigureImagePagerAdapter.DataPresenter() {
+                L2CategoryFragment.this.D.setFigureViewAdapterDataPresenter(new CarouseFigureImagePagerAdapter.DataPresenter() {
                     @Override
                     public int size() {
                         return 1;
