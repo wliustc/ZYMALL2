@@ -72,186 +72,142 @@ public class Catelogy implements Serializable {
     {
     }
 
-    public Catelogy(JSONObjectProxy paramJSONObjectProxy, int paramInt)
-    {
-        switch (paramInt)
-        {
-            default:
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-        }
-        label408:
-        do
-        {
-            do
-            {
-                do
-                {
-                    return;
-                    this.cId = paramJSONObjectProxy.getStringOrNull("cid");
-                    this.level = paramJSONObjectProxy.getIntOrNull("level").intValue();
-                    this.name = paramJSONObjectProxy.getStringOrNull("name");
-                    this.mergeCatalogs = Catelogy.MergedCatelogy.toList(paramJSONObjectProxy.getJSONArrayOrNull("mergeCatalogs"));
-                    this.showTab = paramJSONObjectProxy.optBoolean("showTab");
-                    return;
-                    setcId(paramJSONObjectProxy.getStringOrNull("cid"));
-                    setName(paramJSONObjectProxy.getStringOrNull("name"));
-                    setWareNumber(paramJSONObjectProxy.getIntOrNull("wareNumber"));
-                    setField(paramJSONObjectProxy.getStringOrNull("filed"));
-                    doCatelogyArray(paramJSONObjectProxy.getJSONArrayOrNull("childs"));
-                    this.headerCatelogy = new Catelogy();
-                    this.headerCatelogy = this;
-                    return;
+    public Catelogy(JSONObjectProxy paramJSONObjectProxy, int paramInt) {
+        switch (paramInt) {
+            case 0://:pswitch_0
+                this.cId = paramJSONObjectProxy.getStringOrNull("cid");
+                this.level = paramJSONObjectProxy.getIntOrNull("level").intValue();
+                this.name = paramJSONObjectProxy.getStringOrNull("name");
+                this.mergeCatalogs = Catelogy.MergedCatelogy.toList(paramJSONObjectProxy.getJSONArrayOrNull("mergeCatalogs"));
+                this.showTab = paramJSONObjectProxy.optBoolean("showTab");
+                break;
+            case 1://:pswitch_1
+                setcId(paramJSONObjectProxy.getStringOrNull("cid"));
+                setName(paramJSONObjectProxy.getStringOrNull("name"));
+                setWareNumber(paramJSONObjectProxy.getIntOrNull("wareNumber"));
+                setField(paramJSONObjectProxy.getStringOrNull("filed"));
+                doCatelogyArray(paramJSONObjectProxy.getJSONArrayOrNull("childs"));
+                this.headerCatelogy = new Catelogy();
+                this.headerCatelogy = this;
+                break;
+            case 2://:pswitch_2
+                if (paramJSONObjectProxy != null) {
+                    setcId(paramJSONObjectProxy.getStringOrNull("catelogyId"));
+                    setName(paramJSONObjectProxy.getStringOrNull("promotion_name"));
+                    this.description = paramJSONObjectProxy.getStringOrNull("promotion_info");
+                    this.imgUrl = paramJSONObjectProxy.getStringOrNull("imageUrl");
+                    try {
+                        this.promotionID = paramJSONObjectProxy.getLongOrNull("promotion_id").longValue();
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
-                while (paramJSONObjectProxy == null);
-                setcId(paramJSONObjectProxy.getStringOrNull("catelogyId"));
-                setName(paramJSONObjectProxy.getStringOrNull("promotion_name"));
-                this.description = paramJSONObjectProxy.getStringOrNull("promotion_info");
-                this.imgUrl = paramJSONObjectProxy.getStringOrNull("imageUrl");
-                try
-                {
-                    this.promotionID = paramJSONObjectProxy.getLongOrNull("promotion_id").longValue();
-                    return;
+                break;
+            case 3://:pswitch_3
+                if (paramJSONObjectProxy == null) {
+
                 }
-                catch (NullPointerException e)
-                {
-                    e.printStackTrace();
-                    return;
+                this.name = paramJSONObjectProxy.getStringOrNull("name");
+                this.imgUrl = paramJSONObjectProxy.getStringOrNull("icon");
+                this.cId = paramJSONObjectProxy.getStringOrNull("cid");
+                this.virtualFlag = paramJSONObjectProxy.optInt("virtualFlag");
+                if (this.virtualFlag != 0) {
+                    if (this.virtualFlag == 1)
+                        this.searchKey = paramJSONObjectProxy.getStringOrNull("searchKey");
+                    else if (this.virtualFlag == 2)
+                        this.shopId = paramJSONObjectProxy.getLongOrNull("shopId");
                 }
-            }
-            while (paramJSONObjectProxy == null);
-            this.name = paramJSONObjectProxy.getStringOrNull("name");
-            this.imgUrl = paramJSONObjectProxy.getStringOrNull("icon");
-            this.cId = paramJSONObjectProxy.getStringOrNull("cid");
-            this.virtualFlag = paramJSONObjectProxy.optInt("virtualFlag");
-            if (this.virtualFlag != 0)
-            {
-                if (this.virtualFlag == 1)
-                    this.searchKey = paramJSONObjectProxy.getStringOrNull("searchKey");
-            }
-            else
-            {
+
                 this.action = paramJSONObjectProxy.getStringOrNull("action");
                 this.destination = paramJSONObjectProxy.getStringOrNull("destination");
                 this.path = paramJSONObjectProxy.getStringOrNull("path");
-                if (paramJSONObjectProxy.optInt("YNlevelF", 0) != 0)
-                    break label408;
-                setHasLevelFour(false);
-            }
-            while (true)
-            {
+                if (paramJSONObjectProxy.optInt("YNlevelF", 0) == 0)
+                    setHasLevelFour(false);
+                else
+                    setHasLevelFour(true);
+
                 this.levelFourJsonArray = paramJSONObjectProxy.getJSONArrayOrNull("level_f");
                 this.levelFourList = getLevelFourList(this.levelFourJsonArray);
-                return;
-                if (this.virtualFlag != 2)
-                    break;
-                this.shopId = paramJSONObjectProxy.getLongOrNull("shopId");
                 break;
-                setHasLevelFour(true);
-            }
-        }
-        while (paramJSONObjectProxy == null);
-        this.path = paramJSONObjectProxy.getStringOrNull("path");
-        if (!TextUtils.isEmpty(this.path))
-        {
-            String[] arrayOfString = this.path.split("_");
-            this.level1Cid = arrayOfString[0];
-            this.level2Cid = arrayOfString[1];
-            this.level3Cid = arrayOfString[2];
-        }
-        this.cId = paramJSONObjectProxy.getStringOrNull("cid");
-        this.name = paramJSONObjectProxy.getStringOrNull("name");
-        this.imgUrl = paramJSONObjectProxy.getStringOrNull("icon");
-        this.columNum = paramJSONObjectProxy.optInt("columNum");
-        this.virtualFlag = paramJSONObjectProxy.optInt("virtualFlag");
-        if (this.virtualFlag != 0)
-        {
-            if (this.virtualFlag == 1)
-                this.searchKey = paramJSONObjectProxy.getStringOrNull("searchKey");
-        }
-        else
-        {
-            this.action = paramJSONObjectProxy.getStringOrNull("action");
-            this.destination = paramJSONObjectProxy.getStringOrNull("destination");
-            this.sensitiveFlag = paramJSONObjectProxy.optInt("sensitiveFlag");
-            if (paramJSONObjectProxy.optInt("YNlevelF", 0) != 0)
-                break label639;
-            setHasLevelFour(false);
-        }
-        while (true)
-        {
-            this.levelFourJsonArray = paramJSONObjectProxy.getJSONArrayOrNull("level_f");
-            this.levelFourList = getLevelFourList(this.levelFourJsonArray);
-            return;
-            if (this.virtualFlag != 2)
+            case 4://:pswitch_4
+                if (paramJSONObjectProxy == null) {
+                    this.path = paramJSONObjectProxy.getStringOrNull("path");
+                    if (!TextUtils.isEmpty(this.path)) {
+                        String[] arrayOfString = this.path.split("_");
+                        this.level1Cid = arrayOfString[0];
+                        this.level2Cid = arrayOfString[1];
+                        this.level3Cid = arrayOfString[2];
+                    }
+                    this.cId = paramJSONObjectProxy.getStringOrNull("cid");
+                    this.name = paramJSONObjectProxy.getStringOrNull("name");
+                    this.imgUrl = paramJSONObjectProxy.getStringOrNull("icon");
+                    this.columNum = paramJSONObjectProxy.optInt("columNum");
+                    this.virtualFlag = paramJSONObjectProxy.optInt("virtualFlag");
+                    if (this.virtualFlag != 0) {//if-eqz v0, :cond_5
+                        if (this.virtualFlag == 1)//if-ne v0, v3, :cond_6
+                            this.searchKey = paramJSONObjectProxy.getStringOrNull("searchKey");
+                        else if (this.virtualFlag == 2)
+                            this.shopId = paramJSONObjectProxy.getLongOrNull("shopId");
+                    }
+
+                    this.action = paramJSONObjectProxy.getStringOrNull("action");
+                    this.destination = paramJSONObjectProxy.getStringOrNull("destination");
+                    this.sensitiveFlag = paramJSONObjectProxy.optInt("sensitiveFlag");
+                    if (paramJSONObjectProxy.optInt("YNlevelF", 0) == 0)
+                        setHasLevelFour(false);
+                    else
+                        setHasLevelFour(true);
+
+                    this.levelFourJsonArray = paramJSONObjectProxy.getJSONArrayOrNull("level_f");
+                    this.levelFourList = getLevelFourList(this.levelFourJsonArray);
+                }
                 break;
-            this.shopId = paramJSONObjectProxy.getLongOrNull("shopId");
-            break;
-            label639: setHasLevelFour(true);
         }
+        return;
+
     }
 
     private void doCatelogyArray(JSONArrayProxy paramJSONArrayPoxy)
     {
-        if (Log.D)
-        {
+        if (Log.D){
             Log.d("Catelogy", "doCatelogyArray() -->> ");
             if (paramJSONArrayPoxy != null)
                 Log.d("Catelogy", "jsonArrayOrNull.length() == " + paramJSONArrayPoxy.length());
         }
-        if ((paramJSONArrayPoxy == null) || (paramJSONArrayPoxy.length() <= 0))
-            break label54;
-        label54:
-        do
-            return;
-        while (this.childCategories != null);
-        this.childCategories = new ArrayList();
-        int j = paramJSONArrayPoxy.length();
-        int i = 0;
-        while (i < j)
-            try
-            {
-                Catelogy localCatelogy = new Catelogy(paramJSONArrayPoxy.getJSONObject(i), 1);
-                this.childCategories.add(i, localCatelogy);
-                i += 1;
-            }
-            catch (JSONException localJSONException)
-            {
-                while (true)
-                    localJSONException.printStackTrace();
-            }
+        if ((paramJSONArrayPoxy != null) && (paramJSONArrayPoxy.length() > 0)){
+            if (this.childCategories == null){//if-nez v0, :cond_1
+                this.childCategories = new ArrayList();
+
+                for (int i = 0; i < paramJSONArrayPoxy.length(); i++)
+                    try
+                    {
+                        Catelogy localCatelogy = new Catelogy(paramJSONArrayPoxy.getJSONObject(i), 1);
+                        this.childCategories.add(i, localCatelogy);
+                    }
+                    catch (JSONException e)
+                    {
+                            e.printStackTrace();
+                    }
+            }//:cond_1
+        }
+        return;
+
     }
 
     public static String getCmsTotalCid(ArrayList<Catelogy> paramArrayList, int paramInt)
     {
-        Object localObject2;
-        if (paramInt <= 0)
-            localObject2 = "null";
-        Object localObject1;
-        int i;
-        do
-        {
-            return localObject2;
-            localObject1 = "";
-            i = 0;
-            localObject2 = localObject1;
+        String localObject2= "null";
+        if (paramInt > 0){
+            String localObject1 = "";
+            for (int i = 0; i < paramInt; i++){
+                if (i < paramInt - 1)
+                    localObject2 = (String)localObject1 + ((Catelogy)paramArrayList.get(i)).getcId() + "_";
+                else if (i == paramInt - 1)
+                    localObject2 = (String)localObject1 + ((Catelogy)paramArrayList.get(i)).getcId();
+            }
+
         }
-        while (i >= paramInt);
-        if (i < paramInt - 1)
-            localObject2 = (String)localObject1 + ((Catelogy)paramArrayList.get(i)).getcId() + "_";
-        while (true)
-        {
-            i += 1;
-            localObject1 = localObject2;
-            break;
-            localObject2 = localObject1;
-            if (i != paramInt - 1)
-                continue;
-            localObject2 = (String)localObject1 + ((Catelogy)paramArrayList.get(i)).getcId();
-        }
+        return localObject2;
     }
 
     private List<CatelogyLevelFour> getLevelFourList(JSONArrayProxy paramJSONArrayPoxy)
@@ -768,7 +724,23 @@ public class Catelogy implements Serializable {
 
         public static java.util.ArrayList<MergedCatelogy> toList(JSONArrayProxy paramJSONArrayPoxy)
         {
-
+            ArrayList v0 = null;
+            if (paramJSONArrayPoxy != null) {//if-nez p0, :cond_1
+                v0 = new ArrayList<MergedCatelogy>();
+                for(int v1 = 0; v1< paramJSONArrayPoxy.length(); v1++){//if-ge v1, v2, :cond_3
+                    try {
+                        JSONObjectProxy v2 = paramJSONArrayPoxy.getJSONObject(v1);
+                        if(v2 != null){//if-eqz v2, :cond_2
+                            if(v2.isNull("name")){//if-nez v2, :cond_2
+                                v0.add(new MergedCatelogy(v2));
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }//:cond_1
+            return v0;
         }
 
         public String getId()
