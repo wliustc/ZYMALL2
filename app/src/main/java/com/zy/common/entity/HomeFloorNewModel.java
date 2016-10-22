@@ -3,6 +3,7 @@ package com.zy.common.entity;
 import com.jd.framework.json.JDJSON;
 import com.jingdong.common.utils.JSONObjectProxy;
 import com.zy.common.utils.JSONArrayProxy;
+import com.zy.common.utils.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,15 +16,14 @@ import java.util.List;
  * Created by Robin on 2016/5/8.
  */
 public class HomeFloorNewModel {
+    private static final String TAG = HomeFloorNewModel.class.getSimpleName();
     public static final int APPCENTER = 1;
     public static final int BANNER = 0;
     public static final int HYBRID = 2;
     public static final int RECOMMEND = 3;
     private JSONArrayProxy banner;
-    //private JSONArray banner;
     private int bottomMargin;
     private JSONObjectProxy content;
-    //private JSONObject content;
     private String floorId;
     private String functionId;
     private String head;
@@ -193,13 +193,19 @@ public class HomeFloorNewModel {
             try {
                 this.banner = paramJSONObjectProxy.getJSONArray("content");
             } catch (JSONException e) {
-                e.printStackTrace();
+                if(Log.E) {
+                    Log.e(TAG, e.getMessage());
+                    Log.e(TAG, "Not Find 'content'"+ paramJSONObjectProxy.toString());
+                }
             }
         else
             try {
                 this.content = paramJSONObjectProxy.getJSONObject("content");
             } catch (JSONException e) {
-                e.printStackTrace();
+                if(Log.E) {
+                    Log.e(TAG, e.getMessage());
+                    Log.e(TAG, "Not Find 'content'"+ paramJSONObjectProxy.toString());
+                }
             }
 
         this.isShare = paramJSONObjectProxy.optString("isShare", "");

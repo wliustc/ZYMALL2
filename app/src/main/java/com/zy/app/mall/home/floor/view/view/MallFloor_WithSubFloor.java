@@ -76,8 +76,6 @@ public class MallFloor_WithSubFloor extends MallBaseFloor<MallWithSubFloorFloorP
 
             /*String str = Md5Encrypt.md5(paramHomeFloorNewElements.getTpl() + sb.toString());*/
             String str = paramHomeFloorNewElements.getTpl() + "*" + sb.toString();
-            if(Log.D)
-                Log.d("HomeFloorNewModel:", "-->"+str);
             View localObject = (View) this.h.get(str);
             if (localObject == null) {//if-nez v0, :cond_8
                 localObject = MallFloorCommonUtil.getMallFloorLayout(getContext(), MallFloorTypeUtil.getFloorTypeByFloorElements(paramHomeFloorNewElements));

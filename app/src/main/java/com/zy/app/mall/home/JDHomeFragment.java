@@ -75,8 +75,8 @@ public class JDHomeFragment extends TabFragment
     protected View view = null;   //f
     protected HomePageObserver._Z g;
     protected HomePageObserver mHomePageObserver;//h;
-    protected Boolean i = Boolean.valueOf(false);
-    private final String k = JDHomeFragment.class.getSimpleName();
+    protected Boolean isDestroy = Boolean.valueOf(false);//i
+    private final static String TAG = JDHomeFragment.class.getSimpleName();//k
     private int l = (int) (DPIUtil.getHeight() * 0.618D);
     private HashMap<String, View> m = new HashMap();
     private View n = null;
@@ -143,8 +143,6 @@ public class JDHomeFragment extends TabFragment
                 continue;
             /*str = Md5Encrypt.md5(localHomeFloorNewModel.getType() + localHomeFloorNewModel.getFloorId());*/
             str = localHomeFloorNewModel.getType() + "*" + localHomeFloorNewModel.getFloorId() + "*" + localHomeFloorNewModel.getShowName();
-            if(Log.D)
-                Log.d("HomeFloorNewModel:", str);
             View view = this.m.get(str);
             if (view == null) {//if-nez v2, :cond_9
                 int floorType = MallFloorTypeUtil.getFloorTypeByFloorModel(localHomeFloorNewModel);
@@ -256,7 +254,7 @@ public class JDHomeFragment extends TabFragment
 
     public final void a(int paramInt1, int paramInt2) {
         if (Log.D)
-            Log.d("navigation-click", this.k + "   old-->" + paramInt1 + " now-->" + paramInt2);
+            Log.d("navigation-click", TAG + "   old-->" + paramInt1 + " now-->" + paramInt2);
         if ((paramInt1 == paramInt2) && (paramInt2 == 0) && (this.v == 0)) {
             if (!this.mPullToRefreshListView.isRefreshing()) {
                 a(0);
@@ -491,7 +489,7 @@ public class JDHomeFragment extends TabFragment
     @Override
     public void onCreate(Bundle paramBundle) {
         if (Log.D)
-            Log.d(this.k, "onCreate -->> ");
+            Log.d(TAG, "onCreate -->> ");
         setPageId("Home_Main");
         this.needRemoveviewOnStop = false;
         if (this.mHomePageObserver == null)
@@ -520,7 +518,7 @@ public class JDHomeFragment extends TabFragment
         this.thisActivity.addDestroyListener(new IDestroyListener() {//aa(this));
             @Override
             public void onDestroy() {
-//                JDHomeFragment.this.d();
+                JDHomeFragment.this.d();
             }
         });
         this.mPullToRefreshListView = ((PullToRefreshListView) this.view.findViewById(R.id.pull_refresh_scroll));//2131172359
@@ -666,7 +664,7 @@ public class JDHomeFragment extends TabFragment
     @Override
     public boolean onKeyDown(int paramInt, KeyEvent paramKeyEvent) {
         if (Log.D)
-            Log.d(this.k, "keyCode -->> " + paramInt);
+            Log.d(TAG, "keyCode -->> " + paramInt);
         if (paramInt == 4) {
             com.zy.common.utils.CommonUtil.setHomeActivityStoppedPeriod(System.currentTimeMillis());
             MainFrameActivity mainFrameActivity = MyApplication.getInstance().getMainFrameActivity();
@@ -681,8 +679,8 @@ public class JDHomeFragment extends TabFragment
     @Override
     public void onResume() {
         int i1;
-        synchronized (this.i) {
-            if ((this.m != null) && (this.i.booleanValue())) {
+        synchronized (this.isDestroy) {
+            if ((this.m != null) && (this.isDestroy.booleanValue())) {
                 Iterator localIterator = this.m.entrySet().iterator();
                 while (localIterator.hasNext()) {
                     Object localObject3 = ((Map.Entry) localIterator.next()).getValue();
@@ -691,7 +689,7 @@ public class JDHomeFragment extends TabFragment
                     ((MallBaseFloor) localObject3).k();
 
                 }
-                this.i = Boolean.valueOf(false);
+                this.isDestroy = Boolean.valueOf(false);
             }
         }
         //:cond_0
@@ -706,7 +704,7 @@ public class JDHomeFragment extends TabFragment
         super.onResume();
         FloorFigureViewCtrl.getInstance().c();
         if (Log.D)
-            Log.d(this.k, "HomeActivity onResume() -->> ");
+            Log.d(TAG, "HomeActivity onResume() -->> ");
         ApplicationManager.a();
 
 
@@ -789,7 +787,7 @@ public class JDHomeFragment extends TabFragment
         FloorFigureViewCtrl.b();
         if (this.m == null)
             return;
-        synchronized (this.i) {
+        synchronized (this.isDestroy) {
             Iterator localIterator = this.m.entrySet().iterator();
             while (localIterator.hasNext()) {
                 Object localObject2 = ((Map.Entry) localIterator.next()).getValue();
@@ -797,7 +795,7 @@ public class JDHomeFragment extends TabFragment
                     ((MallBaseFloor) localObject2).j();
             }
         }
-        this.i = Boolean.valueOf(true);
+        this.isDestroy = Boolean.valueOf(true);
 
     }
 

@@ -2589,12 +2589,6 @@ public class Product implements Serializable {
                     }
                 }//:cond_1
 
-                if (Log.D)
-                    Log.d("Temp", "name -->> " + name);
-                if (Log.D)
-                    Log.d("Temp", "stringBuffer.toString() -->> " + v2.toString());
-                if (Log.D)
-                    Log.d("Temp", "sb.toString() -->> " + v3.toString());
                 localMatcher.appendReplacement(v2, v3.toString());
                 //goto/16 :goto_1
             }
