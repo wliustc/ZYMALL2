@@ -218,115 +218,57 @@ public class Catelogy implements Serializable {
             if (paramJSONArrayPoxy != null)
                 Log.d("Catelogy", "jsonArrayOrNull.length() == " + paramJSONArrayPoxy.length());
         }
-        Object localObject;
-        if ((paramJSONArrayPoxy == null) || (paramJSONArrayPoxy.length() <= 0))
+        ArrayList localArrayList = null;
+        if ((paramJSONArrayPoxy != null) || (paramJSONArrayPoxy.length() > 0))
         {
-            localObject = null;
-            return localObject;
-        }
-        int j = paramJSONArrayPoxy.length();
-        ArrayList localArrayList = new ArrayList();
-        int i = 0;
-        while (true)
-        {
-            localObject = localArrayList;
-            if (i >= j)
-                break;
-            localObject = new CatelogyLevelFour();
-            try
+            localArrayList = new ArrayList();
+            for (int i = 0; i< paramJSONArrayPoxy.length(); i++)
             {
-                JSONObjectProxy localJSONObjectProxy = paramJSONArrayPoxy.getJSONObject(i);
-                ((CatelogyLevelFour)localObject).setCatalogId(localJSONObjectProxy.optString("catalogId"));
-                ((CatelogyLevelFour)localObject).setCatalogName(localJSONObjectProxy.optString("getCatalogName"));
-                localArrayList.add(localObject);
-                i += 1;
+                CatelogyLevelFour localObject = new CatelogyLevelFour();
+                try
+                {
+                    JSONObjectProxy localJSONObjectProxy = paramJSONArrayPoxy.getJSONObject(i);
+                    localObject.setCatalogId(localJSONObjectProxy.optString("catalogId"));
+                    localObject.setCatalogName(localJSONObjectProxy.optString("getCatalogName"));
+                    localArrayList.add(localObject);
+                    i += 1;
+                }
+                catch (JSONException localJSONException)
+                {
+                        localJSONException.printStackTrace();
+                }
             }
-            catch (JSONException localJSONException)
-            {
-                while (true)
-                    localJSONException.printStackTrace();
-            }
+
         }
+        return localArrayList;
+
     }
 
     // ERROR //
     public static ArrayList<Catelogy> toList(JSONArrayProxy paramJSONArrayPoxy, int paramInt)
     {
-        // Byte code:
-        //   0: new 322	java/util/ArrayList
-        //   3: dup
-        //   4: invokespecial 323	java/util/ArrayList:<init>	()V
-        //   7: astore_3
-        //   8: iconst_0
-        //   9: istore 4
-        //   11: aload_3
-        //   12: astore_2
-        //   13: iload 4
-        //   15: aload_0
-        //   16: invokevirtual 310	com/jingdong/common/utils/JSONArrayPoxy:length	()I
-        //   19: if_icmpge +77 -> 96
-        //   22: aload_0
-        //   23: iload 4
-        //   25: invokevirtual 327	com/jingdong/common/utils/JSONArrayPoxy:getJSONObject	(I)Lcom/jingdong/common/utils/JSONObjectProxy;
-        //   28: ifnull +36 -> 64
-        //   31: aload_0
-        //   32: iload 4
-        //   34: invokevirtual 327	com/jingdong/common/utils/JSONArrayPoxy:getJSONObject	(I)Lcom/jingdong/common/utils/JSONObjectProxy;
-        //   37: ldc 144
-        //   39: invokevirtual 381	com/jingdong/common/utils/JSONObjectProxy:isNull	(Ljava/lang/String;)Z
-        //   42: ifne +22 -> 64
-        //   45: aload_3
-        //   46: new 2	com/jingdong/common/entity/Catelogy
-        //   49: dup
-        //   50: aload_0
-        //   51: iload 4
-        //   53: invokevirtual 327	com/jingdong/common/utils/JSONArrayPoxy:getJSONObject	(I)Lcom/jingdong/common/utils/JSONObjectProxy;
-        //   56: iload_1
-        //   57: invokespecial 329	com/jingdong/common/entity/Catelogy:<init>	(Lcom/jingdong/common/utils/JSONObjectProxy;I)V
-        //   60: invokevirtual 382	java/util/ArrayList:add	(Ljava/lang/Object;)Z
-        //   63: pop
-        //   64: iload 4
-        //   66: iconst_1
-        //   67: iadd
-        //   68: istore 4
-        //   70: goto -59 -> 11
-        //   73: astore_3
-        //   74: aconst_null
-        //   75: astore_0
-        //   76: aload_0
-        //   77: astore_2
-        //   78: getstatic 385	com/jingdong/common/utils/Log:V	Z
-        //   81: ifeq +15 -> 96
-        //   84: ldc_w 387
-        //   87: aload_3
-        //   88: invokevirtual 390	org/json/JSONException:getMessage	()Ljava/lang/String;
-        //   91: invokestatic 393	com/jingdong/common/utils/Log:v	(Ljava/lang/String;Ljava/lang/String;)V
-        //   94: aload_0
-        //   95: astore_2
-        //   96: getstatic 293	com/jingdong/common/utils/Log:D	Z
-        //   99: ifeq +25 -> 124
-        //   102: ldc 60
-        //   104: new 301	java/lang/StringBuilder
-        //   107: dup
-        //   108: ldc_w 395
-        //   111: invokespecial 305	java/lang/StringBuilder:<init>	(Ljava/lang/String;)V
-        //   114: aload_2
-        //   115: invokevirtual 398	java/lang/StringBuilder:append	(Ljava/lang/Object;)Ljava/lang/StringBuilder;
-        //   118: invokevirtual 318	java/lang/StringBuilder:toString	()Ljava/lang/String;
-        //   121: invokestatic 299	com/jingdong/common/utils/Log:d	(Ljava/lang/String;Ljava/lang/String;)V
-        //   124: aload_2
-        //   125: areturn
-        //   126: astore_2
-        //   127: aload_3
-        //   128: astore_0
-        //   129: aload_2
-        //   130: astore_3
-        //   131: goto -55 -> 76
-        //
-        // Exception table:
-        //   from	to	target	type
-        //   0	8	73	org/json/JSONException
-        //   13	64	126	org/json/JSONException
+        ArrayList<Catelogy> v0 = new ArrayList<Catelogy>();;
+        if(paramJSONArrayPoxy != null && paramJSONArrayPoxy.length() > 0){
+            for(int v1 = 0; v1<paramJSONArrayPoxy.length(); v1++){
+                try {
+                    JSONObjectProxy v2 = paramJSONArrayPoxy.getJSONObject(v1);
+                    if(v2 != null){
+                        if(!v2.isNull("name")){//if-nez v2, :cond_0
+                            v0.add(new Catelogy(v2, paramInt));
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    if(Log.V)
+                        Log.v("Ware", e.getMessage());
+                    break;
+                }
+            }
+        }
+        if (Log.D) {
+            Log.d("Catelogy", "list:" + v0);
+        }
+        return v0;
     }
 
     public String getAction()
@@ -731,7 +673,7 @@ public class Catelogy implements Serializable {
                     try {
                         JSONObjectProxy v2 = paramJSONArrayPoxy.getJSONObject(v1);
                         if(v2 != null){//if-eqz v2, :cond_2
-                            if(v2.isNull("name")){//if-nez v2, :cond_2
+                            if(!v2.isNull("name")){//if-nez v2, :cond_2
                                 v0.add(new MergedCatelogy(v2));
                             }
                         }
