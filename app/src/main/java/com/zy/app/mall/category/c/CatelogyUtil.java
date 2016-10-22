@@ -2,6 +2,9 @@ package com.zy.app.mall.category.c;
 
 import android.content.Context;
 
+import com.zy.common.ui.CameraUtils;
+import com.zy.common.utils.SDKUtils;
+
 /**
  * Created by robin on 16-8-19.
  */
@@ -9,8 +12,8 @@ import android.content.Context;
 public class CatelogyUtil {
     public static boolean a(Context paramContext)
     {
-        if (fe.b())
-            return com.jingdong.common.ui.a.a(paramContext);
+        if (SDKUtils.b())
+            return CameraUtils.a(paramContext);
         return true;
     }
 }

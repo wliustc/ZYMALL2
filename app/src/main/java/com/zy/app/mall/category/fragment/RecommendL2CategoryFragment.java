@@ -14,6 +14,7 @@ import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
+import com.jingdong.jdma.common.utils.Md5Encrypt;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.adapter.IRightAdapterListener;

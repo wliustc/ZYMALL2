@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import com.jingdong.jdma.common.utils.CommonUtil;
 import com.jingdong.jdma.common.utils.Md5Encrypt;
 import com.zy.common.utils.NetUtils;
+import com.zy.jdma.common.secure.DesUtil;
 import com.zy.jdma.minterface.MaInitCommonInfo;
 
 import org.json.JSONException;
@@ -82,7 +83,7 @@ public class UserInfoModel {
         try
         {
             PackageInfo packageInfo = paramContext.getPackageManager().getPackageInfo(paramContext.getPackageName(), 0);
-            setAppver_code(packageInfo.versionCode);
+            setAppver_code(new StringBuilder().append(packageInfo.versionCode).toString());
             setSiteid(paramMaInitCommonInfo.site_id);
             return;
         }
