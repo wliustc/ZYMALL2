@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.jd.voice.jdvoicesdk.JdVoiceRecognitionLintener;
-import com.jd.voice.jdvoicesdk.a.c;
+import com.jd.voice.jdvoicesdk.a.ResultEntity;
 
 /**
  * Created by Robin on 2016/5/16.
@@ -60,7 +60,7 @@ public class VoiceSearchLayout extends LinearLayout
     }
 
     @Override
-    public void onResult(int paramInt, c paramc) {
+    public void onResult(int paramInt, ResultEntity paramc) {
 
     }
 

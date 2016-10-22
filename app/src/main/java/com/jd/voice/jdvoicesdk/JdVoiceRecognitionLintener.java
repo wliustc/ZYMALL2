@@ -1,6 +1,6 @@
 package com.jd.voice.jdvoicesdk;
 
-import com.jd.voice.jdvoicesdk.a.c;
+import com.jd.voice.jdvoicesdk.a.ResultEntity;
 
 /**
  * Created by Robin on 2016/5/16.
@@ -14,7 +14,7 @@ public interface JdVoiceRecognitionLintener {
 
     public abstract void onRecognitionStart();
 
-    public abstract void onResult(int paramInt, c paramc);
+    public abstract void onResult(int paramInt, ResultEntity paramc);
 
     public abstract void onVoiceServiceUnavailable();
 
