@@ -18,6 +18,9 @@ import java.util.Map;
  */
 public abstract class HttpGroup implements IDestroyListener {
 
+    private OnGroupStartListener onGroupStartListener;
+    private OnGroupCompleteListener onGroupCompleteListener;
+
     public static String getCookie() {
         return null;
     }
@@ -32,6 +35,14 @@ public abstract class HttpGroup implements IDestroyListener {
 
     public static String mergerUrlAndParams(String url, Map paramURLParamMap) {
         throw new RuntimeException("Not Found mergerUrlAndParams(String url, URLParamMap paramURLParamMap)");
+    }
+
+    public void setOnGroupStartListener(OnGroupStartListener onGroupStartListener) {
+        this.onGroupStartListener = onGroupStartListener;
+    }
+
+    public void setOnGroupCompleteListener(OnGroupCompleteListener onGroupCompleteListener) {
+        this.onGroupCompleteListener = onGroupCompleteListener;
     }
 
     public interface StopController {
@@ -88,6 +99,11 @@ public abstract class HttpGroup implements IDestroyListener {
     {
         public void onPause();
     }
+
+    public interface OnGroupStartListener {
+        public abstract void onStart();
+    }
+
 
     public class HttpRequest implements HttpGroup.StopController{
         @Override
@@ -275,5 +291,9 @@ public abstract class HttpGroup implements IDestroyListener {
         public void setMyActivity(IMyActivity myActivity) {
             this.myActivity = myActivity;
         }
+    }
+
+    public interface OnGroupCompleteListener {
+        public void onComplete();
     }
 }

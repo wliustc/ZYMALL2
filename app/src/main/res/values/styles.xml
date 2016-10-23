@@ -36,7 +36,7 @@
     <style name="b8" parent="@android:style/Widget.DeviceDefault.Light.ActionButton">
         <item name="android:src">@drawable/c1t</item>
     </style>
-    <style name="MeizuTheme" parent="@android:style/Theme.DeviceDefault.Light">
+    <style name="MeizuTheme" parent="@android:style/Theme.DeviceDefault.Light"><!-- dv -->
         <item name="android:textColor">@color/d5</item>
         <item name="android:actionBarStyle">@style/b6</item>
         <item name="android:actionButtonStyle">@style/b8</item>
