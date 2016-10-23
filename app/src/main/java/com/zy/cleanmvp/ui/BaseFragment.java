@@ -64,7 +64,7 @@ public abstract class BaseFragment extends Fragment {
         if (Log.D)
             Log.d(TAG, "onCreate() >> " + getClass().getName());
         super.onCreate(paramBundle);
-        if (this.rootView == null) ;
+        if (this.rootView == null)
         try {
             this.rootView = onCreateViews(this.thisActivity.getLayoutInflater(), paramBundle);
             return;
@@ -82,6 +82,8 @@ public abstract class BaseFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater paramLayoutInflater, ViewGroup paramViewGroup, Bundle paramBundle) {
+        if (Log.D)
+            Log.d(TAG, "onCreateView() >> " + getClass().getName());
         return this.rootView;
     }
 

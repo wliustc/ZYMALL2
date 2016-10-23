@@ -12,7 +12,7 @@ import com.jingdong.app.mall.faxian.b.d.IFaxianUI;
 import com.jingdong.common.entity.ChannelTabInfo;
 import com.zy.app.mall.basic.JDTaskModule;
 import com.zy.app.mall.navigationbar.INavigationPage;
-import com.zy.app.mall.navigationbar.JDTabFragment;
+import com.zy.app.mall.navigationbar.TabFragment;
 import com.zy.app.mall.personel.a.a.PersonalMessageChannel;
 import com.zy.app.mall.personel.a.a.PersonalMessageObserver;
 
@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Created by Robin on 2016/5/19.
  */
-public class JDFaxianFragment extends JDTabFragment<FaxianPresenter, FaxianNavigator>
+public class JDFaxianFragment extends TabFragment<FaxianPresenter, FaxianNavigator>
         implements IFaxianUI, INavigationPage, PersonalMessageObserver {
     private static JDFaxianFragment instance;
 

@@ -7,9 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ViewSwitcher;
 
-import com.jingdong.app.mall.home.HomePageObserver;
 import com.zy.app.mall.basic.JDTaskModule;
-import com.zy.app.mall.navigationbar.JDTabFragment;
+import com.zy.app.mall.navigationbar.TabFragment;
 import com.zy.app.mall.personel.a.a.PersonalMessageChannel;
 import com.zy.app.mall.personel.a.a.PersonalMessageObserver;
 
@@ -19,7 +18,7 @@ import java.util.Map;
  * Created by Robin on 2016/5/19.
  */
 @SuppressLint({"NewApi"})
-public class JDPersonalFragment extends JDTabFragment
+public class JDPersonalFragment extends TabFragment
         implements ViewSwitcher.ViewFactory,PersonalMessageObserver {
 
     private static boolean A;

@@ -71,7 +71,7 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <com.jingdong.common.ui.JDProgressBar
+        <com.zy.common.ui.JDProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="34.0dip"
             android:layout_height="34.0dip"

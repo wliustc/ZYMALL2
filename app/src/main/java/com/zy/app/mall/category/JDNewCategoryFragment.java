@@ -53,7 +53,7 @@ import com.zy.app.mall.category.fragment.ConjoinedCategoryFragment;
 import com.zy.app.mall.category.fragment.L2CategoryFragment;
 import com.zy.app.mall.category.fragment.OrdinaryL2CategoryFragment;
 import com.zy.app.mall.category.fragment.RecommendL2CategoryFragment;
-import com.zy.app.mall.navigationbar.JDTabFragment;
+import com.zy.app.mall.navigationbar.TabFragment;
 import com.zy.app.mall.personel.a.a.PersonalMessageChannel;
 import com.zy.app.mall.personel.a.a.PersonalMessageObserver;
 import com.zy.app.mall.searchRefactor.view.Activity.SearchActivity;
@@ -77,7 +77,7 @@ import java.util.Map;
 /**
  * Created by Robin on 2016/5/19.
  */
-public class JDNewCategoryFragment extends JDTabFragment implements PersonalMessageObserver {
+public class JDNewCategoryFragment extends TabFragment implements PersonalMessageObserver {
 
     private static JDNewCategoryFragment instance;
     private static final String TAG = JDNewCategoryFragment.class.getSimpleName();

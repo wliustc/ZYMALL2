@@ -168,10 +168,9 @@ public class JDHomeFragment extends TabFragment
                                         && (paramArrayList != null)
                                         && (JDHomeFragment.this.mHomeProductHeadView != null)
                                         && (JDHomeFragment.this.mHomeProductHeadView.getVisibility() == View.VISIBLE)) {
-                                    HomeProductAdapter localHomeProductAdapter = JDHomeFragment.this.mHomeProductAdapter;
                                     if (paramInt == 1)
                                         bool = true;
-                                    localHomeProductAdapter.a((List<HomeRecommendTwoEntity>) paramArrayList, bool);
+                                    JDHomeFragment.this.mHomeProductAdapter.a((List<HomeRecommendTwoEntity>) paramArrayList, bool);
                                     JDHomeFragment.this.mHomeProductAdapter.notifyDataSetChanged();
                                     return true;
                                 }
@@ -514,6 +513,8 @@ public class JDHomeFragment extends TabFragment
 
     @Override
     public View onCreateViews(LayoutInflater paramLayoutInflater, Bundle paramBundle) {
+        if (Log.D)
+            Log.d(TAG, "onCreateViews -->> ");
         this.view = ImageUtil.inflate(R.layout.pull_refresh_scroll_new, null);       //2130904224
         this.thisActivity.addDestroyListener(new IDestroyListener() {//aa(this));
             @Override
