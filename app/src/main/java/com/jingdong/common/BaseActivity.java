@@ -26,12 +26,14 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -44,6 +46,7 @@ import com.jingdong.common.utils.JDFrescoUtils;
 import com.jingdong.common.utils.cache.GlobalImageCache;
 import com.zy.app.mall.R;
 import com.zy.common.JDSoftReference;
+import com.zy.common.e.ConfigUtil;
 import com.zy.common.frame.IDestroyListener;
 import com.zy.common.frame.ILogoutListener;
 import com.zy.common.frame.IMyActivity;
@@ -114,43 +117,33 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     protected int type = 1;
     protected int yDistance;
 
-
-    private static void catchToastTip(Activity paramActivity, Intent paramIntent)
-    {
-        Object localObject = StringUtil.not_find_other;
-        if (TextUtils.equals(paramIntent.getAction(), "android.intent.action.VIEW"))
-        {
+    private static void catchToastTip(final Activity paramActivity, Intent paramIntent) {
+        String localObject = StringUtil.not_find_other;
+        if (TextUtils.equals(paramIntent.getAction(), "android.intent.action.VIEW")) {//if-eqz v1, :cond_3
             String str = paramIntent.getScheme();
-            paramIntent = (Intent)localObject;
-            if (str != null)
-                if (!str.equals("http"))
-                {
-                    paramIntent = (Intent)localObject;
-                    if (!str.equals("https"));
+            //paramIntent = (Intent)localObject;
+            if (str != null)//if-eqz v1, :cond_1
+                if (str.equals("http") || str.equals("https")) {//if-eqz v1, :cond_1
+                    localObject = StringUtil.not_find_browser;
                 }
-                else
-                {
-                    paramIntent = StringUtil.not_find_browser;
+        } else if (TextUtils.equals(paramIntent.getAction(), "android.intent.action.GET_CONTENT")) {
+            localObject = StringUtil.not_find_gallery;
+        } else if (TextUtils.equals(paramIntent.getAction(), "android.media.action.IMAGE_CAPTURE")) {
+            localObject = StringUtil.not_find_camera;
+        }
+        //:goto_0
+
+        BaseActivity baseActivity = (BaseActivity) BaseApplication.getInstance().getCurrentMyActivity();
+        if (baseActivity != null) {
+            final String finalLocalObject = localObject;
+            ((BaseActivity) baseActivity).post(new Runnable(){//g(paramActivity, localObject)
+                @Override
+                public void run() {
+                    Toast.makeText(paramActivity, finalLocalObject, Toast.LENGTH_SHORT).show();
                 }
+            });
         }
-        while (true)
-        {
-            localObject = (BaseActivity)BaseApplication.getInstance().getCurrentMyActivity();
-            if (localObject != null)
-                ((BaseActivity)localObject).post(new g(paramActivity, paramIntent));
-            return;
-            if (TextUtils.equals(paramIntent.getAction(), "android.intent.action.GET_CONTENT"))
-            {
-                paramIntent = StringUtil.not_find_gallery;
-                continue;
-            }
-            if (TextUtils.equals(paramIntent.getAction(), "android.media.action.IMAGE_CAPTURE"))
-            {
-                paramIntent = StringUtil.not_find_camera;
-                continue;
-            }
-            paramIntent = (Intent)localObject;
-        }
+        return;
     }
 
     private void clearHistoryRecord(Intent paramIntent)
@@ -159,9 +152,8 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         localg.a(paramIntent);
         while (this.recordList.remove(localg))
         {
-            if (!Log.D)
-                continue;
-            Log.d("MyActivity", "clearHistoryRecord() r -->> " + localg);
+            if (Log.D)
+                Log.d("MyActivity", "clearHistoryRecord() r -->> " + localg);
         }
     }
 
@@ -189,54 +181,55 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @SuppressLint({"NewApi"})
-    private View getModel()
-    {
+    private View getModel() {
         float f;
         int i;
         if (isActivityInFrame())
-        {
             f = 45.0F;
-            i = DPIUtil.dip2px(f);
-            if (!this.isSpecial)
-                break label160;
+        else
+            f = 70.0F;
+
+        i = DPIUtil.dip2px(f);
+        if (this.isSpecial)
             i = this.yDistance;
-        }
-        label160:
-        while (true)
-            while (true)
+
+        if (this.model == null) {//if-nez v0, :cond_0
+            try
             {
-                if (this.model == null);
-                try
-                {
-                    this.model = ImageUtil.inflate(R.layout.app_network_model, null);
-                    if (this.model == null)
-                    {
-                        return null;
-                        f = 70.0F;
-                    }
-                }
-                catch (Throwable localThrowable)
-                {
-                    while (true)
-                    {
-                        if (!Log.E)
-                            continue;
-                        localThrowable.printStackTrace();
-                    }
-                    if (this.layout == null)
-                    {
-                        this.layout = ((RelativeLayout)this.model.findViewById(R.id.app_network_model_layout));
-                        this.layout.setOnClickListener(new b(this));
-                    }
-                    if (Integer.valueOf(Build.VERSION.SDK).intValue() >= 11)
-                        this.layout.setY(i);
-                    while (true)
-                    {
-                        return this.model;
-                        ((AbsoluteLayout.LayoutParams)this.layout.getLayoutParams()).y = i;
-                    }
-                }
+                this.model = ImageUtil.inflate(R.layout.app_network_model, null);
             }
+            catch (Throwable localThrowable)
+            {
+                    if (Log.E)
+                    localThrowable.printStackTrace();
+                }
+        }
+            //:cond_0
+            //:goto_2
+        if (this.model != null)
+        {
+            if (this.layout == null)
+            {
+                this.layout = ((RelativeLayout)this.model.findViewById(R.id.app_network_model_layout));
+                this.layout.setOnClickListener(new View.OnClickListener(){//b(this))
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent("android.settings.SETTINGS");
+                        if (BaseActivity.this.getPackageManager().queryIntentActivities(intent, PackageManager.GET_META_DATA).size() > 0)
+                        {
+                            BaseActivity.this.startActivity(intent);
+                            return;
+                        }
+                        Toast.makeText(BaseActivity.this.getThisActivity(), "无法进入手机网络设置", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            if (Integer.valueOf(Build.VERSION.SDK).intValue() >= Build.VERSION_CODES.HONEYCOMB)//11
+                this.layout.setY(i);
+            else
+                ((AbsoluteLayout.LayoutParams)this.layout.getLayoutParams()).y = i;
+        }
+        return this.model;
     }
 
     private Integer getNavigationId(Intent paramIntent)
@@ -248,20 +241,20 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
 
     private ViewGroup getRootFrameLayout()
     {
-        if (this.rootFrameLayout != null)
-            return this.rootFrameLayout;
-        this.rootFrameLayout = ((ViewGroup)getWindow().peekDecorView());
-        if (this.rootFrameLayout == null);
-        try
-        {
-            Thread.sleep(50L);
-            label39: this.rootFrameLayout = getRootFrameLayout();
-            return this.rootFrameLayout;
+        if (this.rootFrameLayout == null){
+            this.rootFrameLayout = ((ViewGroup)getWindow().peekDecorView());
+            if (this.rootFrameLayout == null){
+                try
+                {
+                    Thread.sleep(50L);
+                }
+                catch (InterruptedException e)
+                {
+                }
+                this.rootFrameLayout = getRootFrameLayout();
+            }
         }
-        catch (InterruptedException localInterruptedException)
-        {
-            break label39;
-        }
+        return this.rootFrameLayout;
     }
 
     private HashMap<String, Object> getTaskId(Intent paramIntent)
@@ -269,62 +262,36 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return (HashMap)paramIntent.getSerializableExtra("com.360buy:taskIdFlag");
     }
 
-    private void initHardAcclCheck()
-    {
-        Object localObject = Build.MODEL;
+    private void initHardAcclCheck() {
         String[] arrayOfString = mIgnoreModels;
-        int j = arrayOfString.length;
         int i = 0;
-        if (i < j)
-            if (!arrayOfString[i].equalsIgnoreCase((String)localObject));
-        while (true)
-        {
-            return;
-            i += 1;
-            break;
-            try
-            {
-                localObject = getPackageManager().getActivityInfo(getComponentName(), 128);
-                if (((ActivityInfo)localObject).metaData != null)
-                {
-                    localObject = ((ActivityInfo)localObject).metaData.get("hardwareAccelerated");
-                    if (localObject != null)
-                    {
-                        boolean bool = ((Boolean)localObject).booleanValue();
-                        if (!bool)
-                        {
-                            i = 1;
-                            if ((i != 0) || (!com.jingdong.common.e.a.a(21, false)))
-                                continue;
-                            try
-                            {
-                                getWindow().setFlags(16777216, 16777216);
-                                return;
-                            }
-                            catch (Exception localException1)
-                            {
-                                localException1.printStackTrace();
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-            catch (PackageManager.NameNotFoundException localNameNotFoundException)
-            {
-                while (true)
-                {
-                    localNameNotFoundException.printStackTrace();
+        for (; i < arrayOfString.length; i++)
+            if (arrayOfString[i].equalsIgnoreCase(Build.MODEL))
+                return;
+        ActivityInfo localObject = null;
+        try {
+            localObject = getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);//128
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            i = 0;
+        }
+        try {
+            if (((ActivityInfo) localObject).metaData != null) {
+                Object hardwareAccelerated = ((ActivityInfo) localObject).metaData.get("hardwareAccelerated");
+                if (localObject != null && !((Boolean) hardwareAccelerated).booleanValue())//if-eqz v2, :cond_3 if-nez v0, :cond_3
+                    i = 1;
+                else
                     i = 0;
-                }
-            }
-            catch (Exception localException2)
-            {
-                while (true)
-                {
-                    localException2.printStackTrace();
-                    i = 0;
-                }
+            }//:cond_3
+        } catch (Exception e) {
+            e.printStackTrace();
+            i = 0;
+        }
+        if ((i == 0) && (ConfigUtil.a(21, false))) {//if-nez v0, :cond_0    if-eqz v0, :cond_0
+            try {
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);//16777216
+            } catch (Exception localException1) {
+                localException1.printStackTrace();
             }
         }
     }
@@ -339,30 +306,20 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return paramIntent.getBooleanExtra("com.360buy:navigationFlag", false);
     }
 
-    private void startActivityForResultNoExceptionForFragment(Fragment paramFragment, Intent paramIntent, int paramInt)
-    {
-        if ((paramIntent == null) || (paramFragment == null));
-        do
-        {
-            return;
-            try
-            {
+    private void startActivityForResultNoExceptionForFragment(Fragment paramFragment, Intent paramIntent, int paramInt) {
+        if ((paramIntent != null) && (paramFragment != null)) {
+            try {
                 paramFragment.startActivityForResult(paramIntent, paramInt);
-                return;
-            }
-            catch (ActivityNotFoundException paramFragment)
-            {
+            } catch (ActivityNotFoundException e) {
                 if (Log.D)
-                    Log.e(this.TAG, "startActivityForResultNoException -->>  ActivityNotFoundException:" + paramFragment.getMessage());
+                    Log.e(this.TAG, "startActivityForResultNoException -->>  ActivityNotFoundException:" + e.getMessage());
                 catchToastTip(this, paramIntent);
-                return;
-            }
-            catch (Exception paramFragment)
-            {
+            } catch (Exception e) {
+                if (Log.D)
+                    Log.e(this.TAG, "startActivityForResultNoException -->> Exception:" + e.getMessage());
             }
         }
-        while (!Log.D);
-        Log.e(this.TAG, "startActivityForResultNoException -->> Exception:" + paramFragment.getMessage());
+        return;
     }
 
     @Override
@@ -380,41 +337,37 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         this.rootView = paramViewGroup;
         if (Log.D)
             Log.d(this.TAG, "view -->> " + this.rootView);
-        if (this.rootView == null);
-        do
-        {
-            do
-            {
-                return;
-                if (!Log.D)
-                    continue;
+        if (this.rootView != null){
+            if (Log.D)
                 Log.d(this.TAG, "guideResourceId -->> " + this.guideResourceId);
-            }
-            while (this.guideResourceId == 0);
-            this.imageViewLayout = new FrameLayout(this);
-            paramViewGroup = new FrameLayout.LayoutParams(-2, -2);
-            paramViewGroup.gravity = 48;
-            paramViewGroup.height = DPIUtil.getHeight();
-            paramViewGroup.topMargin = getResources().getDimensionPixelOffset(R.dimen.guide_image_margin);
-            SimpleDraweeView localSimpleDraweeView = new SimpleDraweeView(this);
-            try
-            {
-                localSimpleDraweeView.setImageResource(this.guideResourceId);
-                this.imageViewLayout.addView(localSimpleDraweeView, paramViewGroup);
-                this.imageViewLayout.setBackgroundColor(getResources().getColor(R.color.slide_prompt_bg));
-                this.imageViewLayout.getBackground().setAlpha(200);
-                CommonUtil.setIsGuided(getClass().getName());
-                this.imageViewLayout.setOnTouchListener(new d(this));
-                this.rootView.addView(this.imageViewLayout, new ViewGroup.LayoutParams(-1, -1));
-                this.rootView.invalidate();
-                return;
-            }
-            catch (Throwable paramViewGroup)
-            {
-            }
+            if (this.guideResourceId != 0){//if-eqz v0, :cond_2
+                this.imageViewLayout = new FrameLayout(this);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-2, -2);
+                layoutParams.gravity = 48;
+                layoutParams.height = DPIUtil.getHeight();
+                layoutParams.topMargin = getResources().getDimensionPixelOffset(R.dimen.guide_image_margin);
+                SimpleDraweeView localSimpleDraweeView = new SimpleDraweeView(this);
+                try
+                {
+                    localSimpleDraweeView.setImageResource(this.guideResourceId);
+                }
+                catch (Throwable e)
+                {
+                    if (Log.E)
+                        e.printStackTrace();
+                    return;
+                }
+                    this.imageViewLayout.addView(localSimpleDraweeView, layoutParams);
+                    this.imageViewLayout.setBackgroundColor(getResources().getColor(R.color.slide_prompt_bg));
+                    this.imageViewLayout.getBackground().setAlpha(200);
+                    CommonUtil.setIsGuided(getClass().getName());
+                    this.imageViewLayout.setOnTouchListener(new d(this));
+                    this.rootView.addView(this.imageViewLayout, new ViewGroup.LayoutParams(-1, -1));
+                    this.rootView.invalidate();
+
+            }//:cond_2
         }
-        while (!Log.E);
-        paramViewGroup.printStackTrace();
+                return;
     }
 
     protected void addGuideImage(ViewGroup paramViewGroup, int paramInt1, int paramInt2, int paramInt3, ImageView.ScaleType paramScaleType, boolean paramBoolean)
