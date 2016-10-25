@@ -74,10 +74,10 @@ import java.util.Map;
  * Created by Robin on 2016/4/14.
  */
 @SuppressLint({"NewApi"})
-public class BaseActivity  extends FragmentActivity implements IMyActivity {
+public class BaseActivity extends FragmentActivity implements IMyActivity {
     public static final String ISFROMNF = "isFromNF";
     private static AlertDialog.Builder hintDialogBuilder;
-    public static final String[] mIgnoreModels = { "MI-ONE Plus" };
+    public static final String[] mIgnoreModels = {"MI-ONE Plus"};
     private final String TAG = BaseActivity.class.getSimpleName();
     private LocalActivityManager activityManager;
     private AssetManager assetManager;
@@ -139,7 +139,7 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         BaseActivity baseActivity = (BaseActivity) BaseApplication.getInstance().getCurrentMyActivity();
         if (baseActivity != null) {
             final String finalLocalObject = localObject;
-            ((BaseActivity) baseActivity).post(new Runnable(){//g(paramActivity, localObject)
+            ((BaseActivity) baseActivity).post(new Runnable() {//g(paramActivity, localObject)
                 @Override
                 public void run() {
                     Toast.makeText(paramActivity, finalLocalObject, Toast.LENGTH_SHORT).show();
@@ -149,34 +149,28 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    private void clearHistoryRecord(Intent paramIntent)
-    {
+    private void clearHistoryRecord(Intent paramIntent) {
         Record localg = new Record();
         localg.a(paramIntent);
-        while (this.recordList.remove(localg))
-        {
+        while (this.recordList.remove(localg)) {
             if (Log.D)
                 Log.d("MyActivity", "clearHistoryRecord() r -->> " + localg);
         }
     }
 
-    private void doJump()
-    {
+    private void doJump() {
         this.jump = false;
         removeRecordTop();
     }
 
-    private Integer findRadioId(String paramString)
-    {
-        return (Integer)this.recordIdAndRadioId.get(paramString);
+    private Integer findRadioId(String paramString) {
+        return (Integer) this.recordIdAndRadioId.get(paramString);
     }
 
-    private Record findsingleInstanceRecord(Intent paramIntent)
-    {
+    private Record findsingleInstanceRecord(Intent paramIntent) {
         Iterator localIterator = this.singleInstanceRecordList.iterator();
-        while (localIterator.hasNext())
-        {
-            Record localg = (Record)localIterator.next();
+        while (localIterator.hasNext()) {
+            Record localg = (Record) localIterator.next();
             if (localg.b().getComponent().getClassName().equals(paramIntent.getComponent().getClassName()))
                 return localg;
         }
@@ -197,29 +191,23 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
             i = this.yDistance;
 
         if (this.model == null) {//if-nez v0, :cond_0
-            try
-            {
+            try {
                 this.model = ImageUtil.inflate(R.layout.app_network_model, null);
-            }
-            catch (Throwable localThrowable)
-            {
-                    if (Log.E)
+            } catch (Throwable localThrowable) {
+                if (Log.E)
                     localThrowable.printStackTrace();
-                }
+            }
         }
-            //:cond_0
-            //:goto_2
-        if (this.model != null)
-        {
-            if (this.layout == null)
-            {
-                this.layout = ((RelativeLayout)this.model.findViewById(R.id.app_network_model_layout));
-                this.layout.setOnClickListener(new View.OnClickListener(){//b(this))
+        //:cond_0
+        //:goto_2
+        if (this.model != null) {
+            if (this.layout == null) {
+                this.layout = ((RelativeLayout) this.model.findViewById(R.id.app_network_model_layout));
+                this.layout.setOnClickListener(new View.OnClickListener() {//b(this))
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent("android.settings.SETTINGS");
-                        if (BaseActivity.this.getPackageManager().queryIntentActivities(intent, PackageManager.GET_META_DATA).size() > 0)
-                        {
+                        if (BaseActivity.this.getPackageManager().queryIntentActivities(intent, PackageManager.GET_META_DATA).size() > 0) {
                             BaseActivity.this.startActivity(intent);
                             return;
                         }
@@ -230,29 +218,24 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
             if (Integer.valueOf(Build.VERSION.SDK).intValue() >= Build.VERSION_CODES.HONEYCOMB)//11
                 this.layout.setY(i);
             else
-                ((AbsoluteLayout.LayoutParams)this.layout.getLayoutParams()).y = i;
+                ((AbsoluteLayout.LayoutParams) this.layout.getLayoutParams()).y = i;
         }
         return this.model;
     }
 
-    private Integer getNavigationId(Intent paramIntent)
-    {
+    private Integer getNavigationId(Intent paramIntent) {
         if (isNavigation(paramIntent))
             return Integer.valueOf(paramIntent.getIntExtra("com.360buy:navigationId", 0));
         return null;
     }
 
-    private ViewGroup getRootFrameLayout()
-    {
-        if (this.rootFrameLayout == null){
-            this.rootFrameLayout = ((ViewGroup)getWindow().peekDecorView());
-            if (this.rootFrameLayout == null){
-                try
-                {
+    private ViewGroup getRootFrameLayout() {
+        if (this.rootFrameLayout == null) {
+            this.rootFrameLayout = ((ViewGroup) getWindow().peekDecorView());
+            if (this.rootFrameLayout == null) {
+                try {
                     Thread.sleep(50L);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                 }
                 this.rootFrameLayout = getRootFrameLayout();
             }
@@ -260,9 +243,8 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return this.rootFrameLayout;
     }
 
-    private HashMap<String, Object> getTaskId(Intent paramIntent)
-    {
-        return (HashMap)paramIntent.getSerializableExtra("com.360buy:taskIdFlag");
+    private HashMap<String, Object> getTaskId(Intent paramIntent) {
+        return (HashMap) paramIntent.getSerializableExtra("com.360buy:taskIdFlag");
     }
 
     private void initHardAcclCheck() {
@@ -299,13 +281,11 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         }
     }
 
-    private boolean isJump()
-    {
+    private boolean isJump() {
         return this.jump;
     }
 
-    private boolean isNavigation(Intent paramIntent)
-    {
+    private boolean isNavigation(Intent paramIntent) {
         return paramIntent.getBooleanExtra("com.360buy:navigationFlag", false);
     }
 
@@ -326,11 +306,10 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public synchronized void addDestroyListener(IDestroyListener parama)
-    {
-            if (this.destroyListenerList != null)
-                this.destroyListenerList.add(parama);
-            return;
+    public synchronized void addDestroyListener(IDestroyListener parama) {
+        if (this.destroyListenerList != null)
+            this.destroyListenerList.add(parama);
+        return;
     }
 
     protected void addGuideImage(ViewGroup paramViewGroup) {
@@ -360,16 +339,14 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
                 this.imageViewLayout.setBackgroundColor(getResources().getColor(R.color.slide_prompt_bg));
                 this.imageViewLayout.getBackground().setAlpha(200);
                 CommonUtil.setIsGuided(getClass().getName());
-                this.imageViewLayout.setOnTouchListener(new View.OnTouchListener(){//d(this)
+                this.imageViewLayout.setOnTouchListener(new View.OnTouchListener() {//d(this)
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction())
-                        {
+                        switch (event.getAction()) {
                             default:
                             case 1:
                         }
-                        while (true)
-                        {
+                        while (true) {
                             return true;
                             this.a.removeGuideView();
                         }
@@ -383,17 +360,16 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    protected void addGuideImage(ViewGroup paramViewGroup, int paramInt1, int paramInt2, int paramInt3, ImageView.ScaleType paramScaleType, boolean paramBoolean)
-    {
+    protected void addGuideImage(ViewGroup paramViewGroup, int paramInt1, int paramInt2, int paramInt3, ImageView.ScaleType paramScaleType, boolean paramBoolean) {
         if (Log.D)
             Log.d(this.TAG, "addGuideImage -->> ");
         this.rootView = paramViewGroup;
         if (Log.D)
             Log.d(this.TAG, "view -->> " + this.rootView);
-        if (this.rootView != null){
+        if (this.rootView != null) {
             if (Log.D)
                 Log.d(this.TAG, "guideResourceId -->> " + this.guideResourceId);
-            if (this.guideResourceId != 0){
+            if (this.guideResourceId != 0) {
                 this.imageViewLayout = new FrameLayout(this);
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(paramInt2, paramInt3);
                 layoutParams.gravity = paramInt1;
@@ -401,12 +377,9 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
                 if (paramBoolean)
                     layoutParams.topMargin = getStatusHeight();
                 SimpleDraweeView localSimpleDraweeView = new SimpleDraweeView(this);
-                try
-                {
+                try {
                     localSimpleDraweeView.setImageResource(this.guideResourceId);
-                }
-                catch (Throwable e)
-                {
+                } catch (Throwable e) {
                     if (Log.E)
                         e.printStackTrace();
                     return;
@@ -417,16 +390,14 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
                 this.imageViewLayout.setBackgroundColor(getResources().getColor(R.color.slide_prompt_bg));
                 this.imageViewLayout.getBackground().setAlpha(200);
                 CommonUtil.setIsGuided(getClass().getName());
-                this.imageViewLayout.setOnTouchListener(new View.OnTouchListener(){//e(this)
+                this.imageViewLayout.setOnTouchListener(new View.OnTouchListener() {//e(this)
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction())
-                        {
+                        switch (event.getAction()) {
                             default:
                             case 1:
                         }
-                        while (true)
-                        {
+                        while (true) {
                             return true;
                             this.a.removeGuideView();
                         }
@@ -440,33 +411,29 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    public void addHttpGroupWithNPSSetting(HttpGroup.HttpSetting paramHttpSetting)
-    {
+    public void addHttpGroupWithNPSSetting(HttpGroup.HttpSetting paramHttpSetting) {
         getHttpGroupWithNPSGroup().add(paramHttpSetting);
     }
 
     @Override
-    public synchronized void addLogoutListener(ILogoutListener paramb)
-    {
-            if (this.logoutListenerList != null)
-                this.logoutListenerList.add(paramb);
-            return;
+    public synchronized void addLogoutListener(ILogoutListener paramb) {
+        if (this.logoutListenerList != null)
+            this.logoutListenerList.add(paramb);
+        return;
     }
 
     @Override
-    public synchronized void addPauseListener(IPauseListener paramd)
-    {
-            if (this.pauseListenerList != null)
-                this.pauseListenerList.add(paramd);
-            return;
+    public synchronized void addPauseListener(IPauseListener paramd) {
+        if (this.pauseListenerList != null)
+            this.pauseListenerList.add(paramd);
+        return;
     }
 
     @Override
-    public synchronized void addResumeListener(IResumeListener parame)
-    {
-            if (this.resumeListenerList != null)
-                this.resumeListenerList.add(parame);
-            return;
+    public synchronized void addResumeListener(IResumeListener parame) {
+        if (this.resumeListenerList != null)
+            this.resumeListenerList.add(parame);
+        return;
     }
 
     public synchronized void alert(int paramInt) {
@@ -475,7 +442,7 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
             hintDialogBuilder = localBuilder;
             localBuilder.setTitle(StringUtil.prompt);
             hintDialogBuilder.setMessage(paramInt);
-            hintDialogBuilder.setPositiveButton(StringUtil.ok, new DialogInterface.OnClickListener(){//f(this)
+            hintDialogBuilder.setPositiveButton(StringUtil.ok, new DialogInterface.OnClickListener() {//f(this)
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -486,63 +453,52 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    public void attemptRunOnUiThread(Runnable paramRunnable)
-    {
-        if (Thread.currentThread() != getUiThread())
-        {
+    public void attemptRunOnUiThread(Runnable paramRunnable) {
+        if (Thread.currentThread() != getUiThread()) {
             post(paramRunnable);
             return;
         }
         paramRunnable.run();
     }
 
-    public void canNotResend()
-    {
+    public void canNotResend() {
         this.isCanResend = false;
     }
 
-    public void checkNetwork()
-    {
+    public void checkNetwork() {
         if (!this.isOnNetwork)
             return;
-        if (NetUtils.isNetworkAvailable())
-        {
+        if (NetUtils.isNetworkAvailable()) {
             hideModel();
             return;
         }
         showModel();
     }
 
-    public void checkNetwork(int paramInt)
-    {
+    public void checkNetwork(int paramInt) {
         if (!this.needCheckNet)
             return;
         checkNetwork();
     }
 
-    public void clearJump()
-    {
+    public void clearJump() {
         if (isJump())
             this.jump = false;
     }
 
-    public HashMap<String, Object> createTaskId(Intent paramIntent)
-    {
+    public HashMap<String, Object> createTaskId(Intent paramIntent) {
         HashMap localHashMap = new HashMap();
         localHashMap.put("className", paramIntent.getComponent().getClassName());
         return localHashMap;
     }
 
-    public void finish()
-    {
+    public void finish() {
         hideSoftInput();
         super.finish();
     }
 
-    public AssetManager getAssets()
-    {
-        if (CommonUtil.getPlugOn())
-        {
+    public AssetManager getAssets() {
+        if (CommonUtil.getPlugOn()) {
             if (this.assetManager == null)
                 return super.getAssets();
             return this.assetManager;
@@ -550,34 +506,27 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return super.getAssets();
     }
 
-    public boolean getBooleanFromPreference(String paramString)
-    {
+    public boolean getBooleanFromPreference(String paramString) {
         return this.sharedPreferences.getBoolean(paramString, false);
     }
 
-    public boolean getBooleanFromPreference(String paramString, boolean paramBoolean)
-    {
+    public boolean getBooleanFromPreference(String paramString, boolean paramBoolean) {
         return this.sharedPreferences.getBoolean(paramString, paramBoolean);
     }
 
-    public BaseActivity getCurrentMyActivity()
-    {
-        return (BaseActivity)BaseApplication.getInstance().getCurrentMyActivity();
+    public BaseActivity getCurrentMyActivity() {
+        return (BaseActivity) BaseApplication.getInstance().getCurrentMyActivity();
     }
 
     @Override
-    public Handler getHandler()
-    {
+    public Handler getHandler() {
         return this.handler;
     }
 
-    public HttpGroup getHttpGroupWithNPSGroup()
-    {
-        if (this.mHttpGroupWithNPS != null)
-        {
+    public HttpGroup getHttpGroupWithNPSGroup() {
+        if (this.mHttpGroupWithNPS != null) {
             HttpGroup localHttpGroup = this.mHttpGroupWithNPS.getHttpGroup();
-            if (localHttpGroup != null)
-            {
+            if (localHttpGroup != null) {
                 if (localHttpGroup.getHttpGroupSetting() != null)
                     localHttpGroup.getHttpGroupSetting().setMyActivity(this);
                 return localHttpGroup;
@@ -587,14 +536,12 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public HttpGroup getHttpGroupaAsynPool()
-    {
+    public HttpGroup getHttpGroupaAsynPool() {
         return getHttpGroupaAsynPool(1000);
     }
 
     @Override
-    public HttpGroup getHttpGroupaAsynPool(int paramInt)
-    {
+    public HttpGroup getHttpGroupaAsynPool(int paramInt) {
         HttpGroup.HttpGroupSetting localHttpGroupSetting = new HttpGroup.HttpGroupSetting();
         localHttpGroupSetting.setMyActivity(this);
         localHttpGroupSetting.setType(paramInt);
@@ -602,30 +549,25 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return getHttpGroupaAsynPool(localHttpGroupSetting);
     }
 
-    public HttpGroup getHttpGroupaAsynPool(HttpGroup.HttpGroupSetting paramHttpGroupSetting)
-    {
+    public HttpGroup getHttpGroupaAsynPool(HttpGroup.HttpGroupSetting paramHttpGroupSetting) {
         HttpGroup httpGroup = HttpGroup.getHttpGroup(paramHttpGroupSetting);
         addDestroyListener(httpGroup);
         return httpGroup;
     }
 
-    public Intent getJDData()
-    {
+    public Intent getJDData() {
         return this.mData;
     }
 
-    public String getPageParam()
-    {
+    public String getPageParam() {
         return "";
     }
 
-    public Map<String, String> getParams()
-    {
+    public Map<String, String> getParams() {
         return null;
     }
 
-    public String getParamsString()
-    {
+    public String getParamsString() {
         Map localMap = getParams();
         if (localMap == null)
             return "";
@@ -651,45 +593,29 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return localResources;
     }
 
-    public int getStatusHeight()
-    {
+    public int getStatusHeight() {
         Object localObject1 = new Rect();
-        getWindow().getDecorView().getWindowVisibleDisplayFrame((Rect)localObject1);
-        int j = ((Rect)localObject1).top;
-        if (j == 0){//if-nez v0, :cond_0
-            try
-            {
+        getWindow().getDecorView().getWindowVisibleDisplayFrame((Rect) localObject1);
+        int j = ((Rect) localObject1).top;
+        if (j == 0) {//if-nez v0, :cond_0
+            try {
                 localObject1 = Class.forName("com.android.internal.R$dimen");
-                Object localObject2 = ((Class)localObject1).newInstance();
+                Object localObject2 = ((Class) localObject1).newInstance();
                 int i = Integer.parseInt(((Class) localObject1).getField("status_bar_height").get(localObject2).toString());
                 j = getResources().getDimensionPixelSize(i);
-            }
-            catch (ClassNotFoundException localClassNotFoundException)
-            {
+            } catch (ClassNotFoundException localClassNotFoundException) {
                 localClassNotFoundException.printStackTrace();
-            }
-            catch (IllegalAccessException localIllegalAccessException)
-            {
+            } catch (IllegalAccessException localIllegalAccessException) {
                 localIllegalAccessException.printStackTrace();
-            }
-            catch (InstantiationException localInstantiationException)
-            {
+            } catch (InstantiationException localInstantiationException) {
                 localInstantiationException.printStackTrace();
-            }
-            catch (NumberFormatException localNumberFormatException)
-            {
+            } catch (NumberFormatException localNumberFormatException) {
                 localNumberFormatException.printStackTrace();
-            }
-            catch (IllegalArgumentException localIllegalArgumentException)
-            {
+            } catch (IllegalArgumentException localIllegalArgumentException) {
                 localIllegalArgumentException.printStackTrace();
-            }
-            catch (SecurityException localSecurityException)
-            {
+            } catch (SecurityException localSecurityException) {
                 localSecurityException.printStackTrace();
-            }
-            catch (NoSuchFieldException localNoSuchFieldException)
-            {
+            } catch (NoSuchFieldException localNoSuchFieldException) {
                 localNoSuchFieldException.printStackTrace();
             }
         }
@@ -698,51 +624,42 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public String getStringFromPreference(String paramString)
-    {
+    public String getStringFromPreference(String paramString) {
         return this.sharedPreferences.getString(paramString, "");
     }
 
-    public String getStringFromPreference(String paramString1, String paramString2)
-    {
+    public String getStringFromPreference(String paramString1, String paramString2) {
         return this.sharedPreferences.getString(paramString1, paramString2);
     }
 
-    public ViewGroup getSubRootView()
-    {
+    public ViewGroup getSubRootView() {
         return this.subRootView;
     }
 
-    public Resources.Theme getTheme()
-    {
-        if (CommonUtil.getPlugOn())
-        {
+    public Resources.Theme getTheme() {
+        if (CommonUtil.getPlugOn()) {
             if (this.theme != null)
                 return this.theme;
             else
                 return super.getTheme();
-        }
-        else
+        } else
             return super.getTheme();
     }
 
     @Override
-    public Activity getThisActivity()
-    {
+    public Activity getThisActivity() {
         return this;
     }
 
-    public Thread getUiThread()
-    {
+    public Thread getUiThread() {
         return this.mUiThread;
     }
 
-    protected void hideModel()
-    {
+    protected void hideModel() {
         ViewGroup localViewGroup = getRootFrameLayout();
         View localView = getModel();
-        if (localView != null){
-            if (localViewGroup.indexOfChild(localView) != -1){
+        if (localView != null) {
+            if (localViewGroup.indexOfChild(localView) != -1) {
                 localViewGroup.removeView(localView);
                 localViewGroup.invalidate();
             }
@@ -751,81 +668,66 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
 
     }
 
-    public void hideSoftInput()
-    {
-        ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE/*"input_method"*/)).hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+    public void hideSoftInput() {
+        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE/*"input_method"*/)).hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
-    public boolean isActivityInFrame()
-    {
+    public boolean isActivityInFrame() {
         Activity localActivity = getParent();
         return (localActivity != null) && ((localActivity instanceof ScrollableTabActivity._Q));
     }
 
-    public boolean isClearHistory(Intent paramIntent)
-    {
+    public boolean isClearHistory(Intent paramIntent) {
         return paramIntent.getBooleanExtra("com.360buy:clearHistoryFlag", false);
     }
 
-    public boolean isResend(Intent paramIntent)
-    {
+    public boolean isResend(Intent paramIntent) {
         return paramIntent.getBooleanExtra("com.360buy:resendFlag", false);
     }
 
-    public boolean isSingleInstance(Intent paramIntent)
-    {
+    public boolean isSingleInstance(Intent paramIntent) {
         return paramIntent.getBooleanExtra("com.360buy:singleInstanceFlag", false);
     }
 
-    public boolean isUseHistoryRecord(Intent paramIntent)
-    {
+    public boolean isUseHistoryRecord(Intent paramIntent) {
         return paramIntent.getBooleanExtra("com.360buy:useHistoryFlag", false);
     }
 
-    public void markJump()
-    {
+    public void markJump() {
         this.jump = true;
     }
 
-    public void noShowAgain()
-    {
+    public void noShowAgain() {
         finish();
     }
 
-    protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
-    {
+    protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent) {
         super.onActivityResult(paramInt1, paramInt2, paramIntent);
         if ((paramInt1 == 1001) && (paramInt2 == 0))
             BaseApplication.exitAll();
     }
 
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onStateNotSaved();
         super.onBackPressed();
     }
 
-    protected void onClickEvent(String paramString)
-    {
+    protected void onClickEvent(String paramString) {
         if (Log.D)
             Log.d(this.TAG, "onClickEvent clickId-->> " + paramString);
         JDMtaUtils.onClick(getBaseContext(), paramString, getClass().getSimpleName());
     }
 
-    protected void onClickEvent(String paramString1, String paramString2)
-    {
-        if (Log.D)
-        {
+    protected void onClickEvent(String paramString1, String paramString2) {
+        if (Log.D) {
             Log.d(this.TAG, "onClickEvent clickId-->> " + paramString1);
             Log.d(this.TAG, "onClickEvent value-->> " + paramString2);
         }
         JDMtaUtils.onClick(getBaseContext(), paramString1, getClass().getName(), paramString2);
     }
 
-    protected void onClickEvent(String paramString1, String paramString2, String paramString3)
-    {
-        if (Log.D)
-        {
+    protected void onClickEvent(String paramString1, String paramString2, String paramString3) {
+        if (Log.D) {
             Log.d(this.TAG, "onClickEvent clickId-->> " + paramString1);
             Log.d(this.TAG, "onClickEvent event_param-->> " + paramString2);
             Log.d(this.TAG, "onClickEvent page_param-->> " + paramString3);
@@ -833,20 +735,16 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         JDMtaUtils.onClick(getBaseContext(), paramString1, getClass().getName(), paramString2, paramString3);
     }
 
-    protected void onClickEventWithPageId(String paramString1, String paramString2)
-    {
-        if (Log.D)
-        {
+    protected void onClickEventWithPageId(String paramString1, String paramString2) {
+        if (Log.D) {
             Log.d(this.TAG, "onClickEvent clickId-->> " + paramString1);
             Log.d(this.TAG, "onClickEvent pageId-->> " + paramString2);
         }
         JDMtaUtils.onClickWithPageId(getBaseContext(), paramString1, getClass().getSimpleName(), paramString2);
     }
 
-    protected void onClickEventWithPageId(String paramString1, String paramString2, String paramString3, String paramString4)
-    {
-        if (Log.D)
-        {
+    protected void onClickEventWithPageId(String paramString1, String paramString2, String paramString3, String paramString4) {
+        if (Log.D) {
             Log.d(this.TAG, "onClickEvent clickId-->> " + paramString1);
             Log.d(this.TAG, "onClickEvent event_param-->> " + paramString2);
             Log.d(this.TAG, "onClickEvent page_param-->> " + paramString3);
@@ -856,10 +754,8 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration paramConfiguration)
-    {
-        if (paramConfiguration.fontScale > 1.0F)
-        {
+    public void onConfigurationChanged(Configuration paramConfiguration) {
+        if (paramConfiguration.fontScale > 1.0F) {
             paramConfiguration.setToDefaults();
             this.needResetResourceConfig = true;
         }
@@ -867,10 +763,8 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    protected void onCreate(Bundle paramBundle)
-    {
-        if (Log.D)
-        {
+    protected void onCreate(Bundle paramBundle) {
+        if (Log.D) {
             testStack();
             Log.d(this.TAG, "onCreate() -->> " + getClass().getName());
         }
@@ -884,7 +778,7 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         BaseApplication.getInstance().setCurrentMyActivity(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         this.mUiThread = Thread.currentThread();
-        ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         super.onCreate(paramBundle);
         this.sharedPreferences = CommonUtil.getJdSharedPreferences();
         if (getIntent() != null)
@@ -893,48 +787,40 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         if (Log.D)
             Log.d("MyActivity", "onDestroy() TaskId = " + getTaskId() + " -->> " + getClass().getName());
         super.onDestroy();
         ActivityNumController.b(this.softReference);//com.jingdong.common.a.b(this.softReference);
-        synchronized (this)
-        {
-            if (this.destroyListenerList != null){//if-eqz v0, :cond_2
+        synchronized (this) {
+            if (this.destroyListenerList != null) {//if-eqz v0, :cond_2
                 Iterator localIterator = this.destroyListenerList.iterator();
                 while (localIterator.hasNext())
-                    ((IDestroyListener)localIterator.next()).onDestroy();
+                    ((IDestroyListener) localIterator.next()).onDestroy();
                 this.destroyListenerList = null;
             }
-                this.pauseListenerList = null;
-                this.resumeListenerList = null;
+            this.pauseListenerList = null;
+            this.resumeListenerList = null;
 
         }
-        if (this.mHttpGroupWithNPS != null)
-        {
+        if (this.mHttpGroupWithNPS != null) {
             this.mHttpGroupWithNPS.destory();
             this.mHttpGroupWithNPS = null;
         }
     }
 
     @Override
-    public void onHideModal()
-    {
+    public void onHideModal() {
     }
 
     @Override
-    public boolean onKeyDown(int paramInt, KeyEvent paramKeyEvent)
-    {
-        if (paramInt == 4)
-        {//if-ne p1, v2, :cond_2
+    public boolean onKeyDown(int paramInt, KeyEvent paramKeyEvent) {
+        if (paramInt == 4) {//if-ne p1, v2, :cond_2
             if (removeGuideView())//if-eqz v1, :cond_0
                 return true;
-            if ((paramInt == 4) && (this.isFromNF))
-            {
+            if ((paramInt == 4) && (this.isFromNF)) {
                 finish();
-                if (BaseApplication.getInstance().getMainFrameActivity() == null)
-                {
+                if (BaseApplication.getInstance().getMainFrameActivity() == null) {
                     BaseApplication.getInstance().startMainFrameActivity(this);
                     return true;
                 }
@@ -946,35 +832,29 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    protected synchronized void onPause()
-    {
+    protected synchronized void onPause() {
         if (Log.D)
             Log.d("MyActivity", "onPause() TaskId = " + getTaskId() + " -->> " + getClass().getName());
         super.onPause();
-        synchronized (this)
-        {
-            if (this.pauseListenerList != null)
-            {
+        synchronized (this) {
+            if (this.pauseListenerList != null) {
                 Iterator localIterator = this.pauseListenerList.iterator();
                 while (localIterator.hasNext())
-                    ((IPauseListener)localIterator.next()).onPause();
+                    ((IPauseListener) localIterator.next()).onPause();
             }
         }
 
     }
 
-    public void onRefresh()
-    {
+    public void onRefresh() {
     }
 
     @Override
-    protected void onRestart()
-    {
+    protected void onRestart() {
         CrashUtils.a(getIntent());//com.jingdong.common.utils.crash.e.a(getIntent());
         if (Log.D)
             Log.d("MyActivity", "onRestart() TaskId = " + getTaskId() + " -->> " + getClass().getName());
-        if (System.currentTimeMillis() - this.stopTime > 86400000L)
-        {
+        if (System.currentTimeMillis() - this.stopTime > 86400000L) {
             if (Log.D)
                 Log.d("MyActivity", "onRestart() -->> update cache time");
             CacheTimeUtil.a();//com.jingdong.common.utils.y.a();
@@ -983,33 +863,29 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         if (Log.D)
             Log.d("MyActivity", "Resume() TaskId = " + getTaskId() + " -->> " + getClass().getName());
         super.onResume();
         BaseApplication.getInstance().setCurrentMyActivity(this);
-        if (this.resumeListenerList != null){
-            try
-            {
+        if (this.resumeListenerList != null) {
+            try {
                 this.isCanResend = true;
 
                 int v1 = 0;
                 //:goto_1
-                for (int v2 = 0; v2 < this.resumeListenerList.size(); v2++){//if-ge v2, v3, :cond_3
+                for (int v2 = 0; v2 < this.resumeListenerList.size(); v2++) {//if-ge v2, v3, :cond_3
                     int m = this.resumeListenerList.size();
-                    ((IResumeListener)this.resumeListenerList.get(v1)).onResume();
+                    ((IResumeListener) this.resumeListenerList.get(v1)).onResume();
                     int n = this.resumeListenerList.size();
-                    if (m == n){//if-ne v4, v0, :cond_4
+                    if (m == n) {//if-ne v4, v0, :cond_4
                         //add-int/lit8 v0, v1, 0x1
                         v1++;
                     }
                 }
-            }
-            catch (Exception localException)
-            {
+            } catch (Exception localException) {
                 if (Log.D)
-                Log.e(this.TAG, "myActivity onResume -->> Exception:" + localException.getMessage());
+                    Log.e(this.TAG, "myActivity onResume -->> Exception:" + localException.getMessage());
                 checkNetwork(this.type);
                 NightModeUtil.a(this);//com.jingdong.common.utils.el.a(this);
                 if (this.isUseBasePV) {
@@ -1027,29 +903,25 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public boolean onSearchRequested()
-    {
+    public boolean onSearchRequested() {
         if (Log.I)
             Log.i("test", "onSearchRequested++++my");
         return true;
     }
 
     @Override
-    public void onShowModal()
-    {
+    public void onShowModal() {
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
         if (Log.D)
             Log.d("MyActivity", "onStart() TaskId = " + getTaskId() + " -->> " + getClass().getName());
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         if (Log.D)
             Log.d("MyActivity", "onStop() TaskId = " + getTaskId() + " -->> " + getClass().getName());
         this.stopTime = System.currentTimeMillis();
@@ -1057,83 +929,68 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @SuppressLint({"NewApi"})
-    public void onTitleBack()
-    {
+    public void onTitleBack() {
         if (Log.D)
             Log.d("MyActivity", " -->> mTitleBack onClick : ");
-        if (!removeGuideView()){//if-eqz v0, :cond_2
+        if (!removeGuideView()) {//if-eqz v0, :cond_2
             //:cond_2
-            if (!this.isFromNF){//if-eqz v0, :cond_5
+            if (!this.isFromNF) {//if-eqz v0, :cond_5
                 if (Log.D)
                     Log.d("MyActivity", " -->>mTitleBack onClick : isBackToHome ");
                 finish();
-                if (BaseApplication.getInstance().getMainFrameActivity() == null){//if-nez v0, :cond_4
+                if (BaseApplication.getInstance().getMainFrameActivity() == null) {//if-nez v0, :cond_4
                     BaseApplication.getInstance().startMainFrameActivity(this);
-                }else{
-                    try
-                    {
+                } else {
+                    try {
                         onBackPressed();
-                    }
-                    catch (Exception localException1)
-                    {
+                    } catch (Exception localException1) {
                         if (Log.D)
-                        localException1.printStackTrace();
+                            localException1.printStackTrace();
                     }
                 }
-            }else{
-                try
-                {
+            } else {
+                try {
                     onBackPressed();
-                }
-                catch (Exception localException2)
-                {
+                } catch (Exception localException2) {
                     if (Log.D)
-                    localException2.printStackTrace();
+                        localException2.printStackTrace();
                 }
             }
         }
     }
 
     @Override
-    public void post(Runnable paramRunnable)
-    {
+    public void post(Runnable paramRunnable) {
         if (!isFinishing())
             this.handler.post(paramRunnable);
     }
 
     @Override
-    public void post(Runnable paramRunnable, int paramInt)
-    {
+    public void post(Runnable paramRunnable, int paramInt) {
         if (!isFinishing())
             this.handler.postDelayed(paramRunnable, paramInt);
     }
 
     @Override
-    public void putBooleanToPreference(String paramString, Boolean paramBoolean)
-    {
+    public void putBooleanToPreference(String paramString, Boolean paramBoolean) {
         this.sharedPreferences.edit().putBoolean(paramString, paramBoolean.booleanValue()).commit();
     }
 
-    public void putStringToPreference(String paramString1, String paramString2)
-    {
+    public void putStringToPreference(String paramString1, String paramString2) {
         this.sharedPreferences.edit().putString(paramString1, paramString2).commit();
     }
 
-    public void refreshProductListByFilterData(Intent paramIntent)
-    {
+    public void refreshProductListByFilterData(Intent paramIntent) {
     }
 
     @Override
-    public synchronized void removeDestroyListener(IDestroyListener parama)
-    {
-            if (this.destroyListenerList != null)
-                this.destroyListenerList.remove(parama);
+    public synchronized void removeDestroyListener(IDestroyListener parama) {
+        if (this.destroyListenerList != null)
+            this.destroyListenerList.remove(parama);
     }
 
-    public boolean removeGuideView()
-    {
-        if ((this.imageViewLayout != null) && (this.rootView != null) && (this.rootView.isShown()))
-        {
+    public boolean removeGuideView() {
+        if ((this.imageViewLayout != null) && (this.rootView != null) && (this.rootView.isShown())) {
             this.rootView.removeView(this.imageViewLayout);
             this.rootView = null;
             this.imageViewLayout = null;
@@ -1143,27 +1000,24 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public synchronized void removeLogoutListener(ILogoutListener paramb)
-    {
-            if (this.logoutListenerList != null)
-                this.logoutListenerList.remove(paramb);
-            return;
+    public synchronized void removeLogoutListener(ILogoutListener paramb) {
+        if (this.logoutListenerList != null)
+            this.logoutListenerList.remove(paramb);
+        return;
     }
 
     @Override
-    public synchronized void removePauseListener(IPauseListener paramd)
-    {
-            if (this.pauseListenerList != null)
-                this.pauseListenerList.remove(paramd);
-            return;
+    public synchronized void removePauseListener(IPauseListener paramd) {
+        if (this.pauseListenerList != null)
+            this.pauseListenerList.remove(paramd);
+        return;
     }
 
-    public void removeRecordTop()
-    {
+    public void removeRecordTop() {
         if (this.isPrevNotInRecord)
             this.isPrevNotInRecord = false;
-        else if (!this.recordList.isEmpty()){//if-nez v0, :cond_0
-            Record localg = (Record)this.recordList.remove(0);
+        else if (!this.recordList.isEmpty()) {//if-nez v0, :cond_0
+            Record localg = (Record) this.recordList.remove(0);
             if (!isSingleInstance(localg.b()))//if-nez v1, :cond_0
                 this.activityManager.destroyActivity(localg.a(), true);
         }
@@ -1172,16 +1026,14 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public synchronized void removeResumeListener(IResumeListener parame)
-    {
-            if (this.resumeListenerList != null)
-                this.resumeListenerList.remove(parame);
-            return;
+    public synchronized void removeResumeListener(IResumeListener parame) {
+        if (this.resumeListenerList != null)
+            this.resumeListenerList.remove(parame);
+        return;
     }
 
-    protected void setBackground(View paramView, Drawable paramDrawable)
-    {
-        if ((paramView != null) && (paramDrawable != null)){
+    protected void setBackground(View paramView, Drawable paramDrawable) {
+        if ((paramView != null) && (paramDrawable != null)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)//16
                 paramView.setBackground(paramDrawable);
             else
@@ -1190,31 +1042,24 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    public void setContentView(int paramInt)
-    {
-        try
-        {
+    public void setContentView(int paramInt) {
+        try {
             super.setContentView(paramInt);
-        }
-        catch (Throwable localThrowable)
-        {
+        } catch (Throwable localThrowable) {
             GlobalImageCache.getLruBitmapCache().a();
             super.setContentView(paramInt);
         }
     }
 
-    protected void setGuideResId(int paramInt)
-    {
+    protected void setGuideResId(int paramInt) {
         this.guideResourceId = paramInt;
     }
 
-    public void setJDData(Intent paramIntent)
-    {
+    public void setJDData(Intent paramIntent) {
         this.mData = paramIntent;
     }
 
-    public void setJDResult(int paramInt)
-    {
+    public void setJDResult(int paramInt) {
         if (getJDData() != null)
             setResult(paramInt, getJDData());
         else
@@ -1245,49 +1090,41 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    public void setNetworkModel(boolean paramBoolean)
-    {
+    public void setNetworkModel(boolean paramBoolean) {
         this.isOnNetwork = paramBoolean;
     }
 
-    protected void setPageId(String paramString)
-    {
+    protected void setPageId(String paramString) {
         this.page_id = paramString;
     }
 
-    protected void setShopId(String paramString)
-    {
+    protected void setShopId(String paramString) {
         this.shop_id = paramString;
     }
 
-    public void setSubRootView(ViewGroup paramViewGroup)
-    {
+    public void setSubRootView(ViewGroup paramViewGroup) {
         this.subRootView = paramViewGroup;
     }
 
-    public void setTitleBack(ImageView paramImageView)
-    {
+    public void setTitleBack(ImageView paramImageView) {
         setTitleBack(paramImageView, null);
     }
 
-    public void setTitleBack(ImageView paramImageView, Runnable paramRunnable)
-    {
+    public void setTitleBack(ImageView paramImageView, Runnable paramRunnable) {
         this.mTitleBack = paramImageView;
         this.mTitleBack.setVisibility(0);
         this.mTitleBack.setOnClickListener(new c(this, paramRunnable));
     }
 
-    protected void setUseBasePV(boolean paramBoolean)
-    {
+    protected void setUseBasePV(boolean paramBoolean) {
         this.isUseBasePV = paramBoolean;
     }
 
-    protected void showModel()
-    {
+    protected void showModel() {
         ViewGroup localViewGroup = getRootFrameLayout();
         View localView = getModel();
-        if (localView != null){//if-nez v1, :cond_1
-            if (localViewGroup.indexOfChild(localView) == -1){//if-ne v2, v3, :cond_0
+        if (localView != null) {//if-nez v1, :cond_1
+            if (localViewGroup.indexOfChild(localView) == -1) {//if-ne v2, v3, :cond_0
                 localViewGroup.addView(localView);
                 localViewGroup.invalidate();
             }
@@ -1295,14 +1132,12 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         return;
     }
 
-    public void startActivityForResultForFragment(Fragment paramFragment, Intent paramIntent, int paramInt)
-    {
+    public void startActivityForResultForFragment(Fragment paramFragment, Intent paramIntent, int paramInt) {
         startActivityForResultNoExceptionForFragment(paramFragment, paramIntent, paramInt);
     }
 
     @Override
-    public void startActivityForResultNoException(Intent paramIntent, int paramInt)
-    {
+    public void startActivityForResultNoException(Intent paramIntent, int paramInt) {
         startActivityForResultNoExceptionStatic(this, paramIntent, paramInt);
     }
 
@@ -1332,47 +1167,40 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
     }
 
     @Override
-    public void startActivityInFrame(Intent paramIntent)
-    {
+    public void startActivityInFrame(Intent paramIntent) {
         if (Log.D)
             Log.d("BaseActivity", "startActivityInFrame() -->> ");
         startActivity(paramIntent);
     }
 
     @Override
-    public void startActivityInFrameWithNoNavigation(Intent paramIntent)
-    {
+    public void startActivityInFrameWithNoNavigation(Intent paramIntent) {
         paramIntent.putExtra("com.360buy:navigationDisplayFlag", -1);
         startActivityInFrame(paramIntent);
     }
 
     @Override
-    public void startActivityNoException(Intent paramIntent)
-    {
+    public void startActivityNoException(Intent paramIntent) {
         startActivityForResultNoException(paramIntent, -1);
     }
 
-    public void startSingleActivityInFrame(Intent paramIntent)
-    {
+    public void startSingleActivityInFrame(Intent paramIntent) {
         if (Log.D)
             Log.d("MyActivity", "startSingleActivityInFrame() -->> ");
         getCurrentMyActivity().startActivityInFrame(paramIntent);
     }
 
-    public void startSubActivity(Intent paramIntent)
-    {
+    public void startSubActivity(Intent paramIntent) {
         startActivity(paramIntent);
     }
 
-    public void startTaskActivityInFrame(Intent paramIntent)
-    {
+    public void startTaskActivityInFrame(Intent paramIntent) {
         if (Log.D)
             Log.d("MyActivity", "startTaskActivityInFrame() -->> " + paramIntent);
         startTaskActivityInFrame(paramIntent, createTaskId(paramIntent));
     }
 
-    public void startTaskActivityInFrame(Intent paramIntent, HashMap<String, Object> paramHashMap)
-    {
+    public void startTaskActivityInFrame(Intent paramIntent, HashMap<String, Object> paramHashMap) {
         if (Log.D)
             Log.d("MyActivity", "startTaskActivityInFrame() -->> " + paramIntent + "|" + paramHashMap);
         paramIntent.putExtra("com.360buy:taskIdFlag", paramHashMap);
@@ -1380,23 +1208,20 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         startActivityInFrame(paramIntent);
     }
 
-    public void testStack()
-    {
-        Iterator localIterator = ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).getRunningTasks(1000).iterator();
-        while (localIterator.hasNext())
-        {
-            String str = ((ActivityManager.RunningTaskInfo)localIterator.next()).baseActivity.getClassName();
+    public void testStack() {
+        Iterator localIterator = ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getRunningTasks(1000).iterator();
+        while (localIterator.hasNext()) {
+            String str = ((ActivityManager.RunningTaskInfo) localIterator.next()).baseActivity.getClassName();
             Log.d("activity_all_name", str);
             if ((str.startsWith("com.jingdong")) || (str.startsWith("com.jd")) || (str.startsWith("com.zy")))
                 Log.d("activity_name", str);
         }
     }
 
-    protected void updateButtonEnable(Button paramButton, boolean paramBoolean)
-    {
+    protected void updateButtonEnable(Button paramButton, boolean paramBoolean) {
         if (paramButton == null)
             return;
-        post(new Runnable(){//h(this, paramButton, paramBoolean)
+        post(new Runnable() {//h(this, paramButton, paramBoolean)
             @Override
             public void run() {
                 this.a.setEnabled(this.b);
@@ -1404,12 +1229,10 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
         });
     }
 
-    public static final class _O
-    {
+    public static final class _O {
         private static _O instance = null;
 
-        private _O(Context paramContext)
-        {
+        private _O(Context paramContext) {
             JDMtaUtils.init(paramContext.getApplicationContext());
             ImagePipelineConfig.Builder builder = ImagePipelineConfig.newBuilder(paramContext.getApplicationContext()).setBitmapsConfig(Bitmap.Config.RGB_565);
 
@@ -1417,16 +1240,15 @@ public class BaseActivity  extends FragmentActivity implements IMyActivity {
             JDFrescoUtils.initialize(paramContext.getApplicationContext(), builder.build(), false);
         }
 
-        public static _O getInstance(Context paramContext)
-        {
-            if (instance == null){
-                synchronized (_O.class){
+        public static _O getInstance(Context paramContext) {
+            if (instance == null) {
+                synchronized (_O.class) {
                     if (instance == null)
                         instance = new _O(paramContext);
 
                 }
             }
-                return instance;
+            return instance;
 
         }
     }
