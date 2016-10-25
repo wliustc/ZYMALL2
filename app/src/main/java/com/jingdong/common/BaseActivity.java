@@ -343,18 +343,15 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         switch (event.getAction()) {
-                            default:
                             case 1:
+                                BaseActivity.this.removeGuideView();
+                                break;
                         }
-                        while (true) {
-                            return true;
-                            this.a.removeGuideView();
-                        }
+                        return true;
                     }
                 });
                 this.rootView.addView(this.imageViewLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 this.rootView.invalidate();
-
             }//:cond_2
         }
         return;
@@ -394,13 +391,11 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
                         switch (event.getAction()) {
-                            default:
                             case 1:
+                                BaseActivity.this.removeGuideView();
+                                break;
                         }
-                        while (true) {
-                            return true;
-                            this.a.removeGuideView();
-                        }
+                        return true;
                     }
                 });
                 this.rootView.addView(this.imageViewLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -492,6 +487,7 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
         return localHashMap;
     }
 
+    @Override
     public void finish() {
         hideSoftInput();
         super.finish();
@@ -1110,10 +1106,17 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
         setTitleBack(paramImageView, null);
     }
 
-    public void setTitleBack(ImageView paramImageView, Runnable paramRunnable) {
+    public void setTitleBack(ImageView paramImageView, final Runnable paramRunnable) {
         this.mTitleBack = paramImageView;
-        this.mTitleBack.setVisibility(0);
-        this.mTitleBack.setOnClickListener(new c(this, paramRunnable));
+        this.mTitleBack.setVisibility(View.VISIBLE);
+        this.mTitleBack.setOnClickListener(new View.OnClickListener(){//c(this, paramRunnable)
+            @Override
+            public void onClick(View v) {
+                if (paramRunnable != null)
+                    paramRunnable.run();
+                BaseActivity.this.onTitleBack();
+            }
+        });
     }
 
     protected void setUseBasePV(boolean paramBoolean) {
@@ -1218,13 +1221,13 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
         }
     }
 
-    protected void updateButtonEnable(Button paramButton, boolean paramBoolean) {
+    protected void updateButtonEnable(final Button paramButton, final boolean paramBoolean) {
         if (paramButton == null)
             return;
         post(new Runnable() {//h(this, paramButton, paramBoolean)
             @Override
             public void run() {
-                this.a.setEnabled(this.b);
+                paramButton.setEnabled(paramBoolean);
             }
         });
     }
