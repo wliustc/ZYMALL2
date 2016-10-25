@@ -26,7 +26,7 @@ import com.zy.common.utils.TimerUntil;
 /**
  * Created by Robin on 2016/4/14.
  */
-public class MainFrameActivity extends MyActivity implements IMainActivity, ScrollableTabActivity {
+public class MainFrameActivity extends MyActivity implements IMainActivity, ScrollableTabActivity._Q {
     private final static String TAG = MainFrameActivity.class.getSimpleName();
     public static boolean a = true;
     private Handler handler;

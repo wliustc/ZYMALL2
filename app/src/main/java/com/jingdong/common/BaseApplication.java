@@ -113,4 +113,7 @@ public abstract class BaseApplication extends Application {
 
     public static void exitControl() {
     }
+
+    public static void exitAll() {
+    }
 }

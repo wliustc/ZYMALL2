@@ -40,7 +40,7 @@
     <color name="transparent">#00000000</color><!-- "ae" -->
     <color name="af">#ff81838e</color>
     <color name="ag">#ffec3838</color>
-    <color name="ah">#ff000000</color>
+    <color name="slide_prompt_bg">#ff000000</color><!-- "ah" -->
     <color name="c_232326">#ff232326</color><!-- "ai" -->
     <color name="aj">#ffd9d9d9</color>
     <color name="ak">#fff68484</color>

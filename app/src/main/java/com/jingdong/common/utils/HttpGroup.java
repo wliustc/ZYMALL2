@@ -20,6 +20,7 @@ public abstract class HttpGroup implements IDestroyListener {
 
     private OnGroupStartListener onGroupStartListener;
     private OnGroupCompleteListener onGroupCompleteListener;
+    private HttpGroupSetting httpGroupSetting;
 
     public static String getCookie() {
         return null;
@@ -43,6 +44,10 @@ public abstract class HttpGroup implements IDestroyListener {
 
     public void setOnGroupCompleteListener(OnGroupCompleteListener onGroupCompleteListener) {
         this.onGroupCompleteListener = onGroupCompleteListener;
+    }
+
+    public HttpGroupSetting getHttpGroupSetting() {
+        return httpGroupSetting;
     }
 
     public interface StopController {
@@ -290,6 +295,10 @@ public abstract class HttpGroup implements IDestroyListener {
 
         public void setMyActivity(IMyActivity myActivity) {
             this.myActivity = myActivity;
+        }
+
+        public void setProgressBarRootLayout(ViewGroup progressBarRootLayout) {
+            this.progressBarRootLayout = progressBarRootLayout;
         }
     }
 

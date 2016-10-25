@@ -149,7 +149,7 @@
     <dimen name="dh">10.0dip</dimen>
     <dimen name="di">15.0dip</dimen>
     <dimen name="dj">15.0sp</dimen>
-    <dimen name="dk">30.0dip</dimen>
+    <dimen name="guide_image_margin">30.0dip</dimen><!-- dk -->
     <dimen name="dl">13.0sp</dimen>
     <dimen name="dm">222.0dip</dimen>
     <dimen name="dn">16.0dip</dimen>

@@ -19,6 +19,9 @@ public class JDMtaUtils {
         sendCommonData(context, paramString1, paramString3, "onClick", paramString2, "", "", "");
     }
 
+    public static void onClick(Context context, String paramString1, String name, String paramString2, String paramString3) {
+    }
+
     public static void sendCommonData(Context paramContext, String paramString1, String paramString2, String paramString3, Object paramObject, String paramString4, Class paramClass, String paramString5)
     {
         sendCommonData(paramContext, paramString1, paramString2, paramString3, paramObject, paramString4, paramClass, paramString5, "");
@@ -47,6 +50,7 @@ public class JDMtaUtils {
     public static void sendCommonData(Context paramContext, String paramString1, String paramString2, String paramString3, String paramString4, String paramString5, String paramString6, String paramString7, int paramInt) {
 
     }
+
 
     public static void onClickWithPageId(Context paramContext, String paramString1, String paramString2, String paramString3) {
         try
@@ -99,5 +103,6 @@ public class JDMtaUtils {
     public static void init(Context applicationContext) {
 
     }
+
 
 }
