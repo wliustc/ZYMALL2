@@ -465,6 +465,11 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         return this.T;
     }
 
+    @Override
+    public IMyActivity n() {
+        return this.getCurrentMyActivity();
+    }
+
     protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
     {
         if (Log.D)
