@@ -178,12 +178,12 @@ public class NavigationFragment extends BaseFragment {
             for (int i2 = 0; i2 < this.navigationButtonList.size(); i2++) {
                 NavigationButton button = (NavigationButton) this.navigationButtonList.get(i2);
                 int index = button.getIndex();
-////                if (index == 2) //发现
-////                    MainFrameActivity.b(localNavigationButton.f());
-////                if (index == 3) //购物车
-////                    MainFrameActivity.a(localNavigationButton.getStateController());
-////                if (index == 4) //我的
-////                    MainFrameActivity.a(localNavigationButton.f());
+                if (index == 2) //发现
+                    MainFrameActivity.b(button.f());
+                if (index == 3) //购物车
+                    MainFrameActivity.a(button.getStateController());
+                if (index == 4) //我的
+                   MainFrameActivity.a(button.f());
                 button.setId(index);
                 button.setPadding(0, 0, 0, 0);
                 button.setGravity(Gravity.CENTER);

@@ -1,6 +1,7 @@
-package com.jingdong.common.utils;
+package com.zy.common.utils;
 
 import android.app.Activity;
+import android.view.WindowManager;
 
 import com.zy.common.utils.CommonUtil;
 
@@ -21,9 +22,9 @@ public class NightModeUtil {
             localActivity2 = paramActivity.getParent();
             localActivity1 = paramActivity;
         }
-        paramActivity = localActivity1.getWindow().getAttributes();
-        paramActivity.screenBrightness = f;
-        localActivity1.getWindow().setAttributes(paramActivity);
+        WindowManager.LayoutParams layoutParams = localActivity1.getWindow().getAttributes();
+        layoutParams.screenBrightness = f;
+        localActivity1.getWindow().setAttributes(layoutParams);
     }
 
     public static void a(Activity paramActivity, float paramFloat, boolean paramBoolean)
@@ -37,9 +38,9 @@ public class NightModeUtil {
                 localActivity2 = paramActivity.getParent();
                 localActivity1 = paramActivity;
             }
-            paramActivity = localActivity1.getWindow().getAttributes();
-            paramActivity.screenBrightness = paramFloat;
-            localActivity1.getWindow().setAttributes(paramActivity);
+            WindowManager.LayoutParams layoutParams = localActivity1.getWindow().getAttributes();
+            layoutParams.screenBrightness = paramFloat;
+            localActivity1.getWindow().setAttributes(layoutParams);
         }
     }
 }

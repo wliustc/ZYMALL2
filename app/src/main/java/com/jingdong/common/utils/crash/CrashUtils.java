@@ -2,17 +2,21 @@ package com.jingdong.common.utils.crash;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.HttpGroup;
+import com.jingdong.common.utils.MyUncaughtExceptionHandler;
 import com.zy.common.utils.Log;
+import com.zy.common.utils.StatisticsReportUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Created by robin on 16-10-31.
@@ -26,77 +30,108 @@ public class CrashUtils {
     {
         try
         {
-            a = new File(bj.a(1).b(), "crash");
-            return;
+            //a = new File(bj.a(1).b(), "crash");
         }
-        catch (Exception localException)
+        catch (Exception e)
         {
-            while (!Log.E);
-            localException.printStackTrace();
+            if (Log.E)
+            e.printStackTrace();
         }
     }
 
     public static JSONObject a(int paramInt, String paramString1, String paramString2, String paramString3, String paramString4, String paramString5)
     {
-        String str1 = "";
-        String str2 = FormatUtils.formatDate(new Date());
-        if (!TextUtils.isEmpty(paramString1.trim()))
-            str1 = "FeedBack: " + paramString1;
-        paramString1 = "submit: " + paramInt + " ;-- " + str1;
-        paramString1 = paramString1 + " ;--" + paramString2;
-        paramString1 = paramString1 + " ;--current free disk size: " + bp.a() + "M";
-        paramString1 = paramString1 + " ;--cpu: " + Build.CPU_ABI + ";--bootloader:" + Build.BOOTLOADER + ";--romVersion:" + Build.DISPLAY;
-        paramString1 = paramString1 + " ;--ad_se:" + com.jingdong.common.utils.g.a().length() + " ;--ad_si:" + com.jingdong.common.utils.g.b().length();
-        paramString1 = paramString1 + " ;--battery:" + BatteryReceiver.a;
-        paramString2 = new JSONObject();
-        try
-        {
-            paramString2.put("currentPageInfo", paramString3);
-            paramString2.put("crashStack", paramString4);
-            paramString2.put("feedback", paramString1);
-            paramString2.put("buildCode", String.valueOf(StatisticsReportUtil.getSoftwareVersionCode()));
-            paramString2.put("clientVersion", StatisticsReportUtil.getSoftwareVersionName());
-            paramString2.put("crashTime", str2);
-            paramString2.put("partner", Configuration.getProperty("partner"));
-            paramString1 = paramString5;
-            if (TextUtils.isEmpty(paramString5))
-                paramString1 = "default";
-            paramString2.put("bisType", paramString1);
-            paramString2.put("msgType", "1");
-            if (Log.D)
-                Log.d("crash", paramString2.toString());
-            ab.putBooleanToPreference("crash_share_just_start", Boolean.valueOf(false));
-            return paramString2;
-        }
-        catch (Throwable paramString1)
-        {
-            while (true)
-            {
-                if (!Log.D)
-                    continue;
-                paramString1.printStackTrace();
-            }
-        }
+//        String str1 = "";
+//        String str2 = FormatUtils.formatDate(new Date());
+//        if (!TextUtils.isEmpty(paramString1.trim()))
+//            str1 = "FeedBack: " + paramString1;
+//        paramString1 = "submit: " + paramInt + " ;-- " + str1;
+//        paramString1 = paramString1 + " ;--" + paramString2;
+//        paramString1 = paramString1 + " ;--current free disk size: " + bp.a() + "M";
+//        paramString1 = paramString1 + " ;--cpu: " + Build.CPU_ABI + ";--bootloader:" + Build.BOOTLOADER + ";--romVersion:" + Build.DISPLAY;
+//        paramString1 = paramString1 + " ;--ad_se:" + com.jingdong.common.utils.g.a().length() + " ;--ad_si:" + com.jingdong.common.utils.g.b().length();
+//        paramString1 = paramString1 + " ;--battery:" + BatteryReceiver.a;
+        JSONObject jsonObject = new JSONObject();
+//        try
+//        {
+//            jsonObject.put("currentPageInfo", paramString3);
+//            jsonObject.put("crashStack", paramString4);
+//            jsonObject.put("feedback", paramString1);
+//            jsonObject.put("buildCode", String.valueOf(StatisticsReportUtil.getSoftwareVersionCode()));
+//            jsonObject.put("clientVersion", StatisticsReportUtil.getSoftwareVersionName());
+//            jsonObject.put("crashTime", str2);
+//            jsonObject.put("partner", Configuration.getProperty("partner"));
+//            paramString1 = paramString5;
+//            if (TextUtils.isEmpty(paramString5))
+//                paramString1 = "default";
+//            jsonObject.put("bisType", paramString1);
+//            jsonObject.put("msgType", "1");
+//            if (Log.D)
+//                Log.d("crash", paramString2.toString());
+//            ab.putBooleanToPreference("crash_share_just_start", Boolean.valueOf(false));
+//
+//        }
+//        catch (Throwable e)
+//        {
+//                if (Log.D)
+//                e.printStackTrace();
+//        }
+        return jsonObject;
     }
 
     public static void a()
     {
-        if (a == null);
-        do
-            return;
-        while (!b);
-        b = false;
-        if (!a.exists())
-        {
-            b = true;
-            return;
-        }
-        new g().start();
+//        if (a == null);
+//        do
+//            return;
+//        while (!b);
+//        b = false;
+//        if (!a.exists())
+//        {
+//            b = true;
+//            return;
+//        }
+//        new g().start();
     }
 
-    public static void a(Intent paramIntent)
+    public static void a(final Intent paramIntent)
     {
-        new f(paramIntent).start();
+        new Thread(){//f(paramIntent)
+
+            @Override
+            public void run() {
+                try
+                {
+                    if (paramIntent == null)
+                        return;
+                    Bundle localBundle = paramIntent.getExtras();
+                    StringBuffer localStringBuffer = new StringBuffer();
+                    localStringBuffer.append("intent content：");
+                    if (localBundle != null){//if-eqz v1, :cond_3
+                        Iterator localIterator = localBundle.keySet().iterator();
+                        //:goto_1
+                            while (localIterator.hasNext()){//if-eqz v0, :cond_3
+                                String str1 = (String)localIterator.next();
+                                localStringBuffer.append(str1 + "：");
+                                if (localBundle.get(str1) == null)//if-nez v4, :cond_2
+                                    str1 = "<null>";
+                                else
+                                    str1 = localBundle.get(str1).toString();
+                                localStringBuffer.append(str1 + "，");
+                            }
+                    }
+                    MyUncaughtExceptionHandler.a(localStringBuffer.toString(), paramIntent.getComponent().getClassName());//do.a(localStringBuffer.toString(), paramIntent.getComponent().getClassName());
+                }
+                catch (Throwable e)
+                {
+
+                    if (Log.D)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     // ERROR //
@@ -426,19 +461,19 @@ public class CrashUtils {
     public static void a(JSONObject paramJSONObject, HttpGroup.OnAllListener paramOnAllListener)
             throws Exception
     {
-        Object localObject = new JSONArray();
-        ((JSONArray)localObject).put(paramJSONObject);
-        paramJSONObject = new JSONObject();
-        paramJSONObject.put("msg", localObject);
-        localObject = new HttpGroup.HttpGroupSetting();
-        ((HttpGroup.HttpGroupSetting)localObject).setPriority(1000);
-        ((HttpGroup.HttpGroupSetting)localObject).setType(1000);
-        localObject = HttpGroup.getHttpGroup((HttpGroup.HttpGroupSetting)localObject);
-        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
-        localHttpSetting.setFunctionId("newcrash");
-        localHttpSetting.setJsonParams(paramJSONObject);
-        localHttpSetting.setHost(Configuration.getNgwHost());
-        localHttpSetting.setListener(paramOnAllListener);
-        ((HttpGroup)localObject).add(localHttpSetting);
+//        Object localObject = new JSONArray();
+//        ((JSONArray)localObject).put(paramJSONObject);
+//        paramJSONObject = new JSONObject();
+//        paramJSONObject.put("msg", localObject);
+//        localObject = new HttpGroup.HttpGroupSetting();
+//        ((HttpGroup.HttpGroupSetting)localObject).setPriority(1000);
+//        ((HttpGroup.HttpGroupSetting)localObject).setType(1000);
+//        localObject = HttpGroup.getHttpGroup((HttpGroup.HttpGroupSetting)localObject);
+//        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+//        localHttpSetting.setFunctionId("newcrash");
+//        localHttpSetting.setJsonParams(paramJSONObject);
+//        localHttpSetting.setHost(Configuration.getNgwHost());
+//        localHttpSetting.setListener(paramOnAllListener);
+//        ((HttpGroup)localObject).add(localHttpSetting);
     }
 }

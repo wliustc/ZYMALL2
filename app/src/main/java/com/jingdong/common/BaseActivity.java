@@ -46,7 +46,6 @@ import com.jingdong.common.utils.CacheTimeUtil;
 import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.HttpGroupWithNPS;
 import com.jingdong.common.utils.JDFrescoUtils;
-import com.jingdong.common.utils.NightModeUtil;
 import com.jingdong.common.utils.cache.GlobalImageCache;
 import com.jingdong.common.utils.crash.CrashUtils;
 import com.zy.app.mall.R;
@@ -67,6 +66,7 @@ import com.zy.common.utils.ImageUtil;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.Log;
 import com.zy.common.utils.NetUtils;
+import com.zy.common.utils.NightModeUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -856,7 +856,7 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
         if (System.currentTimeMillis() - this.stopTime > 86400000L) {
             if (Log.D)
                 Log.d("MyActivity", "onRestart() -->> update cache time");
-            CacheTimeUtil.a();//com.jingdong.common.utils.y.a();
+            CacheTimeUtil.getCacheTime();//com.jingdong.common.utils.y.a();
         }
         super.onRestart();
     }

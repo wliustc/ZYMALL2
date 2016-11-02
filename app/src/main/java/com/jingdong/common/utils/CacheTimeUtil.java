@@ -7,15 +7,15 @@ import com.jingdong.common.config.Configuration;
  */
 //y
 public class CacheTimeUtil {
-    public static void a()
+    public static void getCacheTime()
     {
-        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
-        localHttpSetting.setFunctionId("getCacheTime");
-        localHttpSetting.setEffect(0);
-        localHttpSetting.setCacheMode(2);
-        localHttpSetting.setHost(Configuration.getPortalHost());
-        localHttpSetting.setListener(new z());
-        localHttpSetting.setNotifyUser(false);
-        HttpGroupUtils.getHttpGroupaAsynPool().add(localHttpSetting);
+//        HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+//        localHttpSetting.setFunctionId("getCacheTime");
+//        localHttpSetting.setEffect(0);
+//        localHttpSetting.setCacheMode(2);
+//        localHttpSetting.setHost(Configuration.getPortalHost());
+//        localHttpSetting.setListener(new z());
+//        localHttpSetting.setNotifyUser(false);
+//        HttpGroupUtils.getHttpGroupaAsynPool().add(localHttpSetting);
     }
 }
