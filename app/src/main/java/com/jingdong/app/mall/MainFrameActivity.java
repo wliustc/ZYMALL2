@@ -23,14 +23,17 @@ import com.jingdong.app.mall.basic.JDUntil;
 import com.jingdong.app.mall.faxian.JDFaxianFragment;
 import com.jingdong.app.mall.home.HomePageObserver;
 import com.jingdong.app.mall.navigationbar.NavigationFragment;
+import com.jingdong.app.mall.navigationbar.NavigationOptHelper;
 import com.jingdong.app.mall.personel.home.JDPersonalFragment;
 import com.jingdong.app.mall.search.CameraPurchaseActivity;
 import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
+import com.jingdong.app.mall.settlement.ShoppingController;
 import com.jingdong.app.mall.shopping.JDShoppingCartFragment;
 import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.common.ActivityNumController;
-import com.jingdong.common.BaseActivity;
 import com.jingdong.common.BaseApplication;
+import com.jingdong.common.utils.CommonBase;
+import com.jingdong.common.utils.FileService;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.home.JDHomeFragment;
@@ -39,6 +42,7 @@ import com.zy.app.mall.searchRefactor.view.Activity.SearchActivity;
 import com.zy.app.mall.utils.MyActivity;
 import com.zy.app.mall.utils.frame.TabBarButton;
 import com.zy.cleanmvp.ui.BaseFragment;
+import com.zy.common.BaseActivity;
 import com.zy.common.ScrollableTabActivity;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.frame.IMainActivity;
@@ -46,6 +50,7 @@ import com.zy.common.frame.IMyActivity;
 import com.zy.common.utils.Log;
 import com.zy.common.utils.TimerUntil;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -116,8 +121,7 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
     private String y = "";
     private String z = "";
 
-    static
-    {
+    static {
         fragmentList.add(JDNewCategoryFragment.class.getName());
         fragmentList.add(JDShoppingCartFragment.class.getName());
         fragmentList.add(JDPersonalFragment.class.getName());
@@ -125,39 +129,29 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         c = true;
     }
 
-    private void a(Bundle paramBundle)
-    {
-        try
-        {
+    private void a(Bundle bundle) {
+        try {
             if (this.b == null)
                 return;
-            int i1 = com.jingdong.app.mall.navigationbar.j.a().a;
-            if (paramBundle != null)
-            {
-                i1 = paramBundle.getInt("to", -1);
+            int to = NavigationOptHelper.getInstance().lastIndex;
+            if (bundle != null) {//if-eqz p1, :cond_3
+                to = bundle.getInt("to", -1);
                 if (Log.D)
-                    Log.d(this.f, "1.goAction() to = " + i1 + " bundle = " + paramBundle);
-                paramBundle.remove("to");
-                if (i1 == -1);
-            }
-            else
-            {
-                int i2 = i1;
-                if (i1 == 65793)
-                {
-                    b(null);
-                    i2 = 0;
-                }
-                this.b.b(i2);
-                if (Log.D)
-                {
-                    Log.d(this.f, "goAction() to = " + i2 + " bundle = " + paramBundle);
+                    Log.d(this.f, "1.goAction() to = " + to + " bundle = " + bundle);
+                bundle.remove("to");
+                if (to == -1) {//if-eq v0, v4, :cond_0
                     return;
                 }
+            }//:cond_3
+            if (to == 65793) {//if-ne v0, v1, :cond_4
+                b((Bundle) null);//MainFrameActivity;->b(Landroid/os/Bundle;)V
+                to = 0;
             }
-        }
-        catch (Exception e)
-        {
+            this.b.b(to);
+            if (Log.D) {
+                Log.d(this.f, "goAction() to = " + to + " bundle = " + bundle);
+            }
+        } catch (Exception e) {
             if (Log.D)
                 e.printStackTrace();
         }
@@ -181,38 +175,50 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
 
     public static void a(boolean paramBoolean)
     {
-        TabBarButton.RedPoint localc = Q;
-        if (localc == null);
-        do
-            return;
-        while ((BaseApplication.getInstance().getMainFrameActivity() == null) || (BaseApplication.getInstance().getMainFrameActivity().getHandler() == null));
-        BaseApplication.getInstance().getMainFrameActivity().getHandler().post(new af(true, localc));
+        final TabBarButton.RedPoint localc = Q;
+        if (localc != null
+                && (BaseApplication.getInstance().getMainFrameActivity() != null)
+                && (BaseApplication.getInstance().getMainFrameActivity().getHandler() != null))
+            BaseApplication.getInstance().getMainFrameActivity().getHandler().post(new Runnable(){//af(true, localc)
+                @Override
+                public void run() {
+                    if (true)
+                    {
+                        CommonUtil.putIntToPreference("shared_faxian_redpoint_flag", 1);
+                        if (CommonBase.getJdFaxianNewFlag())
+                        {
+                            localc.a(Boolean.valueOf(false));
+                            localc.b(Boolean.valueOf(true));
+                            CommonBase.setJdFaxianNewFlag(false);
+                            return;
+                        }
+                        localc.b(Boolean.valueOf(true));
+                        localc.a(Boolean.valueOf(false));
+                        return;
+                    }
+                    localc.a(Boolean.valueOf(false));
+                    localc.b(Boolean.valueOf(false));
+                }
+            });
     }
 
     public static boolean a()
     {
-        Object localObject2 = CommonUtil.getJdSharedPreferences().getString("endTime", "");
-        if (((String)localObject2).equals(""));
-        while (true)
-        {
-            return true;
-            Date localDate = new Date();
-            SimpleDateFormat localSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Object localObject1 = null;
-            try
-            {
-                localObject2 = localSimpleDateFormat.parse((String)localObject2);
-                localObject1 = localObject2;
-                if ((localObject1 == null) || (localDate.after(localObject1)))
-                    continue;
+        String localObject2 = CommonUtil.getJdSharedPreferences().getString("endTime", "");
+        if (!localObject2.equals("")) {//if-eqz v1, :cond_1
+            Date now = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date endTime = null;
+            try {
+                endTime = simpleDateFormat.parse((String) localObject2);
+            } catch (ParseException localParseException) {
+                localParseException.printStackTrace();
+            }
+            if ((endTime != null) && (!now.after(endTime)))
                 return false;
-            }
-            catch (ParseException localParseException)
-            {
-                while (true)
-                    localParseException.printStackTrace();
-            }
         }
+        return true;
+
     }
 
     public static void b()
@@ -250,7 +256,15 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
     {
         if (Log.D)
             Log.d("Temp", "MainFrameActivity clearCache() -->> ");
-        new ac().start();
+        new Thread(){//ac()
+            @Override
+            public void run() {
+                setName("MainFrameActivity_clearCache");
+                android.os.Process.setThreadPriority(19);
+                FileService.d();
+                FileService.e();
+            }
+        }.start();
     }
 
     public static TabBarButton.RedPoint f()
@@ -278,24 +292,25 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         }
         catch (Exception localException)
         {
-            while (true)
                 localException.printStackTrace();
         }
     }
 
-    private static void o()
-    {
-        com.jingdong.app.mall.utils.frame.b localb = J;
-        if (localb == null);
-        while (true)
-        {
-            return;
-            int i1 = qi.getProductCount();
-            if (i1 == 0);
-            for (Integer localInteger = null; (BaseApplication.getInstance().getMainFrameActivity() != null) && (BaseApplication.getInstance().getMainFrameActivity().getHandler() != null); localInteger = Integer.valueOf(i1))
-            {
-                BaseApplication.getInstance().getMainFrameActivity().getHandler().post(new ae(localb, localInteger));
-                return;
+    private static void o() {
+        if (J != null) {
+            int i1 = ShoppingController.getProductCount();//com.jingdong.app.mall.settlement.qi
+            Integer localInteger = null;
+            if (i1 != 0) {
+                localInteger = Integer.valueOf(i1);
+            }
+            if ((BaseApplication.getInstance().getMainFrameActivity() != null) && (BaseApplication.getInstance().getMainFrameActivity().getHandler() != null)) {
+                final Integer finalLocalInteger = localInteger;
+                BaseApplication.getInstance().getMainFrameActivity().getHandler().post(new Runnable(){//ae(localb, localInteger)
+                    @Override
+                    public void run() {
+                        J.a(finalLocalInteger);
+                    }
+                });
             }
         }
     }

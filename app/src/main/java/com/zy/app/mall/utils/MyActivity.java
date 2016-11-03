@@ -7,8 +7,8 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.R;
+import com.zy.common.BaseActivity;
 import com.zy.common.utils.Log;
 
 /**

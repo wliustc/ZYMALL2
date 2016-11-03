@@ -1,7 +1,7 @@
 package com.jingdong.app.mall.utils;
 
-import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.home.JDHomeFragment;
+import com.zy.common.BaseActivity;
 import com.zy.common.frame.IMyActivity;
 
 /**

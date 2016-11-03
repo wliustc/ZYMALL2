@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jingdong.common.BaseActivity;
 import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.JSONObjectProxy;
@@ -16,6 +15,7 @@ import com.zy.app.mall.R;
 import com.zy.app.mall.home.JDHomeFragment;
 import com.zy.app.mall.home.floor.a.a.Constants;
 import com.zy.app.mall.home.floor.model.entity.HomeRecommendTwoEntity;
+import com.zy.common.BaseActivity;
 import com.zy.common.entity.HomeFloorNewModel;
 import com.zy.common.frame.IMyActivity;
 import com.zy.common.utils.*;

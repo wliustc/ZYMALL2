@@ -146,6 +146,7 @@ public class NavigationFragment extends BaseFragment {
         init();
     }
 
+    //c()
     private void init() {
 
         if (Log.D)
@@ -210,9 +211,69 @@ public class NavigationFragment extends BaseFragment {
         this.rgBottomMenu.check(lastIndex);
     }
 
+    public final void a()
+    {
+        c();
+        this.j = false;
+        int i1 = j.a().a;
+        b(-1);
+        if ((i1 == 2) && (!TextUtils.isEmpty(((NavigationButton)this.c.get(i1)).b())))
+        {
+            this.j = true;
+            this.g = true;
+        }
+        b(i1);
+        this.j = true;
+        s locals = s.a();
+        if (!this.g);
+        for (boolean bool = true; ; bool = false)
+        {
+            locals.a(i1, bool);
+            return;
+        }
+    }
+
+    public final void a(Integer paramInteger)
+    {
+        if (Log.D)
+            Log.d("JDNavigationFragment", "radioId -->> " + paramInteger);
+        j.a().a = paramInteger.intValue();
+        if (this.a.getCheckedRadioButtonId() != paramInteger.intValue())
+        {
+            if (Log.D)
+                Log.d("JDNavigationFragment", "bottomRadioGroup.getCheckedRadioButtonId() != radioId -->> " + this.a.getCheckedRadioButtonId());
+            this.e = this.a.getCheckedRadioButtonId();
+            this.o.a(true);
+            this.o.a(paramInteger.intValue());
+            this.a.check(paramInteger.intValue());
+            if (Log.D)
+                Log.d("JDNavigationFragment", "old -->> " + this.e);
+        }
+    }
+
     public final void b()
     {
         this.d.clear();
     }
 
+    public final void b(int paramInt)
+    {
+        if (Log.D)
+            Log.d("JDNavigationFragment", "setCurrentTab() index = " + paramInt);
+        if (n.a());
+        try
+        {
+            MainFrameActivity localMainFrameActivity = (MainFrameActivity)this.thisActivity;
+            if (localMainFrameActivity != null)
+                localMainFrameActivity.a(paramInt);
+            this.a.check(paramInt);
+            j.a().a = paramInt;
+            return;
+        }
+        catch (Exception localException)
+        {
+            while (true)
+                localException.printStackTrace();
+        }
+    }
 }

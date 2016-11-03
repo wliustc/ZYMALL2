@@ -16,7 +16,6 @@ import com.jingdong.app.mall.home.HSimilarProductListActivity;
 import com.jingdong.app.mall.home.floor.view.view.HomeFooterView;
 import com.jingdong.app.mall.product.ProductDetailActivity;
 import com.jingdong.app.mall.utils.StartActivityUtils;
-import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.R;
 import com.zy.app.mall.home.JDHomeFragment;
 import com.jingdong.app.mall.home.floor.b.FloorImageLoadCtrl;
@@ -25,6 +24,7 @@ import com.zy.app.mall.home.floor.model.entity.HomeProductEntity;
 import com.zy.app.mall.home.floor.model.entity.HomeRecommendEntity;
 import com.zy.app.mall.home.floor.model.entity.HomeRecommendTwoEntity;
 import com.zy.app.mall.home.floor.view.view.HomeRecommendOtherView;
+import com.zy.common.BaseActivity;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.utils.DPIUtil;
 import com.zy.common.utils.ImageUtil;
@@ -304,7 +304,7 @@ public class HomeProductAdapter extends BaseAdapter {
                     @Override
                     public final void onClick(View paramView) {
                         if ((paramHomeProductEntity != null) && (paramHomeProductEntity.getId() != null))
-                            com.jingdong.common.deeplinkhelper._B.a(paramOneProductViewHolder.f.i, String.valueOf(paramHomeProductEntity.getId()), paramHomeProductEntity.getJdPriceWithOutZero(), paramHomeProductEntity.getName(), paramHomeProductEntity.getImageUrl(), 0);
+                            com.jingdong.common.deeplinkhelper.DeepLinkMyStreetHelper._B.a(paramOneProductViewHolder.f.i, String.valueOf(paramHomeProductEntity.getId()), paramHomeProductEntity.getJdPriceWithOutZero(), paramHomeProductEntity.getName(), paramHomeProductEntity.getImageUrl(), 0);
                         try {
                             JDMtaUtils.sendCommonData(paramOneProductViewHolder.f.i, "Home_SimilarView", paramHomeProductEntity.getSourceValue(), "", paramOneProductViewHolder.f.h, "", HSimilarProductListActivity.class, "", Constants.b);
                             return;

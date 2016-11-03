@@ -11,8 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jingdong.common.BaseActivity;
 import com.jingdong.common.BaseApplication;
+import com.zy.common.BaseActivity;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.Log;
 

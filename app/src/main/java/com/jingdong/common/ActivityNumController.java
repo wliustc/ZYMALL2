@@ -144,55 +144,42 @@ public class ActivityNumController {
     public static void a(String paramString)
     {
         ArrayList localArrayList2 = new ArrayList();
-        int j = d.size();
-        int i = 0;
         JDSoftReference localp;
-        ArrayList localArrayList1;
-        if (i < j)
-        {
+
+        //:goto_0
+        for (int i = 0;i < d.size(); i++){//if-ge v4, v6, :cond_7
             localp = (JDSoftReference)d.get(i);
-            if (localp != null)
-                localArrayList1 = null;
-        }
-        while (true)
-        {
-            try
-            {
-                localObject = (Activity)localp.get();
-                if (localObject == null)
-                    return;
-            }
-            catch (Exception localException)
-            {
-                Object localObject = localArrayList1;
-                if (!Log.D)
-                    continue;
-                localException.printStackTrace();
-                localObject = localArrayList1;
-                continue;
-                if ((TextUtils.isEmpty(paramString)) || (!localObject.getClass().getSimpleName().equals(paramString)))
-                {
-                    if (!Log.D)
-                        continue;
-                    Log.d(c, "exitActivityNonByClassName() finish " + localObject.getClass().getSimpleName());
-                    localArrayList2.add(localp);
-                    localArrayList1 = (ArrayList)g.get(localObject.getClass().getName());
-                    if (localArrayList1 == null)
-                        continue;
-                    localArrayList1.remove(localp);
-                    ((Activity)localObject).finish();
+            if (localp != null){//if-eqz v0, :cond_6
+                Activity localObject = null;
+                try {
+                    localObject = (Activity) localp.get();
+                } catch (Exception e) {
+                    if (Log.D)
+                        e.printStackTrace();
                 }
-            }
-            i += 1;
-            break;
-            j = localArrayList2.size();
-            i = 0;
-            while (i < j)
+                //:cond_0
+                //:goto_1
+                if (localObject == null) {//if-nez v3, :cond_2
+                    return;
+                }
+                //:cond_2
+                if ((TextUtils.isEmpty(paramString)) || (!localObject.getClass().getSimpleName().equals(paramString))) {//if-nez v1, :cond_3 if-nez v1, :cond_6
+                    if (Log.D)
+                        Log.d(c, "exitActivityNonByClassName() finish " + localObject.getClass().getSimpleName());
+                    localArrayList2.add(localp);
+                    ArrayList localArrayList1 = (ArrayList) g.get(localObject.getClass().getName());
+                    if (localArrayList1 != null)
+                        localArrayList1.remove(localp);
+                    ((Activity) localObject).finish();
+                }
+            }//:cond_6
+        }
+
+            for (int i = 0; i < localArrayList2.size(); i++)
             {
                 d.remove(localArrayList2.get(i));
-                i += 1;
             }
-        }
+
     }
 
 //    public static void b()

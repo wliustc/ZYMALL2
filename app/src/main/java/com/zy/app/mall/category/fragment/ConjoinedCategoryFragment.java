@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jingdong.common.BaseActivity;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.category.adapter.ScrollTabHolderPagerAdapter;
@@ -20,6 +19,7 @@ import com.zy.app.mall.category.view.NestedViewPager;
 import com.zy.app.mall.category.view.PagerSlidingTabStrip;
 import com.zy.app.mall.category.view.ParallaxHeaderHelper;
 import com.zy.cleanmvp.ui.BaseFragment;
+import com.zy.common.BaseActivity;
 import com.zy.common.entity.Catelogy;
 import com.zy.common.utils.JDMtaUtils;
 
