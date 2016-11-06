@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jingdong.app.mall.aura.AuraBlackList;
 import com.jingdong.app.mall.aura.AuraUpdate;
 import com.jingdong.app.mall.basic.ActivityJumpController;
 import com.jingdong.app.mall.basic.ApplicationManager;
@@ -29,6 +30,10 @@ import com.jingdong.app.mall.basic.ErrorActivity;
 import com.jingdong.app.mall.basic.JDUntil;
 import com.jingdong.app.mall.faxian.JDFaxianFragment;
 import com.jingdong.app.mall.home.HomePageObserver;
+import com.jingdong.app.mall.more.AboutActivity;
+import com.jingdong.app.mall.more.FeedbackActivity;
+import com.jingdong.app.mall.more.HistoryListActivity;
+import com.jingdong.app.mall.more.MoreActivity;
 import com.jingdong.app.mall.navigationbar.NavigationFragment;
 import com.jingdong.app.mall.navigationbar.NavigationOptHelper;
 import com.jingdong.app.mall.open.OpenAppJumpController;
@@ -39,10 +44,13 @@ import com.jingdong.app.mall.settlement.ShoppingController;
 import com.jingdong.app.mall.shopping.JDShoppingCartFragment;
 import com.jingdong.app.mall.utils.CommonUtil;
 import com.jingdong.app.mall.utils.LoginUser;
+import com.jingdong.app.mall.utils.ReActivationUserManager;
 import com.jingdong.app.mall.utils.StartActivityUtils;
+import com.jingdong.app.mall.utils.ui.NightModeDialog;
 import com.jingdong.common.ActivityNumController;
 import com.jingdong.common.BaseApplication;
 import com.jingdong.common.c.LocManager;
+import com.jingdong.common.ui.JDDialogFactory;
 import com.jingdong.common.utils.CommonBase;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.FileService;
@@ -58,12 +66,15 @@ import com.zy.app.mall.searchRefactor.view.Activity.SearchActivity;
 import com.zy.app.mall.utils.MyActivity;
 import com.zy.app.mall.utils.frame.TabBarButton;
 import com.zy.app.util.image.JDDisplayImageOptions;
+import com.zy.app.util.image.assist.JDFailReason;
+import com.zy.app.util.image.listener.JDSimpleImageLoadingListener;
 import com.zy.cleanmvp.ui.BaseFragment;
 import com.zy.common.BaseActivity;
 import com.zy.common.ScrollableTabActivity;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.frame.IMainActivity;
 import com.zy.common.frame.IMyActivity;
+import com.zy.common.ui.JDDialog;
 import com.zy.common.utils.JDImageUtils;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
@@ -73,6 +84,7 @@ import com.zy.common.utils.TimerUntil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -822,7 +834,79 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
                                         JDImageUtils.loadImage(jsonObjectProxy.optString("url", "")
                                                 , JDDisplayImageOptions.createSimple().cacheInMemory(false).bitmapConfig(Bitmap.Config.ARGB_8888)
                                                 , new JDSimpleImageLoadingListener(){//t(localMainFrameActivity, i)
+                                                    public final void onLoadingComplete(String paramString, View paramView, Bitmap paramBitmap)
+                                                    {
+                                                        paramView = null;
+                                                        ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream();
+                                                        paramString = paramView;
+                                                        if (paramBitmap != null);
+                                                        try
+                                                        {
+                                                            paramBitmap.compress(Bitmap.CompressFormat.PNG, 100, localByteArrayOutputStream);
+                                                            paramBitmap.recycle();
+                                                            paramString = localByteArrayOutputStream.toByteArray();
+                                                            paramView = bj.a(4);
+                                                            if (paramView == null)
+                                                                return;
+                                                        }
+                                                        catch (Exception paramBitmap)
+                                                        {
+                                                            do
+                                                            {
+                                                                while (true)
+                                                                {
+                                                                    paramString = paramView;
+                                                                    if (!Log.E)
+                                                                        continue;
+                                                                    paramBitmap.printStackTrace();
+                                                                    paramString = paramView;
+                                                                }
+                                                                paramBitmap = "startimage.image" + this.a;
+                                                                MainFrameActivity.f(this.b).put(Integer.valueOf(this.a), paramView.d() + "/" + paramBitmap);
+                                                                if (Boolean.valueOf(bj.a(paramView, paramBitmap, paramString)).booleanValue())
+                                                                    continue;
+                                                                if (Log.D)
+                                                                    Log.d(MainFrameActivity.b(this.b), "Image saved faild.");
+                                                                MainFrameActivity.f(this.b).clear();
+                                                                MainFrameActivity.b();
+                                                                return;
+                                                            }
+                                                            while (MainFrameActivity.f(this.b).size() != MainFrameActivity.e(this.b));
+                                                            paramString = "";
+                                                            int i = 0;
+                                                            if (i < MainFrameActivity.f(this.b).size())
+                                                            {
+                                                                if (TextUtils.isEmpty(paramString));
+                                                                for (paramString = MainFrameActivity.f(this.b).get(Integer.valueOf(i)).toString(); ; paramString = paramString + "," + MainFrameActivity.f(this.b).get(Integer.valueOf(i)).toString())
+                                                                {
+                                                                    i += 1;
+                                                                    break;
+                                                                }
+                                                            }
+                                                            paramView = CommonUtil.getJdSharedPreferences().edit();
+                                                            paramView.putString("start_image_md5", MainFrameActivity.d(this.b));
+                                                            paramView.putString("forwardUrl", MainFrameActivity.g(this.b));
+                                                            paramView.putString("imagepath", paramString);
+                                                            paramView.putString("beginTime", MainFrameActivity.h(this.b));
+                                                            paramView.putString("endTime", MainFrameActivity.i(this.b));
+                                                            paramView.putString("startSrcVal", MainFrameActivity.j(this.b));
+                                                            paramView.putInt("showTime", MainFrameActivity.k(this.b));
+                                                            paramView.putInt("redirect", MainFrameActivity.l(this.b));
+                                                            paramView.putInt("skip", MainFrameActivity.m(this.b));
+                                                            paramView.putInt("start_ad_type", MainFrameActivity.n(this.b));
+                                                            paramView.putString("shareUrl", MainFrameActivity.o(this.b));
+                                                            paramView.putString("shareTitle", MainFrameActivity.p(this.b));
+                                                            paramView.putString("shareContent", MainFrameActivity.q(this.b));
+                                                            paramView.putString("shareAvatar", MainFrameActivity.r(this.b));
+                                                            paramView.putInt("start_countdown", MainFrameActivity.s(this.b));
+                                                            paramView.commit();
+                                                        }
+                                                    }
 
+                                                    public final void onLoadingFailed(String paramString, View paramView, JDFailReason paramJDFailReason)
+                                                    {
+                                                        ExceptionReporter.reportBitmapException(paramString, paramJDFailReason);
+                                                    }
                                                 });
                                     }
                                 } else {
@@ -848,48 +932,41 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         //:goto_4
         if (Log.D)
             Log.d(this.f, "onCreate moduleId -->> " + i1);
-        new bi(getApplicationContext()).a();
-        new ad(this).start();
-        com.jingdong.app.mall.aura.a.a(BaseApplication.getInstance().getCurrentMyActivity(), true);
+        new ReActivationUserManager(getApplicationContext()).a();//new bi(getApplicationContext()).a();
+        new _Ad().start();
+        AuraBlackList.a(BaseApplication.getInstance().getCurrentMyActivity(), true);
         return;
     }
 
-    private static void synthetic_u(MainFrameActivity mainFrameActivity) {
-        //TODO: 1477 .method static synthetic_u(Lcom/jingdong/app/mall/MainFrameActivity;)V
-    }
 
     public boolean onCreateOptionsMenu(Menu paramMenu)
     {
-        if (n.a())
-            getMenuInflater().inflate(2131689475, paramMenu);
-        while (true)
-        {
+        if (JDUntil.hasSmartBar()) {//if-eqz v0, :cond_2
+            getMenuInflater().inflate(R.menu.navigation_menu, paramMenu);//2131689475
             try
             {
                 this.Z = paramMenu.getItem(0);
                 this.aa = paramMenu.getItem(1);
                 this.ab = paramMenu.getItem(2);
-                a(this.V);
-                if (this.M)
-                    continue;
-                removeGuideView();
-                return true;
+                a(this.lastIndex);
             }
-            catch (Exception paramMenu)
+            catch (Exception e)
             {
-                paramMenu.printStackTrace();
-                continue;
+                e.printStackTrace();
             }
-            if (this.g.size() > 0)
-                continue;
-            getMenuInflater().inflate(2131689473, paramMenu);
+        }else if (this.g.size() <= 0){
+            getMenuInflater().inflate(R.menu.main_menu, paramMenu);//2131689473
             S = paramMenu;
         }
+        if (!this.M)
+            removeGuideView();
+        return true;
+
     }
 
     protected void onDestroy()
     {
-        com.jingdong.common.c.c.j = true;
+        LocManager.j = true;
         super.onDestroy();
     }
 
@@ -897,58 +974,44 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
     {
         if (Log.I)
             Log.i(this.f, "onSearchRequested++++main");
-        if (paramInt == 84)
-        {
-            paramKeyEvent = JDHomeFragment.class.getSimpleName();
+        if (paramInt == 84) {//if-ne p1, v0, :cond_4
+            String simpleName = JDHomeFragment.class.getSimpleName();
             String str = JDPersonalFragment.class.getSimpleName();
-            Object localObject = this.U;
-            if (localObject == null)
-                return true;
-            localObject = localObject.getClass().getSimpleName();
-            if (Log.D)
-                Log.d(this.f, "currentActivity -->> " + (String)localObject);
-            if ((!paramKeyEvent.equals(localObject)) && (!str.equals(localObject)))
-                b(null);
+
+            if (this.U != null){//if-nez v3, :cond_1
+                String currentActivitySimpleName = this.U.getClass().getSimpleName();
+                if (Log.D)
+                    Log.d(this.f, "currentActivity -->> " + (String)currentActivitySimpleName);
+                if ((!simpleName.equals(currentActivitySimpleName)) && (!str.equals(currentActivitySimpleName)))
+                    b((Bundle)null);
+            }
             return true;
-        }
-        if (paramInt == 4)
-        {
+        }else if (paramInt == 4) {//if-ne p1, v0, :cond_b
             if (((this.U instanceof JDHomeFragment)) && (((JDHomeFragment)this.U).onKeyDown(paramInt, paramKeyEvent)))
                 return true;
-            if (((this.U instanceof JDNewCategoryFragment)) && (((JDNewCategoryFragment)this.U).onKeyDown(paramInt, paramKeyEvent)))
+            else if (((this.U instanceof JDNewCategoryFragment)) && (((JDNewCategoryFragment)this.U).onKeyDown(paramInt, paramKeyEvent)))
                 return true;
-            if (((this.U instanceof JDShoppingCartFragment)) && (((JDShoppingCartFragment)this.U).onKeyDown(paramInt, paramKeyEvent)))
+            else if (((this.U instanceof JDShoppingCartFragment)) && (((JDShoppingCartFragment)this.U).onKeyDown(paramInt, paramKeyEvent)))
                 return true;
-            if (((this.U instanceof JDPersonalFragment)) && (this.U.onKeyDown(paramInt, paramKeyEvent)))
+            else if (((this.U instanceof JDPersonalFragment)) && (this.U.onKeyDown(paramInt, paramKeyEvent)))
                 return true;
-            try
-            {
-                l.a(this.U);
-                l.a();
-            }
-            catch (Exception paramKeyEvent)
-            {
-                try
-                {
-                    while (true)
-                    {
-                        this.b.b(0);
-                        return true;
-                        paramKeyEvent = paramKeyEvent;
-                        if (!Log.D)
-                            continue;
-                        paramKeyEvent.printStackTrace();
-                    }
+            else{
+                try {
+                    ApplicationManager.a(this.U);
+                    ApplicationManager.a();
                 }
-                catch (Throwable paramKeyEvent)
-                {
-                    while (true)
-                    {
-                        if (!Log.D)
-                            continue;
-                        paramKeyEvent.printStackTrace();
-                    }
+                catch (Exception e){
+                    if (Log.D)
+                        e.printStackTrace();
                 }
+                try {
+                    this.b.b(0);
+                }
+                catch (Throwable e) {
+                    if (Log.D)
+                        e.printStackTrace();
+                }
+                return true;
             }
         }
         return super.onKeyDown(paramInt, paramKeyEvent);
@@ -957,108 +1020,104 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
     protected void onNewIntent(Intent paramIntent)
     {
         super.onNewIntent(paramIntent);
-        if (paramIntent == null);
-        do
-            while (true)
+        if (paramIntent != null){
+            try
             {
-                return;
-                try
+                if (Log.D)
                 {
-                    if (Log.D)
-                    {
-                        Log.d(this.f, "onNewIntent intent:" + paramIntent);
-                        Log.d(this.f, "onNewIntent intent:" + paramIntent.getExtras());
-                    }
-                    Intent localIntent = getIntent();
-                    com.jingdong.common.a.a(MainFrameActivity.class.getSimpleName());
-                    if ((paramIntent.getExtras() != null) && (localIntent != null))
-                    {
-                        a(paramIntent.getExtras());
-                        localIntent.putExtras(paramIntent.getExtras());
-                    }
-                    int i1 = paramIntent.getIntExtra("com.360buy:navigationId", 0);
-                    Log.d("navigation-click", " main " + i1 + "  mc  " + this.V);
-                    if (i1 == this.V)
-                        continue;
-                    this.V = i1;
-                    this.b.b(this.V);
-                    return;
+                    Log.d(this.f, "onNewIntent intent:" + paramIntent);
+                    Log.d(this.f, "onNewIntent intent:" + paramIntent.getExtras());
                 }
-                catch (Exception paramIntent)
+                Intent localIntent = getIntent();
+                ActivityNumController.a(MainFrameActivity.class.getSimpleName());
+                if ((paramIntent.getExtras() != null) && (localIntent != null))
                 {
+                    a(paramIntent.getExtras());
+                    localIntent.putExtras(paramIntent.getExtras());
+                }
+                int i1 = paramIntent.getIntExtra("com.360buy:navigationId", 0);
+                Log.d("navigation-click", " main " + i1 + "  mc  " + this.lastIndex);
+                if (i1 != this.lastIndex) {
+                    this.lastIndex = i1;
+                    this.b.b(this.lastIndex);
                 }
             }
-        while (!Log.E);
-        paramIntent.printStackTrace();
+            catch (Exception e)
+            {
+                if (Log.E)
+                    e.printStackTrace();
+            }
+        }
+        return;
     }
 
     public boolean onOptionsItemSelected(MenuItem paramMenuItem)
     {
         if (Log.D)
             Log.d("Temp", "onOptionsItemSelected -->>id= " + paramMenuItem.getItemId());
-        if (n.a())
-            switch (paramMenuItem.getItemId())
-            {
-                default:
-                case 2131173072:
-                case 2131173073:
-                case 2131173074:
-                case 2131173076:
-                case 2131173075:
+        if (JDUntil.hasSmartBar()) {//if-eqz v0, :cond_2
+            switch (paramMenuItem.getItemId()) {
+                case R.id.menu_home://pswitch_0  2131173072  7F071ED0
+                    this.b.b(0);
+                    return true;
+                case R.id.menu_category://pswitch_1  2131173073  7F071ED1
+                    this.b.b(1);
+                    return true;
+                case R.id.menu_car://pswitch_2  2131173074  7F071ED2
+                    this.b.b(3);
+                    return true;
+                case R.id.menu_personal://pswitch_3  2131173076  7F071ED4
+                    this.b.b(4);
+                    return true;
+                case R.id.menu_faxian://pswitch_4  2131173075  7F071ED3
+                    this.b.b(2);
+                    return true;
             }
-        int i1;
-        do
-        {
             return true;
-            this.b.b(0);
-            return true;
-            this.b.b(1);
-            return true;
-            this.b.b(3);
-            return true;
-            this.b.b(4);
-            return true;
-            this.b.b(2);
-            return true;
-            i1 = paramMenuItem.getItemId();
-        }
-        while (this == null);
-        JDMtaUtils.onClick(this, "Menu_MenuOption", MainFrameActivity.class.getName());
-        switch (i1)
-        {
-            default:
-                return true;
-            case 2131165402:
-                startActivity(new Intent(this, AboutActivity.class));
-                return true;
-            case 2131165408:
-                if ((this instanceof MyActivity));
-                for (paramMenuItem = (BaseActivity)this; ; paramMenuItem = (BaseActivity)BaseApplication.getInstance().getCurrentMyActivity())
+        }else{
+            int i1 = paramMenuItem.getItemId();
+            if (this != null){
+                JDMtaUtils.onClick(this, "Menu_MenuOption", MainFrameActivity.class.getName());
+                BaseActivity activity = null;
+                switch (i1)
                 {
-                    paramMenuItem.startActivityForResult(new Intent(paramMenuItem, SearchActivity.class), 272);
-                    return true;
+                    case R.id.menu_about://2131165402://7F0700DA  sswitch_0
+                        startActivity(new Intent(this, AboutActivity.class));
+                        return true;
+                    case R.id.menu_search://2131165408: 7F0700E0  sswitch_1
+                        activity = (BaseActivity)this;
+                        if (!(this instanceof MyActivity))
+                            activity = (BaseActivity)BaseApplication.getInstance().getCurrentMyActivity();
+                        activity.startActivityForResult(new Intent(activity, SearchActivity.class), 272);
+                        return true;
+                    case R.id.menu_history://2131165407: 7F0700DF  sswitch_2
+                        activity = (BaseActivity) this;
+                        if (!(this instanceof MyActivity))
+                            activity = (BaseActivity)BaseApplication.getInstance().getCurrentMyActivity();
+                        LoginUser.getInstance().executeLoginRunnable(activity, new Runnable(){// ab(this);
+                                @Override
+                                public void run() {
+                                    MainFrameActivity.this.startActivity(new Intent(MainFrameActivity.this, HistoryListActivity.class));
+                                }
+                            });
+                            return true;
+                    case R.id.menu_feedback://2131165405: 7F0700DD  sswitch_3
+                        startActivity(new Intent(this, FeedbackActivity.class));
+                        return true;
+                    case R.id.menu_setup://2131165409: 7F0700E1 sswitch_4
+                        startActivity(new Intent(this, MoreActivity.class));
+                        return true;
+                    case R.id.menu_nightmode://2131173071:  7F071ECF  sswitch_5
+                        new NightModeDialog(this, R.style.nightModeDialogTheme).show();//2131296562
+                        JDMtaUtils.onClick(this, "MenuOption_LightAdjust", MainFrameActivity.class.getName());
+                        return true;
+                    case R.id.menu_exit://2131165404: 7F0700DC sswitch_6
+                        BaseApplication.exitDialog();
+                        break;
                 }
-            case 2131165407:
-                if ((this instanceof MyActivity));
-                for (paramMenuItem = (BaseActivity)this; ; paramMenuItem = (BaseActivity)BaseApplication.getInstance().getCurrentMyActivity())
-                {
-                    ab localab = new ab(this);
-                    LoginUser.getInstance().executeLoginRunnable(paramMenuItem, localab);
-                    return true;
-                }
-            case 2131165405:
-                startActivity(new Intent(this, FeedbackActivity.class));
                 return true;
-            case 2131165409:
-                startActivity(new Intent(this, MoreActivity.class));
-                return true;
-            case 2131173071:
-                new com.jingdong.app.mall.utils.ui.af(this, 2131296562).show();
-                JDMtaUtils.onClick(this, "MenuOption_LightAdjust", MainFrameActivity.class.getName());
-                return true;
-            case 2131165404:
+            }
         }
-        BaseApplication.exitDialog();
         return true;
     }
 
@@ -1169,7 +1228,16 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         return false;
     }
 
-    /////////////////////////////////////
+    private static void synthetic_u(MainFrameActivity mainFrameActivity) {
+        //TODO: 1477 .method static synthetic_u(Lcom/jingdong/app/mall/MainFrameActivity;)V
+    }
+
+    public class _Ad extends Thread{
+        @Override
+        public void run(){
+            //TODO: 未实现
+        }
+    }
 
 
 

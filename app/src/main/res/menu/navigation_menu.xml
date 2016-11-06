@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:icon="@drawable/navigation_home_selector" android:id="@+id/menu_home" app:showAsAction="always"/>
+    <item android:icon="@drawable/navigation_catagory_selector" android:id="@+id/menu_category" app:showAsAction="always" />
+    <item android:icon="@drawable/navigation_car_selector" android:id="@+id/menu_car" app:showAsAction="always" />
+    <item android:id="@+id/menu_faxian" android:title="@string/aqc" app:showAsAction="never" />
+    <item android:id="@+id/menu_personal" android:title="@string/aqd" app:showAsAction="never" />
+</menu>

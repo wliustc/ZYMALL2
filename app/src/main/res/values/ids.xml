@@ -9,4 +9,6 @@
     <item type="id" name="home_icon_image"></item>
 
     <item type="id" name="mallfloor_announcement_leftimage"></item>
+
+    <item type="id" name="menu_search" />
 </resources>
