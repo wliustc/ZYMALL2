@@ -27,14 +27,14 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="b6" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
-        <item name="android:background">@drawable/c1w</item>
-        <item name="android:backgroundSplit">@drawable/c1v</item>
+        <item name="android:background">@drawable/mz_titlebar_background</item>
+        <item name="android:backgroundSplit">@drawable/mz_smartbar_background</item>
     </style>
     <style name="b7" parent="@android:style/Widget.DeviceDefault.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/c1u</item>
+        <item name="android:src">@drawable/mz_ic_sb_more</item>
     </style>
     <style name="b8" parent="@android:style/Widget.DeviceDefault.Light.ActionButton">
-        <item name="android:src">@drawable/c1t</item>
+        <item name="android:src">@drawable/mz_ic_sb_back</item>
     </style>
     <style name="MeizuTheme" parent="@android:style/Theme.DeviceDefault.Light"><!-- dv -->
         <item name="android:textColor">@color/d5</item>

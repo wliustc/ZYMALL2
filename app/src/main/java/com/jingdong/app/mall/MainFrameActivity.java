@@ -18,12 +18,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jingdong.app.mall.aura.AuraUpdate;
+import com.jingdong.app.mall.basic.ActivityJumpController;
 import com.jingdong.app.mall.basic.ApplicationManager;
+import com.jingdong.app.mall.basic.ErrorActivity;
 import com.jingdong.app.mall.basic.JDUntil;
 import com.jingdong.app.mall.faxian.JDFaxianFragment;
 import com.jingdong.app.mall.home.HomePageObserver;
 import com.jingdong.app.mall.navigationbar.NavigationFragment;
 import com.jingdong.app.mall.navigationbar.NavigationOptHelper;
+import com.jingdong.app.mall.open.OpenAppJumpController;
 import com.jingdong.app.mall.personel.home.JDPersonalFragment;
 import com.jingdong.app.mall.search.CameraPurchaseActivity;
 import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
@@ -56,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
@@ -283,17 +287,16 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
 
     protected static String m()
     {
-        Object localObject = "";
+        String str = "";
         try
         {
-            String str = BaseApplication.getInstance().getPackageManager().getPackageInfo(BaseApplication.getInstance().getPackageName(), 0).versionName;
-            localObject = str;
-            return "first_start_flag_" + (String)localObject;
+            str = BaseApplication.getInstance().getPackageManager().getPackageInfo(BaseApplication.getInstance().getPackageName(), 0).versionName;
         }
         catch (Exception localException)
         {
                 localException.printStackTrace();
         }
+        return "first_start_flag_" + str;
     }
 
     private static void o() {
@@ -319,61 +322,48 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
     {
         switch (this.ac)
         {
-            default:
-                this.ac = paramInt;
-                switch (paramInt)
-                {
-                    default:
-                    case 0:
-                    case 1:
-                    case 12:
-                    case 3:
-                }
-            case 0:
-            case 1:
-            case 12:
-            case 3:
+
+            case 0://switch_0
+                if (this.Z != null)
+                    this.Z.setIcon(R.drawable.navigation_home_selector);//0x7f020b93  2130840467
+                break;
+            case 1://:sswitch_1
+            case 12://:sswitch_1
+                if (this.aa != null)
+                    this.aa.setIcon(R.drawable.navigation_catagory_selector);//0x7f020b92  2130840466
+                break;
+            case 3://sswitch_2
+                if (this.ab != null)
+                    this.ab.setIcon(R.drawable.navigation_car_selector);//0x7f020b91  2130840465
         }
-        do
+
+        this.ac = paramInt;
+        switch (paramInt)
         {
-            do
-            {
-                do
-                {
-                    return;
-                    if (this.Z == null)
-                        break;
-                    this.Z.setIcon(2130840467);
-                    break;
-                    if (this.aa == null)
-                        break;
-                    this.aa.setIcon(2130840466);
-                    break;
-                    if (this.ab == null)
-                        break;
-                    this.ab.setIcon(2130840465);
-                    break;
-                }
-                while (this.Z == null);
-                this.Z.setIcon(2130840153);
-                return;
-            }
-            while (this.aa == null);
-            this.aa.setIcon(2130840150);
-            return;
+            case 0://:sswitch_3
+                if (this.Z != null)
+                    this.Z.setIcon(R.drawable.main_navigation_home_checked);//0x7f020a59  2130840153
+                break;
+            case 1://:sswitch_4
+            case 12://:sswitch_4
+                if (this.aa != null)
+                    this.aa.setIcon(R.drawable.main_navigation_catagory_checked);//0x7f020a56  2130840150
+                break;
+            case 3://:sswitch_5
+                if (this.ab != null)
+                    this.ab.setIcon(R.drawable.main_navigation_car_checked);//0x7f020a54  2130840148
         }
-        while (this.ab == null);
-        this.ab.setIcon(2130840148);
+        return;
     }
 
     public final void c()
     {
         if (Log.D)
             Log.d(this.f, "checkTargetActivity() -->> ");
-        Object localObject1 = CommonUtil.getJdSharedPreferences();
-        Object localObject2 = ((SharedPreferences)localObject1).getString("cameraFilePath", null);
-        String str = ((SharedPreferences)localObject1).getString("photoType", null);
-        int i1 = ((SharedPreferences)localObject1).getInt("photoTypeIndex", 0);
+        SharedPreferences sharedPreferences = CommonUtil.getJdSharedPreferences();
+        Object localObject2 = ((SharedPreferences)sharedPreferences).getString("cameraFilePath", null);
+        String str = ((SharedPreferences)sharedPreferences).getString("photoType", null);
+        int i1 = ((SharedPreferences)sharedPreferences).getInt("photoTypeIndex", 0);
         if (!TextUtils.isEmpty((CharSequence)localObject2))
         {
             Intent localIntent = new Intent(this, CameraPurchaseActivity.class);
@@ -381,44 +371,69 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
             localIntent.putExtra("categoryTypeArray", str);
             localIntent.putExtra("categoryTypeIndex", i1);
             startActivity(localIntent);
-            localObject1 = ((SharedPreferences)localObject1).edit();
-            ((SharedPreferences.Editor)localObject1).remove("cameraFilePath");
-            ((SharedPreferences.Editor)localObject1).remove("photoType");
-            ((SharedPreferences.Editor)localObject1).remove("photoTypeIndex");
-            ((SharedPreferences.Editor)localObject1).commit();
-        }
-        do
+            SharedPreferences.Editor editor = ((SharedPreferences)sharedPreferences).edit();
+            ((SharedPreferences.Editor)editor).remove("cameraFilePath");
+            ((SharedPreferences.Editor)editor).remove("photoType");
+            ((SharedPreferences.Editor)editor).remove("photoTypeIndex");
+            ((SharedPreferences.Editor)editor).commit();
+        }else if (this.H != null)
         {
-            do
-            {
-                return;
-                if (this.H != null)
-                {
-                    localObject2 = new Intent(this, CameraPurchaseActivity.class);
-                    ((Intent)localObject2).putExtra("galleryData", this.G);
-                    ((Intent)localObject2).putExtra("categoryTypeArray", str);
-                    ((Intent)localObject2).putExtra("categoryTypeIndex", i1);
-                    startActivity((Intent)localObject2);
-                    ((SharedPreferences)localObject1).edit().remove("photoType").commit();
-                    ((SharedPreferences)localObject1).edit().remove("photoTypeIndex").commit();
-                    return;
+            localObject2 = new Intent(this, CameraPurchaseActivity.class);
+            ((Intent)localObject2).putExtra("galleryData", this.G);
+            ((Intent)localObject2).putExtra("categoryTypeArray", str);
+            ((Intent)localObject2).putExtra("categoryTypeIndex", i1);
+            startActivity((Intent)localObject2);
+            SharedPreferences.Editor editor = ((SharedPreferences)sharedPreferences).edit();
+            ((SharedPreferences)editor).edit().remove("photoType").commit();
+            ((SharedPreferences)editor).edit().remove("photoTypeIndex").commit();
+        }else{
+            Bundle extras = getIntent().getExtras();
+            if (Log.D)
+                Log.d(this.f, "checkTargetActivity() bundle -->> " + extras);
+            if (extras != null){
+                final OpenAppJumpController openAppJumpController = OpenAppJumpController.a(getIntent());
+                if (Log.D)
+                    Log.d(this.f, "checkTargetActivity() command -->> " + openAppJumpController);
+                if (openAppJumpController != null){
+                    if (Log.D)
+                        Log.d(this.f, "toTargetActivity -->> ");
+                    OpenAppJumpController._A.a();
+                    getHandler().post(new Runnable(){//u(this, (com.jingdong.app.mall.open.d)openAppJumpController)
+                        @Override
+                        public void run() {
+                            final int i = openAppJumpController.a();
+                            final Bundle localBundle = openAppJumpController.b();
+                            if (Log.D)
+                                Log.d(MainFrameActivity.this.f, "toTargetActivity moduleId -->> " + i);
+                            if ((Log.D) && (localBundle != null))
+                            {
+                                Log.d(MainFrameActivity.this.f, "bundle -->> " + localBundle);
+                                Iterator localIterator = localBundle.keySet().iterator();
+                                while (localIterator.hasNext())
+                                {
+                                    String str = (String)localIterator.next();
+                                    Object localObject = localBundle.get(str);
+                                    Log.d(MainFrameActivity.this.f, "bundle key value -->> " + str + "：" + localObject);
+                                }
+                            }
+                            //:cond_1
+                            if (!MainFrameActivity.this.o)
+                                MainFrameActivity.this.n = new Runnable(){//v(this, localBundle, i)
+                                    @Override
+                                    public void run() {
+                                        ActivityJumpController.a().a(MainFrameActivity.this).a(localBundle, i);
+                                    }
+                                };
+                            else
+                                ActivityJumpController.a().a(MainFrameActivity.this).a(localBundle, i);
+                            MainFrameActivity.this.Y = 2;
+                            return;
+                        }
+                    });
                 }
-                localObject1 = getIntent().getExtras();
-                if (!Log.D)
-                    continue;
-                Log.d(this.f, "checkTargetActivity() bundle -->> " + localObject1);
             }
-            while (localObject1 == null);
-            localObject1 = d.a(getIntent());
-            if (!Log.D)
-                continue;
-            Log.d(this.f, "checkTargetActivity() command -->> " + localObject1);
         }
-        while (localObject1 == null);
-        if (Log.D)
-            Log.d(this.f, "toTargetActivity -->> ");
-        com.jingdong.app.mall.open.a.a();
-        getHandler().post(new u(this, (d)localObject1));
+        return;
     }
 
     @Override
@@ -429,16 +444,16 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
     @Override
     public void finish()
     {
-        Object localObject = getCurrentMyActivity();
+        BaseActivity currentMyActivity = getCurrentMyActivity();
         if (Log.D)
             Log.d(this.f, " MainFrame -->> finish() ");
-        if (localObject != null)
+        if (currentMyActivity != null)
         {
-            localObject = localObject.getClass();
-            if (localObject != null)
+            Class<? extends BaseActivity> activityClass = currentMyActivity.getClass();
+            if (activityClass != null)
             {
-                localObject = ((Class)localObject).getName();
-                if ((!TextUtils.isEmpty((CharSequence)localObject)) && (fragmentList.contains(localObject)))
+                String className = ((Class) activityClass).getName();
+                if ((!TextUtils.isEmpty((CharSequence)className)) && (fragmentList.contains(className)))
                 {
                     k();
                     return;
