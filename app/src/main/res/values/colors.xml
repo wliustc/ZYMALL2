@@ -448,7 +448,7 @@
     <color name="lw">#fff0f0f0</color>
     <color name="lx">#ffe76e69</color>
     <color name="ly">#ff555555</color>
-    <color name="lz">#ff000000</color>
+    <color name="home_slide_prompt_bg">#ff000000</color><!-- "lz" -->
     <color name="m0">#ffbcbcbc</color>
     <color name="m1">#ffffffff</color>
     <color name="m2">#ffe7e9eb</color>

@@ -12,10 +12,7 @@ public class Configuration {
     }
 
     public static Boolean getBooleanProperty(String paramString) {
-        /**
-         * 该方法未实现
-         */
-        ////throw new RuntimeException("Not Find getBooleanProperty(String paramString)");
+        //TODO: 该方法未实现
 
         return false;
 
@@ -31,10 +28,7 @@ public class Configuration {
     }
 
     public static String getProperty(String client, String s) {
-        /**
-         * 该方法未实现
-         */
-        ////throw new RuntimeException("Not Find getBooleanProperty(String paramString)");
+        //TODO: 该方法未实现
         return s;
     }
 

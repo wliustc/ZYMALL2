@@ -125,6 +125,7 @@ public abstract class HttpGroup implements IDestroyListener {
         private Map moreParams;
         private org.json.JSONObject JSONObject;
         private JSONObjectProxy jSONObjectProxy;
+        private String string;
 
         public Map getMoreParams() {
             return moreParams;
@@ -137,6 +138,10 @@ public abstract class HttpGroup implements IDestroyListener {
         }
         public JSONObjectProxy getJSONObjectProxy() {
             return jSONObjectProxy;
+        }
+
+        public String getString() {
+            return this.string;
         }
     }
 

@@ -27,6 +27,11 @@ public class JDUntil {
 
     }
 
+    // ERROR //
+    public static void a(android.app.ActionBar paramActionBar, boolean paramBoolean)
+    {
+        //TODO: 未实现
+    }
     public static void a(Window paramWindow, boolean paramBoolean)
     {
         try

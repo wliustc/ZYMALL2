@@ -123,10 +123,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Log.D)
             Log.d(TAG, "onActivityResult() >> " + getClass().getName());
-        super.onActivityResult(paramInt1, paramInt2, paramIntent);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

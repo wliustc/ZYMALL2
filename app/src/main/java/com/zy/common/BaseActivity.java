@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.jingdong.common.ActivityNumController;
 import com.jingdong.common.BaseApplication;
 import com.jingdong.common.utils.CacheTimeUtil;
 import com.jingdong.common.utils.HttpGroup;
@@ -700,9 +701,9 @@ public class BaseActivity extends FragmentActivity implements IMyActivity {
         finish();
     }
 
-    protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent) {
-        super.onActivityResult(paramInt1, paramInt2, paramIntent);
-        if ((paramInt1 == 1001) && (paramInt2 == 0))
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 1001) && (resultCode == 0))
             BaseApplication.exitAll();
     }
 

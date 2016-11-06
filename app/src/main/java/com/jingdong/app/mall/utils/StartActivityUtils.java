@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.jingdong.app.mall.product.ProductDetailActivity;
-import com.jingdong.common.BaseActivity;
 import com.jingdong.common.jdtravel.FlightSearchActivity;
 import com.jingdong.common.movie.main.MovieActivity;
+import com.jingdong.common.sample.JshopSearchListActivity;
 import com.zy.app.mall.utils.MyActivity;
+import com.zy.common.BaseActivity;
 import com.zy.common.entity.SourceEntity;
+import com.zy.common.utils.Log;
 
 /**
  * Created by Robin on 2016/6/21.
@@ -74,7 +76,7 @@ public class StartActivityUtils {
 //        paramBundle.putExtra("pauseBackRefresh", "yes");
 //        StartHybridActivityUtils.startHybridActivity(paramActivity.getApplicationContext(), paramBundle);
 //    }
-//
+
     public static void a(Activity paramActivity, Long paramLong, String paramString, int paramInt, SourceEntity paramSourceEntity)
     {
         if ((paramActivity == null) || (paramLong == null))
@@ -113,16 +115,16 @@ public class StartActivityUtils {
 //            localBundle.putString("targetUrl", paramString4);
 //        a(paramActivity, localBundle, paramSourceEntity);
 //    }
-//
-//    public static void a(Activity paramActivity, String paramString, SourceEntity paramSourceEntity)
-//    {
-//        if (paramActivity == null)
-//            return;
-//        Intent localIntent = new Intent(paramActivity, JshopSearchListActivity.class);
-//        localIntent.putExtra("keyword", paramString);
-//        localIntent.putExtra("source", paramSourceEntity);
-//        a(paramActivity, localIntent, false);
-//    }
+
+    public static void a(Activity paramActivity, String paramString, SourceEntity paramSourceEntity)
+    {
+        if (paramActivity == null)
+            return;
+        Intent localIntent = new Intent(paramActivity, JshopSearchListActivity.class);
+        localIntent.putExtra("keyword", paramString);
+        localIntent.putExtra("source", paramSourceEntity);
+        a(paramActivity, localIntent, false);
+    }
 //
 //    public static void a(MyActivity paramMyActivity)
 //    {

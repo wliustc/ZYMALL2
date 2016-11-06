@@ -6,17 +6,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.jingdong.app.mall.aura.AuraUpdate;
 import com.jingdong.app.mall.basic.ActivityJumpController;
 import com.jingdong.app.mall.basic.ApplicationManager;
@@ -33,10 +38,18 @@ import com.jingdong.app.mall.searchRefactor.view.Activity.ProductListActivity;
 import com.jingdong.app.mall.settlement.ShoppingController;
 import com.jingdong.app.mall.shopping.JDShoppingCartFragment;
 import com.jingdong.app.mall.utils.CommonUtil;
+import com.jingdong.app.mall.utils.LoginUser;
+import com.jingdong.app.mall.utils.StartActivityUtils;
 import com.jingdong.common.ActivityNumController;
 import com.jingdong.common.BaseApplication;
+import com.jingdong.common.c.LocManager;
 import com.jingdong.common.utils.CommonBase;
+import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.FileService;
+import com.jingdong.common.utils.HttpGroup;
+import com.jingdong.common.utils.HttpGroupUtils;
+import com.jingdong.common.utils.JSONObjectProxy;
+import com.jingdong.jdma.common.utils.Md5Encrypt;
 import com.zy.app.mall.R;
 import com.zy.app.mall.category.JDNewCategoryFragment;
 import com.zy.app.mall.home.JDHomeFragment;
@@ -44,14 +57,21 @@ import com.zy.app.mall.navigationbar.TabFragment;
 import com.zy.app.mall.searchRefactor.view.Activity.SearchActivity;
 import com.zy.app.mall.utils.MyActivity;
 import com.zy.app.mall.utils.frame.TabBarButton;
+import com.zy.app.util.image.JDDisplayImageOptions;
 import com.zy.cleanmvp.ui.BaseFragment;
 import com.zy.common.BaseActivity;
 import com.zy.common.ScrollableTabActivity;
 import com.zy.common.entity.SourceEntity;
 import com.zy.common.frame.IMainActivity;
 import com.zy.common.frame.IMyActivity;
+import com.zy.common.utils.JDImageUtils;
+import com.zy.common.utils.JDMtaUtils;
+import com.zy.common.utils.JSONArrayProxy;
 import com.zy.common.utils.Log;
 import com.zy.common.utils.TimerUntil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +83,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Robin on 2016/4/14.
@@ -500,51 +521,50 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         return this.getCurrentMyActivity();
     }
 
-    protected void onActivityResult(int paramInt1, int paramInt2, Intent paramIntent)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (Log.D)
-            Log.d(this.f, "onActivityResult() -->> " + paramInt1 + "```" + paramInt2);
-        if ((272 == paramInt1) && (-1 == paramInt2))
-        {
-            paramIntent = paramIntent.getExtras();
-            if ((paramIntent != null) && (paramIntent.getBoolean("isShop")))
-            {
-                paramIntent = paramIntent.getString("keyWord");
-                bp.a(this, paramIntent, new SourceEntity("shop_from_search", paramIntent));
+            Log.d(this.f, "onActivityResult() -->> " + requestCode + "```" + resultCode);
+        if ((272 == requestCode) && (-1 == resultCode))
+        {//if-ne v0, p1, :cond_4    if-ne v0, p2, :cond_4
+            Bundle extras = data.getExtras();
+            if ((data != null) && (extras.getBoolean("isShop")))
+            {//if-eqz v0, :cond_2   if-eqz v1, :cond_2
+                String keyWord = extras.getString("keyWord");
+                StartActivityUtils.a(this, keyWord, new SourceEntity("shop_from_search", keyWord));
+            }else{
+                Object localObject = new Intent(this, ProductListActivity.class);
+                ((Intent)localObject).putExtras(extras);
+                ((Intent)localObject).putExtra("sortKey", 5);
+                if (extras != null)
+                    ((Intent)localObject).putExtra("source", new SourceEntity("search", extras.getString("keyWord")));
+                StartActivityUtils.a(this, (Intent)localObject, false);
             }
-        }
-        while (true)
-        {
-            return;
-            Object localObject = new Intent(this, ProductListActivity.class);
-            ((Intent)localObject).putExtras(paramIntent);
-            ((Intent)localObject).putExtra("sortKey", 5);
-            if (paramIntent != null)
-                ((Intent)localObject).putExtra("source", new SourceEntity("search", paramIntent.getString("keyWord")));
-            bp.a(this, (Intent)localObject, false);
-            return;
-            if (paramInt1 != 12)
-                break label247;
-            if (getCurrentMyActivity() == null)
-                break;
-            localObject = getCurrentMyActivity();
-            if ((localObject instanceof CameraPurchaseActivity))
-            {
-                ((CameraPurchaseActivity)localObject).onActivityResult(paramInt1, paramInt2, paramIntent);
-                return;
+        }else if (requestCode == 12){//if-ne p1, v0, :cond_7
+            if (getCurrentMyActivity() != null){//if-eqz v0, :cond_6
+                BaseActivity localObject = getCurrentMyActivity();
+                if ((localObject instanceof CameraPurchaseActivity))
+                {//if-eqz v1, :cond_5
+                    ((CameraPurchaseActivity)localObject).onActivityResult(requestCode, resultCode, data);
+                    return;
+                }else{
+                    if (Log.D) {
+                        System.err.println("MianActivity onActivityResult() getCurrentActivity instanceof CameraPurchaseActivity is false");
+                        System.err.println(localObject.getClass().toString());
+                    }
+                }
+            }else{
+                this.G = data;
+                this.H = Integer.valueOf(resultCode);
             }
-            if (!Log.D)
-                continue;
-            System.err.println("MianActivity onActivityResult() getCurrentActivity instanceof CameraPurchaseActivity is false");
-            System.err.println(localObject.getClass().toString());
-            return;
-        }
-        this.G = paramIntent;
-        this.H = Integer.valueOf(paramInt2);
+        }else if ((requestCode >> 16 == 0) && (this.U != null))
+            this.U.onActivityResult(requestCode, resultCode, data);
+        else
+            super.onActivityResult(requestCode, resultCode, data);
+
         return;
-        label247: if ((paramInt1 >> 16 == 0) && (this.U != null))
-            this.U.onActivityResult(paramInt1, paramInt2, paramIntent);
-        super.onActivityResult(paramInt1, paramInt2, paramIntent);
+
     }
 
     @Override
@@ -591,94 +611,251 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
             Configuration localConfiguration = ((Resources) localObject2).getConfiguration();
             localConfiguration.fontScale = 1.0F;
             ((Resources) localObject2).updateConfiguration(localConfiguration, ((Resources) localObject2).getDisplayMetrics());
-            this.handler = new Handler();
-            ActivityNumController.a(MainFrameActivity.class.getSimpleName());
-            ApplicationManager.a(getSupportFragmentManager());//l.a(getSupportFragmentManager());
-            super.onCreate(paramBundle);
-            setContentView(R.layout.app_jd_fragment_activity);
-            if (paramBundle != null) {
-                this.lastIndex = paramBundle.getInt("lastIndex");
-                a = false;
-            }
-            if (JDUntil.hasSmartBar()) {
-                localObject2 = new RelativeLayout.LayoutParams(-1, -1);
-                ((ViewGroup) findViewById(2131165832)).setLayoutParams((ViewGroup.LayoutParams) localObject2);
-                JDUntil.a(getWindow(), true);
-                localObject2 = getActionBar();
-                if (localObject2 != null) {
-                    JDUntil.a((ActionBar) localObject2, true);
-                    ((ActionBar) localObject2).setDisplayOptions(0);
-                }
-                a(this.V);
-            }
-            if ((paramBundle == null) || (this.lastIndex != 0)) {
-                paramBundle = NavigationFragment.a(this.lastIndex);
-                getSupportFragmentManager().beginTransaction().replace(2131165833, paramBundle, "JDNavigationBarFragment").commit();
-            }
-            if (a) {
-                paramBundle = new SplashFragment();
-                getSupportFragmentManager().beginTransaction().add(2131165834, paramBundle, "SplashFragment").commit();
-            }
-            getHandler().postDelayed(new q(this), 100L);
-            int i1 = ((Intent) localObject1).getIntExtra("moduleId", -1);
-            this.lastIndex = ((Intent) localObject1).getIntExtra("com.360buy:navigationId", 0);
-            a(getIntent().getExtras());
-            if (a) {
-                a = false;
-                getHandler().postDelayed(new w(this), 100L);
-                if (Log.D)
-                    Log.d(this.f, "loadHomeActivity -->> ");
-                o();
-                a("");
-                if (!this.M) {
-                    if (Log.D)
-                        Log.d(this.f, "addGuideImage -->> ");
-                    if ((this.L) && (this.K)) ;
-                } else {
-                    this.K = true;
-                    new Timer().schedule(new an(this), 30000L);
-                    if (Log.D)
-                        Log.d(this.f, "onCreate moduleId -->> " + i1);
-                    new bi(getApplicationContext()).a();
-                    new ad(this).start();
-                    com.jingdong.app.mall.aura.a.a(BaseApplication.getInstance().getCurrentMyActivity(), true);
-                    return;
-                    if (!((Intent) localObject1).getBooleanExtra("from_launch", false))
-                        continue;
-
-                }
-            }
-        } catch (Throwable localThrowable) {
-            while (true) {
-                if (!Log.E)
-                    continue;
-                localThrowable.printStackTrace();
-                continue;
-                this.N = ((ViewGroup) getWindow().peekDecorView());
-                if (Log.D)
-                    Log.d(this.f, "view -->> " + this.N);
-                if (this.N == null)
-                    continue;
-                if (Log.D)
-                    Log.d(this.f, "guideResourceId -->> " + 2130839330);
-                this.O = new RelativeLayout(this);
-                paramBundle = new RelativeLayout.LayoutParams(getResources().getDimensionPixelOffset(2131035569), getResources().getDimensionPixelOffset(2131035568));
-                paramBundle.addRule(13);
-                localObject1 = new SimpleDraweeView(this);
-                ((ImageView) localObject1).setImageResource(2130839330);
-                this.O.addView((View) localObject1, paramBundle);
-                this.O.setBackgroundColor(getResources().getColor(2131100115));
-                this.O.getBackground().setAlpha(200);
-                CommonUtil.setIsGuided("com.jingdong.app.mall.MainActivity");
-                this.O.setOnTouchListener(new ag(this));
-                this.N.addView(this.O, new ViewGroup.LayoutParams(-1, -1));
-                this.N.invalidate();
-                continue;
-                o();
-                a("");
-            }
+        } catch (Throwable e) {
+            if (Log.E)
+                e.printStackTrace();
         }
+        // :cond_3
+        //:goto_2
+        this.handler = new Handler();
+        ActivityNumController.a(MainFrameActivity.class.getSimpleName());
+        ApplicationManager.a(getSupportFragmentManager());//l.a(getSupportFragmentManager());
+        super.onCreate(paramBundle);
+        setContentView(R.layout.app_jd_fragment_activity);
+        if (paramBundle != null) {
+            this.lastIndex = paramBundle.getInt("lastIndex");
+            this.a = false;
+        }
+        if (JDUntil.hasSmartBar()) {//if-eqz v0, :cond_6
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            ((ViewGroup) findViewById(R.id.content_layout)).setLayoutParams((ViewGroup.LayoutParams) layoutParams);//2131165832
+            JDUntil.a(getWindow(), true);
+            ActionBar actionBar = getActionBar();
+            if (actionBar != null) {
+                JDUntil.a((ActionBar) actionBar, true);
+                ((ActionBar) actionBar).setDisplayOptions(0);
+            }
+            this.a(this.lastIndex);
+        }
+        if ((paramBundle == null) || (this.lastIndex != 0)) {
+            NavigationFragment fragment = NavigationFragment.a(this.lastIndex);
+            getSupportFragmentManager().beginTransaction().replace(R.id.navigation_fragment, fragment, "JDNavigationBarFragment").commit();//2131165833
+        }
+        if (this.a) {
+            SplashFragment fragment = new SplashFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.splash_fragment, fragment, "SplashFragment").commit();//2131165834
+        }
+        //:cond_9
+        getHandler().postDelayed(new Runnable(){//q(this)
+            @Override
+            public void run() {
+                //TODO: 未实现
+//                MainFrameActivity.d();
+//                SharedPreferences localSharedPreferences = com.jingdong.app.mall.utils.CommonUtil.getJdSharedPreferences();
+//                Boolean localBoolean = Configuration.getBooleanProperty("applicationShortcut");
+//                Object localObject = localBoolean;
+//                if (localBoolean == null)
+//                    localObject = Boolean.valueOf(true);
+//                if ((!localSharedPreferences.getBoolean("add_short_cut_flag_500", false)) && (((Boolean)localObject).booleanValue()))
+//                    fp.a(this.a);
+//                MainFrameActivity.a(this.a, com.jingdong.app.mall.utils.CommonUtil.activityIsGuided("com.jingdong.app.mall.MainActivity"));
+//                BaseApplication.networkSetting();
+//                SafetyManager.initEncryptKey();
+//                localSharedPreferences.edit().remove("appUseTime").commit();
+//                MainFrameActivity.a(this.a);
+//                localObject = com.jingdong.app.mall.utils.CommonUtil.getBooleanFromPreference(this.a.getString(2131232560), Boolean.valueOf(true));
+//                if (((Boolean)localObject).booleanValue())
+//                {
+//                    if (Log.D)
+//                        Log.d(MainFrameActivity.b(this.a), " -->> msgSwitch : " + localObject);
+//                    if (dd.a())
+//                    {
+//                        localObject = com.jingdong.common.utils.CommonUtil.getBooleanFromPreference(StringUtil.msg_auto_update_switch_key, Configuration.getBooleanProperty("msgSwitch"));
+//                        if (!((Boolean)localObject).booleanValue());
+//                    }
+//                }
+//                try
+//                {
+//                    if (Log.D)
+//                        Log.i("MessageUtil", "openMsgService-->> startPush.msgSwitch=" + localObject);
+//                    com.jingdong.cloud.jdpush.a.a(BaseApplication.getInstance().getApplicationContext());
+//                    com.jingdong.jdpush.a.a(BaseApplication.getInstance().getApplicationContext());
+//                    y.a();
+//                    c.a().a(this.a, this.a.getString(2131232411));
+//                    int i = com.jingdong.app.mall.utils.CommonUtil.getJdSharedPreferences().getInt("appStartCount", 0);
+//                    localObject = com.jingdong.app.mall.utils.CommonUtil.getJdSharedPreferences().edit();
+//                    ((SharedPreferences.Editor)localObject).putInt("appStartCount", i + 1);
+//                    ((SharedPreferences.Editor)localObject).commit();
+//                    return;
+//                }
+//                catch (Exception localException)
+//                {
+//                        if (Log.D)
+//                        localException.printStackTrace();
+//                }
+            }
+        }, 100L);
+        int i1 = ((Intent) getIntent()).getIntExtra("moduleId", -1);
+        this.lastIndex = ((Intent) getIntent()).getIntExtra("com.360buy:navigationId", 0);
+        a(getIntent().getExtras());
+        if (this.a) {//if-eqz v0, :cond_12
+            this.a = false;
+            getHandler().postDelayed(new Runnable(){//w(this)
+                @Override
+                public void run() {
+                    if ((CommonUtil.getJdSharedPreferences().getBoolean("showCost", true)) && (com.jingdong.common.config.Configuration.getBooleanProperty("costHint").booleanValue())) {
+                        MainFrameActivity.synthetic_u(MainFrameActivity.this);
+                    }
+                }
+            }, 100L);
+            if (Log.D)
+                Log.d(this.f, "loadHomeActivity -->> ");
+            o();
+            a("");
+            if (!this.M) {//if-nez v0, :cond_c
+                if (Log.D)
+                    Log.d(this.f, "addGuideImage -->> ");
+                if ((this.L) && (this.K)) {//if-eqz v0, :cond_c if-nez v0, :cond_f
+                    this.N = ((ViewGroup) getWindow().peekDecorView());
+                    if (Log.D)
+                        Log.d(this.f, "view -->> " + this.N);
+                    if (this.N != null) {
+                        if (Log.D)
+                            Log.d(this.f, "guideResourceId -->> " + R.drawable.home_guide);//2130839330
+                        this.O = new RelativeLayout(this);
+                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getResources().getDimensionPixelOffset(R.dimen.guide_home_width), getResources().getDimensionPixelOffset(R.dimen.guide_home_height));//2131035569 2131035568
+                        layoutParams.addRule(13);
+                        SimpleDraweeView localObject1 = new SimpleDraweeView(this);
+                        ((ImageView) localObject1).setImageResource(R.drawable.home_guide);//2130839330
+                        this.O.addView((View) localObject1, layoutParams);
+                        this.O.setBackgroundColor(getResources().getColor(R.color.home_slide_prompt_bg));//2131100115
+                        this.O.getBackground().setAlpha(200);
+                        CommonUtil.setIsGuided("com.jingdong.app.mall.MainActivity");
+                        this.O.setOnTouchListener(new View.OnTouchListener(){//ag(this)
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                switch (event.getAction())
+                                {
+                                    case 1:
+                                        MainFrameActivity.this.removeGuideView();
+                                }
+                                    return true;
+                            }
+                        });
+                        this.N.addView(this.O, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        this.N.invalidate();
+                    }
+                }
+            }
+            //:cond_c
+            //:goto_3
 
+            this.K = true;
+            new Timer().schedule(new TimerTask() {//an(this)
+                @Override
+                public final void run() {
+                    int i = 0;
+                    if (CommonUtil.getJdSharedPreferences().getString("imagepath", "").trim().equals(""))
+                        i = 1;
+                    else if (MainFrameActivity.a()) {
+                        if (Log.D)
+                            Log.d("Temp", "startimage is out of dates");
+                        i = 2;
+                    } else {
+                        if (Log.D)
+                            Log.d("Temp", "startimage is not out of dates");
+                        i = 3;
+                    }
+                    if (Log.D)
+                        System.out.println("当前启动图state" + i);
+                    final HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
+                    localHttpSetting.setFunctionId("start");
+                    localHttpSetting.setHost(com.jingdong.common.config.Configuration.getPortalHost());
+                    localHttpSetting.setEffect(0);
+                    JSONObject localJSONObject = new JSONObject();
+                    try {
+                        localJSONObject.put("lng", String.valueOf(LocManager.c));
+                        localJSONObject.put("lat", String.valueOf(LocManager.b));
+                        localHttpSetting.putJsonParam("geo", localJSONObject);
+                        localHttpSetting.setListener(new HttpGroup.OnCommonListener() {//s(MainFrameActivity.this, new ExceptionReporter(localHttpSetting))
+                            @Override
+                            public void onReady(HttpGroup.HttpSettingParams paramHttpSettingParams) {
+
+                            }
+
+                            @Override
+                            public void onError(HttpGroup.HttpError paramHttpError) {
+                                if (Log.D)
+                                    Log.d("MainFrameActivity", "start image on error");
+                            }
+
+                            @Override
+                            public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
+                                MainFrameActivity.this.s = Md5Encrypt.md5(paramHttpResponse.getString());
+                                if (CommonUtil.getStringFromPreference("start_image_md5", "").equals(MainFrameActivity.this.s))
+                                    return;
+                                Object localObject = paramHttpResponse.getJSONObject();
+                                MainFrameActivity.this.F = ((JSONObjectProxy) localObject).optInt("countdown", 0);
+                                localObject = ((JSONObjectProxy) localObject).getJSONArrayOrNull("images");
+                                if (localObject != null) {//if-eqz v2, :cond_3
+                                    MainFrameActivity.this.q = ((JSONArrayProxy) localObject).length();
+
+                                    for (int i = 0; i < MainFrameActivity.this.q; i++) {//if-ge v0, v3, :cond_0
+                                        JSONObjectProxy jsonObjectProxy = ((JSONArrayProxy) localObject).getJSONObjectOrNull(i);
+                                        if (i == 0) {///if-nez v0, :cond_2
+                                            MainFrameActivity.this.v = jsonObjectProxy.optString("mUrl", "");
+                                            MainFrameActivity.this.t = jsonObjectProxy.optString("onlineTime", "");
+                                            MainFrameActivity.this.u = jsonObjectProxy.optString("referralsTime", "");
+                                            MainFrameActivity.this.A = jsonObjectProxy.optString("sourceValue", "");
+                                            MainFrameActivity.this.B = jsonObjectProxy.optInt("time", 0);
+                                            MainFrameActivity.this.C = jsonObjectProxy.optInt("ynRedirect", 0);
+                                            MainFrameActivity.this.D = jsonObjectProxy.optInt("ynSkip", 0);
+                                            MainFrameActivity.this.E = jsonObjectProxy.optInt("type", 0);
+                                            MainFrameActivity.this.x = jsonObjectProxy.optString("shareTitle", "");
+                                            MainFrameActivity.this.w = jsonObjectProxy.optString("shareUrl", "");
+                                            MainFrameActivity.this.y = jsonObjectProxy.optString("shareContent", "");
+                                            MainFrameActivity.this.z = jsonObjectProxy.optString("shareAvatar", "");
+                                        } else {
+                                            MainFrameActivity.this.A += ("||" + jsonObjectProxy.optString("sourceValue", ""));
+                                        }
+                                        //:goto_2
+                                        JDImageUtils.loadImage(jsonObjectProxy.optString("url", "")
+                                                , JDDisplayImageOptions.createSimple().cacheInMemory(false).bitmapConfig(Bitmap.Config.ARGB_8888)
+                                                , new JDSimpleImageLoadingListener(){//t(localMainFrameActivity, i)
+
+                                                });
+                                    }
+                                } else {
+                                    MainFrameActivity.b();
+                                    new ExceptionReporter(localHttpSetting).reportHttpBusinessException(paramHttpResponse);
+                                }
+                                return;
+                            }
+                        });
+                        HttpGroupUtils.getHttpGroupaAsynPool().add(localHttpSetting);
+                        return;
+
+                    } catch (JSONException localJSONException) {
+                        localJSONException.printStackTrace();
+                    }
+
+                }
+            }, 30000L);
+        } else {        //:cond_12
+            o();
+            a("");
+        }
+        //:goto_4
+        if (Log.D)
+            Log.d(this.f, "onCreate moduleId -->> " + i1);
+        new bi(getApplicationContext()).a();
+        new ad(this).start();
+        com.jingdong.app.mall.aura.a.a(BaseApplication.getInstance().getCurrentMyActivity(), true);
+        return;
+    }
+
+    private static void synthetic_u(MainFrameActivity mainFrameActivity) {
+        //TODO: 1477 .method static synthetic_u(Lcom/jingdong/app/mall/MainFrameActivity;)V
     }
 
     public boolean onCreateOptionsMenu(Menu paramMenu)
