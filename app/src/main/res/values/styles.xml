@@ -98,7 +98,7 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
     <style name="g6" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@drawable/ra</item>
+        <item name="android:windowBackground">@drawable/jd_prompt_dialog_shape</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
@@ -116,25 +116,25 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1.0dip</item>
     </style>
-    <style name="g_" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@drawable/a54</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
+    <!--<style name="g_" parent="@android:style/Theme.Dialog">-->
+        <!--<item name="android:windowBackground">@drawable/a54</item>-->
+        <!--<item name="android:windowFrame">@null</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!--<item name="android:windowIsTranslucent">false</item>-->
+        <!--<item name="android:backgroundDimEnabled">true</item>-->
+    <!--</style>-->
     <style name="ga" parent="@android:style/Widget.RatingBar">
         <item name="android:maxWidth">11.0dip</item>
         <item name="android:maxHeight">10.0dip</item>
-        <item name="android:progressDrawable">@drawable/sz</item>
+        <item name="android:progressDrawable">@drawable/jshop_recommend_ratingbar_drawable</item>
         <item name="android:minWidth">11.0dip</item>
         <item name="android:minHeight">10.0dip</item>
     </style>
     <style name="gb" parent="@android:style/Widget.RatingBar">
         <item name="android:maxWidth">15.0dip</item>
         <item name="android:maxHeight">14.0dip</item>
-        <item name="android:progressDrawable">@drawable/sz</item>
+        <item name="android:progressDrawable">@drawable/jshop_recommend_ratingbar_drawable</item>
         <item name="android:minWidth">15.0dip</item>
         <item name="android:minHeight">14.0dip</item>
     </style>
@@ -142,7 +142,7 @@
         <item name="android:textColor">#ff666666</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:background">@drawable/tj</item>
+        <item name="android:background">@drawable/jshop_signup_fail_button_selector</item>
         <item name="android:padding">0.0dip</item>
         <item name="android:layout_width">111.0dip</item>
         <item name="android:layout_height">35.0dip</item>
@@ -170,18 +170,18 @@
     </style>
     <style name="gh" parent="@android:style/Widget.CompoundButton.RadioButton">
         <item name="android:paddingLeft">25.0dip</item>
-        <item name="android:button">@drawable/us</item>
+        <item name="android:button">@drawable/lib_phone_charge_checkbox_btn</item>
     </style>
     <style name="gi">
         <item name="android:background">#ffe3e5e9</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1.0px</item>
     </style>
-    <style name="gj">
-        <item name="android:background">@drawable/a0o</item>
-        <item name="android:layout_width">133.0dip</item>
-        <item name="android:layout_height">1.5dip</item>
-    </style>
+    <!--<style name="gj">-->
+        <!--<item name="android:background">@drawable/a0o</item>-->
+        <!--<item name="android:layout_width">133.0dip</item>-->
+        <!--<item name="android:layout_height">1.5dip</item>-->
+    <!--</style>-->
     <style name="gk" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -213,11 +213,11 @@
         <item name="android:layout_height">1.0px</item>
         <item name="android:layout_marginLeft">@dimen/afl</item>
     </style>
-    <style name="gp">
-        <item name="android:background">@drawable/a0o</item>
-        <item name="android:layout_width">85.0dip</item>
-        <item name="android:layout_height">1.5dip</item>
-    </style>
+    <!--<style name="gp">-->
+        <!--<item name="android:background">@drawable/a0o</item>-->
+        <!--<item name="android:layout_width">85.0dip</item>-->
+        <!--<item name="android:layout_height">1.5dip</item>-->
+    <!--</style>-->
     <style name="gq">
         <item name="android:background">#ffe2e2e2</item>
         <item name="android:layout_width">1.0px</item>
@@ -338,7 +338,7 @@
     </style>
     <style name="h_" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:textSize">0.0sp</item>
-        <item name="android:button">@drawable/vb</item>
+        <item name="android:button">@drawable/logistics_jdcheckbox_selector</item>
         <item name="android:maxHeight">15.0dip</item>
     </style>
     <style name="ha">
@@ -348,19 +348,19 @@
     </style>
     <style name="hb" parent="@android:style/Widget.RatingBar">
         <item name="android:maxHeight">10.0dip</item>
-        <item name="android:progressDrawable">@drawable/vj</item>
+        <item name="android:progressDrawable">@drawable/logistics_star_rating_bar</item>
         <item name="android:minHeight">10.0dip</item>
     </style>
     <style name="hc">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">13.0dip</item>
-        <item name="android:src">@drawable/a5</item>
+        <item name="android:src">@drawable/button_k</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:contentDescription">@string/atb</item>
     </style>
     <style name="hd">
-        <item name="android:background">@drawable/a2</item>
+        <item name="android:background">@drawable/button_h</item>
         <item name="android:focusable">false</item>
         <item name="android:clickable">false</item>
         <item name="android:layout_width">55.0dip</item>
@@ -371,7 +371,7 @@
     </style>
     <style name="he">
         <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/a0j</item>
+        <item name="android:background">@drawable/personal_view_pressed_selector</item>
         <item name="android:padding">10.0dip</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">49.0dip</item>
@@ -401,7 +401,7 @@
         <item name="android:layout_height">49.0dip</item>
     </style>
     <style name="hj">
-        <item name="android:background">@drawable/ar3</item>
+        <item name="android:background">@drawable/new_easy_buy_line</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1.0px</item>
     </style>

@@ -14,6 +14,7 @@ import java.util.Timer;
 /**
  * Created by robin on 16-6-27.
  */
+//c
 public class LocManager {
     public static boolean a = false;
     public static double b;
@@ -25,11 +26,11 @@ public class LocManager {
     public static String h;
     public static String i;
     public static boolean j;
-    /*private static a k;
-    private static c o;
-    private static k r;
+    //private static a k;
+    private static LocManager o;
+    //private static k r;
     private static boolean s = false;
-    private l l;
+    //private l l;
     private Context m;
     private boolean n = true;
     private boolean p;
@@ -40,7 +41,7 @@ public class LocManager {
         j = false;
     }
 
-    private c(Context paramContext)
+    private LocManager(Context paramContext)
     {
         this.m = paramContext;
     }
@@ -50,24 +51,17 @@ public class LocManager {
         return 3.141592653589793D * paramDouble / 180.0D;
     }
 
-    public static c a()
-    {
-        monitorenter;
-        try
-        {
-            if (Log.D)
-                Log.d("LocManager", " getInstance -->>  ");
-            if (o == null)
-                o = new c(BaseApplication.getInstance().getApplicationContext());
-            k = o.c();
-            c localc = o;
-            return localc;
-        }
-        finally
-        {
-            monitorexit;
-        }
-        throw localObject;
+    public static synchronized LocManager a() {
+
+        if (Log.D)
+            Log.d("LocManager", " getInstance -->>  ");
+        if (o == null)
+            o = new LocManager(BaseApplication.getInstance().getApplicationContext());
+        //TODO: 下面代码未实现
+        //k = o.c();
+        LocManager localc = o;
+        return localc;
+
     }
 
     public static boolean a(Map<String, Double> paramMap)
@@ -92,7 +86,7 @@ public class LocManager {
         return false;
     }
 
-    public static void b()
+/*    public static void b()
     {
         if (Log.D)
             Log.d("LocManager", " removeUpdateLocation -->> ");
@@ -173,15 +167,16 @@ public class LocManager {
             return;
         }
         g();
-    }
+    }*/
 
     public final void c()
     {
-        if (Log.D)
-            Log.d("LocManager", " onStop -->> ");
-        a();
-        b();
-        this.n = false;
+        //TODO: 未实现
+//        if (Log.D)
+//            Log.d("LocManager", " onStop -->> ");
+//        a();
+//        b();
+//        this.n = false;
     }
 
     public final void d()
@@ -189,5 +184,5 @@ public class LocManager {
         if (Log.D)
             Log.d("LocManager", " onResume -->> ");
         this.n = true;
-    }*/
+    }
 }

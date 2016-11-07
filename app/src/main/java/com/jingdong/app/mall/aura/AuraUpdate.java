@@ -23,11 +23,12 @@ public class AuraUpdate {
         b.a(600000L);
     }
 
-//    public static void a()
-//    {
+    public static void a()
+    {
+        //TODO: 未实现
 //        if (b.a())
 //            ApkDownloadController.a().a(null, null, null);//c.a().a(null, null, null);
-//    }
+    }
 
     public static void a(Context paramContext)
     {

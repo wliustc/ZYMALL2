@@ -6,6 +6,10 @@ import com.jingdong.common.utils.HttpGroup;
 import com.zy.common.frame.IMyActivity;
 import com.zy.common.utils.Log;
 
+import org.json.JSONArray;
+
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**

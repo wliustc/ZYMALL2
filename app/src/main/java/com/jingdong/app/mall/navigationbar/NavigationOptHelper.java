@@ -558,4 +558,27 @@ public class NavigationOptHelper {
             ApplicationManager.a(localx);
         }
     }
+
+    public final synchronized void c() {
+
+
+        boolean bool = this.sharedPreferences.getBoolean("display_defultNavigation", true);
+        if ((bool) && (!h())) {
+            MyApplication.getInstance().getMainFrameActivity().b.a();
+            this.sharedPreferences.edit().putBoolean("display_defultNavigation", false).commit();
+        } else if ((!bool) && (h())) {
+            MyApplication.getInstance().getMainFrameActivity().b.a();
+            this.sharedPreferences.edit().putBoolean("display_defultNavigation", true).commit();
+        } else if ((!bool) && (!h())) {
+            int m =1 ;
+            if (this.sharedPreferences.getLong("display_version_Navigation", 0L) != this.sharedPreferences.getLong("dataVersion_Navigation", 0L)) {
+                m = 0;
+            }
+            if (m == 0) {
+                MyApplication.getInstance().getMainFrameActivity().b.a();
+                this.sharedPreferences.edit().putBoolean("display_defultNavigation", false).commit();
+            }
+        }
+        return;
+    }
 }

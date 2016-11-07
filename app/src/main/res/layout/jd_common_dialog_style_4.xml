@@ -31,7 +31,7 @@
         android:layout_weight="1.0"
         android:alwaysDrawnWithCache="false"
         android:cacheColorHint="#00000000"
-        android:divider="@drawable/b5"
+        android:divider="@drawable/jd_dialog_common_divider"
         android:dividerHeight="2.0px"
         android:fadeScrollbars="true"
         android:listSelector="#00000000"
@@ -42,7 +42,7 @@
         android:layout_width="fill_parent"
         android:layout_height="2.0px"
         android:layout_marginTop="-1.0dip"
-        android:background="@drawable/b5" />
+        android:background="@drawable/jd_dialog_common_divider" />
 
     <LinearLayout
         android:layout_width="fill_parent"

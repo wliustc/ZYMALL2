@@ -24,6 +24,7 @@ import android.widget.RelativeLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jingdong.app.mall.aura.AuraBlackList;
 import com.jingdong.app.mall.aura.AuraUpdate;
+import com.jingdong.app.mall.aura.internal.AuraSwitchOfNetwork;
 import com.jingdong.app.mall.basic.ActivityJumpController;
 import com.jingdong.app.mall.basic.ApplicationManager;
 import com.jingdong.app.mall.basic.ErrorActivity;
@@ -1130,7 +1131,7 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
 
     protected void onResume()
     {
-        com.jingdong.app.mall.navigationbar.j.a().c();
+        NavigationOptHelper.getInstance().c();
         this.T = false;
         super.onResume();
         if (Log.D)
@@ -1144,57 +1145,43 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
                 getHandler().post(this.n);
                 this.n = null;
             }
-            int i1;
+            int i1 = 0;
             if (!this.X)
-                i1 = Settings.System.getInt(getContentResolver(), "always_finish_activities", 0);
+                i1 = android.provider.Settings.System.getInt(getContentResolver(), "always_finish_activities", 0);
             switch (i1)
             {
-                default:
-                    com.jingdong.app.mall.aura.internal.b.a(BaseApplication.getInstance().getCurrentMyActivity(), true);
-                    com.jingdong.app.mall.aura.j.a();
                 case 1:
+                    JDDialog localJDDialog = JDDialogFactory.getInstance().createJdDialogWithStyle2(this, getString(R.string.always_finish_activities), getString(R.string.cancel), getString(R.string.set_close));//2131230841 //2131230726    //2131233653
+                    localJDDialog.setOnLeftButtonClickListener(new ak(this, localJDDialog));
+                    localJDDialog.setOnRightButtonClickListener(new al(this));
+                    localJDDialog.show();
+                    break;
             }
+            AuraSwitchOfNetwork.a(BaseApplication.getInstance().getCurrentMyActivity(), true);
+            AuraUpdate.a();
         }
-        catch (Exception localException3)
-        {
-            try
-            {
-                getHandler().postDelayed(new ai(this), 100L);
-            }
-            catch (Exception localException3)
-            {
-                try
-                {
-                    while (true)
-                    {
-                        getHandler().postDelayed(new aj(this), 5000L);
-                        return;
-                        JDDialog localJDDialog = JDDialogFactory.getInstance().createJdDialogWithStyle2(this, getString(2131230841), getString(2131230726), getString(2131233653));
-                        localJDDialog.setOnLeftButtonClickListener(new ak(this, localJDDialog));
-                        localJDDialog.setOnRightButtonClickListener(new al(this));
-                        localJDDialog.show();
-                        continue;
-                        localException1 = localException1;
-                        if (!Log.D)
-                            continue;
-                        Log.d("Temp", " onResume()-->> " + localException1.getMessage());
-                        continue;
-                        localException2 = localException2;
-                        localException2.printStackTrace();
-                    }
-                }
-                catch (Exception localException3)
-                {
-                    localException3.printStackTrace();
-                }
-            }
+        catch (Exception e) {
+            if (Log.D)
+                Log.d("Temp", " onResume()-->> " + e.getMessage());
         }
+        try {
+            getHandler().postDelayed(new ai(this), 100L);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+
+            getHandler().postDelayed(new aj(this), 5000L);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
     }
 
     protected void onSaveInstanceState(Bundle paramBundle)
     {
         super.onSaveInstanceState(paramBundle);
-        paramBundle.putInt("lastIndex", com.jingdong.app.mall.navigationbar.j.a().a);
+        paramBundle.putInt("lastIndex", NavigationOptHelper.getInstance().lastIndex);
         paramBundle.putBoolean("isFromMainFrameInstance", true);
     }
 
@@ -1206,13 +1193,13 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         try
         {
             super.onStop();
-            com.jingdong.common.c.c.a().c();
-            return;
+            LocManager.a().c();
         }
         catch (Exception localException)
         {
             localException.printStackTrace();
         }
+        return;
     }
 
     public boolean removeGuideView()
