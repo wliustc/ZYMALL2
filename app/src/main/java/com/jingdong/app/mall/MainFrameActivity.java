@@ -2,6 +2,8 @@ package com.jingdong.app.mall;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -18,6 +20,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -51,10 +55,13 @@ import com.jingdong.app.mall.utils.ui.NightModeDialog;
 import com.jingdong.common.ActivityNumController;
 import com.jingdong.common.BaseApplication;
 import com.jingdong.common.c.LocManager;
+import com.jingdong.common.hybrid.HybridUpdate;
+import com.jingdong.common.reactnative.download.ReactNativeUpdate;
 import com.jingdong.common.ui.JDDialogFactory;
 import com.jingdong.common.utils.CommonBase;
 import com.jingdong.common.utils.ExceptionReporter;
 import com.jingdong.common.utils.FileService;
+import com.jingdong.common.utils.GlobalInitialization;
 import com.jingdong.common.utils.HttpGroup;
 import com.jingdong.common.utils.HttpGroupUtils;
 import com.jingdong.common.utils.JSONObjectProxy;
@@ -76,6 +83,7 @@ import com.zy.common.entity.SourceEntity;
 import com.zy.common.frame.IMainActivity;
 import com.zy.common.frame.IMyActivity;
 import com.zy.common.ui.JDDialog;
+import com.zy.common.utils.ImageUtil;
 import com.zy.common.utils.JDImageUtils;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.JSONArrayProxy;
@@ -804,117 +812,118 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
 
                             @Override
                             public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
-                                MainFrameActivity.this.s = Md5Encrypt.md5(paramHttpResponse.getString());
-                                if (CommonUtil.getStringFromPreference("start_image_md5", "").equals(MainFrameActivity.this.s))
-                                    return;
-                                Object localObject = paramHttpResponse.getJSONObject();
-                                MainFrameActivity.this.F = ((JSONObjectProxy) localObject).optInt("countdown", 0);
-                                localObject = ((JSONObjectProxy) localObject).getJSONArrayOrNull("images");
-                                if (localObject != null) {//if-eqz v2, :cond_3
-                                    MainFrameActivity.this.q = ((JSONArrayProxy) localObject).length();
-
-                                    for (int i = 0; i < MainFrameActivity.this.q; i++) {//if-ge v0, v3, :cond_0
-                                        JSONObjectProxy jsonObjectProxy = ((JSONArrayProxy) localObject).getJSONObjectOrNull(i);
-                                        if (i == 0) {///if-nez v0, :cond_2
-                                            MainFrameActivity.this.v = jsonObjectProxy.optString("mUrl", "");
-                                            MainFrameActivity.this.t = jsonObjectProxy.optString("onlineTime", "");
-                                            MainFrameActivity.this.u = jsonObjectProxy.optString("referralsTime", "");
-                                            MainFrameActivity.this.A = jsonObjectProxy.optString("sourceValue", "");
-                                            MainFrameActivity.this.B = jsonObjectProxy.optInt("time", 0);
-                                            MainFrameActivity.this.C = jsonObjectProxy.optInt("ynRedirect", 0);
-                                            MainFrameActivity.this.D = jsonObjectProxy.optInt("ynSkip", 0);
-                                            MainFrameActivity.this.E = jsonObjectProxy.optInt("type", 0);
-                                            MainFrameActivity.this.x = jsonObjectProxy.optString("shareTitle", "");
-                                            MainFrameActivity.this.w = jsonObjectProxy.optString("shareUrl", "");
-                                            MainFrameActivity.this.y = jsonObjectProxy.optString("shareContent", "");
-                                            MainFrameActivity.this.z = jsonObjectProxy.optString("shareAvatar", "");
-                                        } else {
-                                            MainFrameActivity.this.A += ("||" + jsonObjectProxy.optString("sourceValue", ""));
-                                        }
-                                        //:goto_2
-                                        JDImageUtils.loadImage(jsonObjectProxy.optString("url", "")
-                                                , JDDisplayImageOptions.createSimple().cacheInMemory(false).bitmapConfig(Bitmap.Config.ARGB_8888)
-                                                , new JDSimpleImageLoadingListener(){//t(localMainFrameActivity, i)
-                                                    public final void onLoadingComplete(String paramString, View paramView, Bitmap paramBitmap)
-                                                    {
-                                                        paramView = null;
-                                                        ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream();
-                                                        paramString = paramView;
-                                                        if (paramBitmap != null);
-                                                        try
-                                                        {
-                                                            paramBitmap.compress(Bitmap.CompressFormat.PNG, 100, localByteArrayOutputStream);
-                                                            paramBitmap.recycle();
-                                                            paramString = localByteArrayOutputStream.toByteArray();
-                                                            paramView = bj.a(4);
-                                                            if (paramView == null)
-                                                                return;
-                                                        }
-                                                        catch (Exception paramBitmap)
-                                                        {
-                                                            do
-                                                            {
-                                                                while (true)
-                                                                {
-                                                                    paramString = paramView;
-                                                                    if (!Log.E)
-                                                                        continue;
-                                                                    paramBitmap.printStackTrace();
-                                                                    paramString = paramView;
-                                                                }
-                                                                paramBitmap = "startimage.image" + this.a;
-                                                                MainFrameActivity.f(this.b).put(Integer.valueOf(this.a), paramView.d() + "/" + paramBitmap);
-                                                                if (Boolean.valueOf(bj.a(paramView, paramBitmap, paramString)).booleanValue())
-                                                                    continue;
-                                                                if (Log.D)
-                                                                    Log.d(MainFrameActivity.b(this.b), "Image saved faild.");
-                                                                MainFrameActivity.f(this.b).clear();
-                                                                MainFrameActivity.b();
-                                                                return;
-                                                            }
-                                                            while (MainFrameActivity.f(this.b).size() != MainFrameActivity.e(this.b));
-                                                            paramString = "";
-                                                            int i = 0;
-                                                            if (i < MainFrameActivity.f(this.b).size())
-                                                            {
-                                                                if (TextUtils.isEmpty(paramString));
-                                                                for (paramString = MainFrameActivity.f(this.b).get(Integer.valueOf(i)).toString(); ; paramString = paramString + "," + MainFrameActivity.f(this.b).get(Integer.valueOf(i)).toString())
-                                                                {
-                                                                    i += 1;
-                                                                    break;
-                                                                }
-                                                            }
-                                                            paramView = CommonUtil.getJdSharedPreferences().edit();
-                                                            paramView.putString("start_image_md5", MainFrameActivity.d(this.b));
-                                                            paramView.putString("forwardUrl", MainFrameActivity.g(this.b));
-                                                            paramView.putString("imagepath", paramString);
-                                                            paramView.putString("beginTime", MainFrameActivity.h(this.b));
-                                                            paramView.putString("endTime", MainFrameActivity.i(this.b));
-                                                            paramView.putString("startSrcVal", MainFrameActivity.j(this.b));
-                                                            paramView.putInt("showTime", MainFrameActivity.k(this.b));
-                                                            paramView.putInt("redirect", MainFrameActivity.l(this.b));
-                                                            paramView.putInt("skip", MainFrameActivity.m(this.b));
-                                                            paramView.putInt("start_ad_type", MainFrameActivity.n(this.b));
-                                                            paramView.putString("shareUrl", MainFrameActivity.o(this.b));
-                                                            paramView.putString("shareTitle", MainFrameActivity.p(this.b));
-                                                            paramView.putString("shareContent", MainFrameActivity.q(this.b));
-                                                            paramView.putString("shareAvatar", MainFrameActivity.r(this.b));
-                                                            paramView.putInt("start_countdown", MainFrameActivity.s(this.b));
-                                                            paramView.commit();
-                                                        }
-                                                    }
-
-                                                    public final void onLoadingFailed(String paramString, View paramView, JDFailReason paramJDFailReason)
-                                                    {
-                                                        ExceptionReporter.reportBitmapException(paramString, paramJDFailReason);
-                                                    }
-                                                });
-                                    }
-                                } else {
-                                    MainFrameActivity.b();
-                                    new ExceptionReporter(localHttpSetting).reportHttpBusinessException(paramHttpResponse);
-                                }
-                                return;
+                                //TODO: 未实现
+//                                MainFrameActivity.this.s = Md5Encrypt.md5(paramHttpResponse.getString());
+//                                if (CommonUtil.getStringFromPreference("start_image_md5", "").equals(MainFrameActivity.this.s))
+//                                    return;
+//                                Object localObject = paramHttpResponse.getJSONObject();
+//                                MainFrameActivity.this.F = ((JSONObjectProxy) localObject).optInt("countdown", 0);
+//                                localObject = ((JSONObjectProxy) localObject).getJSONArrayOrNull("images");
+//                                if (localObject != null) {//if-eqz v2, :cond_3
+//                                    MainFrameActivity.this.q = ((JSONArrayProxy) localObject).length();
+//
+//                                    for (int i = 0; i < MainFrameActivity.this.q; i++) {//if-ge v0, v3, :cond_0
+//                                        JSONObjectProxy jsonObjectProxy = ((JSONArrayProxy) localObject).getJSONObjectOrNull(i);
+//                                        if (i == 0) {///if-nez v0, :cond_2
+//                                            MainFrameActivity.this.v = jsonObjectProxy.optString("mUrl", "");
+//                                            MainFrameActivity.this.t = jsonObjectProxy.optString("onlineTime", "");
+//                                            MainFrameActivity.this.u = jsonObjectProxy.optString("referralsTime", "");
+//                                            MainFrameActivity.this.A = jsonObjectProxy.optString("sourceValue", "");
+//                                            MainFrameActivity.this.B = jsonObjectProxy.optInt("time", 0);
+//                                            MainFrameActivity.this.C = jsonObjectProxy.optInt("ynRedirect", 0);
+//                                            MainFrameActivity.this.D = jsonObjectProxy.optInt("ynSkip", 0);
+//                                            MainFrameActivity.this.E = jsonObjectProxy.optInt("type", 0);
+//                                            MainFrameActivity.this.x = jsonObjectProxy.optString("shareTitle", "");
+//                                            MainFrameActivity.this.w = jsonObjectProxy.optString("shareUrl", "");
+//                                            MainFrameActivity.this.y = jsonObjectProxy.optString("shareContent", "");
+//                                            MainFrameActivity.this.z = jsonObjectProxy.optString("shareAvatar", "");
+//                                        } else {
+//                                            MainFrameActivity.this.A += ("||" + jsonObjectProxy.optString("sourceValue", ""));
+//                                        }
+//                                        //:goto_2
+//                                        JDImageUtils.loadImage(jsonObjectProxy.optString("url", "")
+//                                                , JDDisplayImageOptions.createSimple().cacheInMemory(false).bitmapConfig(Bitmap.Config.ARGB_8888)
+//                                                , new JDSimpleImageLoadingListener(){//t(localMainFrameActivity, i)
+//                                                    public final void onLoadingComplete(String paramString, View paramView, Bitmap paramBitmap)
+//                                                    {
+//                                                        paramView = null;
+//                                                        ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream();
+//                                                        paramString = paramView;
+//                                                        if (paramBitmap != null);
+//                                                        try
+//                                                        {
+//                                                            paramBitmap.compress(Bitmap.CompressFormat.PNG, 100, localByteArrayOutputStream);
+//                                                            paramBitmap.recycle();
+//                                                            paramString = localByteArrayOutputStream.toByteArray();
+//                                                            paramView = bj.a(4);
+//                                                            if (paramView == null)
+//                                                                return;
+//                                                        }
+//                                                        catch (Exception paramBitmap)
+//                                                        {
+//                                                            do
+//                                                            {
+//                                                                while (true)
+//                                                                {
+//                                                                    paramString = paramView;
+//                                                                    if (!Log.E)
+//                                                                        continue;
+//                                                                    paramBitmap.printStackTrace();
+//                                                                    paramString = paramView;
+//                                                                }
+//                                                                paramBitmap = "startimage.image" + this.a;
+//                                                                MainFrameActivity.f(this.b).put(Integer.valueOf(this.a), paramView.d() + "/" + paramBitmap);
+//                                                                if (Boolean.valueOf(bj.a(paramView, paramBitmap, paramString)).booleanValue())
+//                                                                    continue;
+//                                                                if (Log.D)
+//                                                                    Log.d(MainFrameActivity.b(this.b), "Image saved faild.");
+//                                                                MainFrameActivity.f(this.b).clear();
+//                                                                MainFrameActivity.b();
+//                                                                return;
+//                                                            }
+//                                                            while (MainFrameActivity.f(this.b).size() != MainFrameActivity.e(this.b));
+//                                                            paramString = "";
+//                                                            int i = 0;
+//                                                            if (i < MainFrameActivity.f(this.b).size())
+//                                                            {
+//                                                                if (TextUtils.isEmpty(paramString));
+//                                                                for (paramString = MainFrameActivity.f(this.b).get(Integer.valueOf(i)).toString(); ; paramString = paramString + "," + MainFrameActivity.f(this.b).get(Integer.valueOf(i)).toString())
+//                                                                {
+//                                                                    i += 1;
+//                                                                    break;
+//                                                                }
+//                                                            }
+//                                                            paramView = CommonUtil.getJdSharedPreferences().edit();
+//                                                            paramView.putString("start_image_md5", MainFrameActivity.d(this.b));
+//                                                            paramView.putString("forwardUrl", MainFrameActivity.g(this.b));
+//                                                            paramView.putString("imagepath", paramString);
+//                                                            paramView.putString("beginTime", MainFrameActivity.h(this.b));
+//                                                            paramView.putString("endTime", MainFrameActivity.i(this.b));
+//                                                            paramView.putString("startSrcVal", MainFrameActivity.j(this.b));
+//                                                            paramView.putInt("showTime", MainFrameActivity.k(this.b));
+//                                                            paramView.putInt("redirect", MainFrameActivity.l(this.b));
+//                                                            paramView.putInt("skip", MainFrameActivity.m(this.b));
+//                                                            paramView.putInt("start_ad_type", MainFrameActivity.n(this.b));
+//                                                            paramView.putString("shareUrl", MainFrameActivity.o(this.b));
+//                                                            paramView.putString("shareTitle", MainFrameActivity.p(this.b));
+//                                                            paramView.putString("shareContent", MainFrameActivity.q(this.b));
+//                                                            paramView.putString("shareAvatar", MainFrameActivity.r(this.b));
+//                                                            paramView.putInt("start_countdown", MainFrameActivity.s(this.b));
+//                                                            paramView.commit();
+//                                                        }
+//                                                    }
+//
+//                                                    public final void onLoadingFailed(String paramString, View paramView, JDFailReason paramJDFailReason)
+//                                                    {
+//                                                        ExceptionReporter.reportBitmapException(paramString, paramJDFailReason);
+//                                                    }
+//                                                });
+//                                    }
+//                                } else {
+//                                    MainFrameActivity.b();
+//                                    new ExceptionReporter(localHttpSetting).reportHttpBusinessException(paramHttpResponse);
+//                                }
+//                                return;
                             }
                         });
                         HttpGroupUtils.getHttpGroupaAsynPool().add(localHttpSetting);
@@ -1139,7 +1148,15 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         try
         {
             this.o = true;
-            getHandler().postDelayed(new ah(this), 100L);
+            getHandler().postDelayed(new Runnable(){//ah(this)
+                @Override
+                public void run(){
+                    if ((MainFrameActivity.this.p != null)
+                            && (new Date().getTime() - MainFrameActivity.this.p.getTime() > com.jingdong.common.config.Configuration.getIntegerProperty("leaveTimeGap").intValue()))
+                        GlobalInitialization.regDevice();
+                    LocManager.getInstance().d();
+                }
+            }, 100L);
             if (this.n != null)
             {
                 getHandler().post(this.n);
@@ -1151,9 +1168,28 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
             switch (i1)
             {
                 case 1:
-                    JDDialog localJDDialog = JDDialogFactory.getInstance().createJdDialogWithStyle2(this, getString(R.string.always_finish_activities), getString(R.string.cancel), getString(R.string.set_close));//2131230841 //2131230726    //2131233653
-                    localJDDialog.setOnLeftButtonClickListener(new ak(this, localJDDialog));
-                    localJDDialog.setOnRightButtonClickListener(new al(this));
+                    final JDDialog localJDDialog = JDDialogFactory.getInstance().createJdDialogWithStyle2(this, getString(R.string.always_finish_activities), getString(R.string.cancel), getString(R.string.set_close));//2131230841 //2131230726    //2131233653
+                    localJDDialog.setOnLeftButtonClickListener(new View.OnClickListener(){//ak(this, localJDDialog)
+                        @Override
+                        public void onClick(View v) {
+                            MainFrameActivity.this.X = true;
+                            localJDDialog.dismiss();
+                        }
+                    });
+                    localJDDialog.setOnRightButtonClickListener(new View.OnClickListener(){//al(this)
+                        @Override
+                        public void onClick(View v) {
+                            try
+                            {
+                                Intent intent = new Intent("android.settings.APPLICATION_DEVELOPMENT_SETTINGS");
+                                MainFrameActivity.this.startActivity(intent);
+                            }
+                            catch (java.lang.Exception paramView)
+                            {
+                            }
+                            return;
+                        }
+                    });
                     localJDDialog.show();
                     break;
             }
@@ -1165,13 +1201,22 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
                 Log.d("Temp", " onResume()-->> " + e.getMessage());
         }
         try {
-            getHandler().postDelayed(new ai(this), 100L);
+            getHandler().postDelayed(new Runnable(){//ai(this)
+                @Override
+                public void run() {
+                    HybridUpdate.getInstance(MainFrameActivity.this, "com.jd.app.main").check();
+                }
+            }, 100L);
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-
-            getHandler().postDelayed(new aj(this), 5000L);
+            getHandler().postDelayed(new Runnable(){//aj(this)
+                @Override
+                public void run() {
+                    ReactNativeUpdate.getInstance(MainFrameActivity.this).checkUpdate();
+                }
+            }, 5000L);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1193,7 +1238,7 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         try
         {
             super.onStop();
-            LocManager.a().c();
+            LocManager.getInstance().c();
         }
         catch (Exception localException)
         {
@@ -1215,8 +1260,47 @@ public class MainFrameActivity extends MyActivity implements IMainActivity, Scro
         return false;
     }
 
-    private static void synthetic_u(MainFrameActivity mainFrameActivity) {
-        //TODO: 1477 .method static synthetic_u(Lcom/jingdong/app/mall/MainFrameActivity;)V
+    private static void synthetic_u(MainFrameActivity paramMainFrameActivity) {
+        final AlertDialog localAlertDialog = new AlertDialog.Builder(paramMainFrameActivity).create();
+        localAlertDialog.setTitle(R.string.prompt);//2131233421
+        View localView = ImageUtil.inflate(R.layout.cost_alert, new RelativeLayout(paramMainFrameActivity));//2130903329
+        CheckBox localCheckBox = (CheckBox)localView.findViewById(R.id.not_show_again);//2131166716
+        localCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){//x(paramMainFrameActivity)
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                switch (buttonView.getId())
+                {
+                    case R.id.not_show_again://2131166716
+                        SharedPreferences sharedPreferences = CommonUtil.getJdSharedPreferences();
+                        if (isChecked)
+                            sharedPreferences.edit().putBoolean("showCost", false).commit();
+                        else
+                            sharedPreferences.edit().putBoolean("showCost", true).commit();
+                }
+
+            }
+        });
+        localCheckBox.setChecked(false);
+        localAlertDialog.setView(localView);
+        localAlertDialog.setButton(paramMainFrameActivity.getText(R.string.ok), new DialogInterface.OnClickListener(){//y(paramMainFrameActivity, localAlertDialog) //2131232844
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                localAlertDialog.dismiss();
+            }
+        });
+        localAlertDialog.setButton2(paramMainFrameActivity.getText(R.string.cancel), new DialogInterface.OnClickListener(){//z(paramMainFrameActivity)  //2131230726
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BaseApplication.exitAll();
+            }
+        });
+        localAlertDialog.setOnKeyListener(new DialogInterface.OnKeyListener(){//aa(paramMainFrameActivity)
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return true;
+            }
+        });
+        localAlertDialog.show();
     }
 
     public class _Ad extends Thread{

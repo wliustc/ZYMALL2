@@ -51,7 +51,8 @@ public class LocManager {
         return 3.141592653589793D * paramDouble / 180.0D;
     }
 
-    public static synchronized LocManager a() {
+    //a()
+    public static synchronized LocManager getInstance() {
 
         if (Log.D)
             Log.d("LocManager", " getInstance -->>  ");

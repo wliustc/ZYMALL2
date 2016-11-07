@@ -2784,7 +2784,7 @@
     <string name="b9b">2、使用优惠券，结算->填写订单->优惠券/礼品卡</string>
     <string name="b9c">您的领券申请已提交</string>
     <string name="b9d">审核通过后，3日内将自动发放优惠券到您的京东账户</string>
-    <string name="b9e">提示</string>
+    <string name="prompt">提示</string><!-- "b9e" -->
     <string name="b9f">取消订单</string>
     <string name="b9g">查看订单</string>
     <string name="b9h">京东消息更新</string>

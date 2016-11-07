@@ -35,4 +35,29 @@ public class Configuration {
     public static String getNgwHost() {
         return ngwHost;
     }
+
+    public static String getCommentHost()
+    {
+        return HostConfig.getInstance().getHost(HostConstants.COMMENT_HOST);
+    }
+
+    public static Integer getIntegerProperty(String paramString)
+    {
+        return getIntegerProperty(paramString, null);
+    }
+
+    public static Integer getIntegerProperty(String paramString, Integer paramInteger)
+    {
+        paramString = getProperty(paramString);
+        if (paramString == null)
+            return paramInteger;
+        try
+        {
+            return Integer.valueOf(paramString);
+        }
+        catch (java.lang.Exception e)
+        {
+        }
+        return paramInteger;
+    }
 }
