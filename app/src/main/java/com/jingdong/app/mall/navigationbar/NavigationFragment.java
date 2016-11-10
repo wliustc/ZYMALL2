@@ -57,56 +57,9 @@ public class NavigationFragment extends BaseFragment {
         }
 
     };
-    private RadioGroup.OnCheckedChangeListener o = new RadioGroup.OnCheckedChangeListener(){//f(this)
-        private boolean b;
-        private int c = -1;
-        private int d = -2;
 
-        public final void a(int paramInt)
-        {
-            this.c = paramInt;
-        }
-
-        public final void a(boolean paramBoolean)
-        {
-            this.b = true;
-        }
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (!JDNavigationFragment.b(this.a));
-            do
-            {
-                do
-                    return;
-                while (checkedId < 0);
-                if (!this.b)
-                    continue;
-                this.b = false;
-                return;
-            }
-            while ((this.c == checkedId) && (!JDNavigationFragment.c(this.a)));
-            JDNavigationFragment.a(this.a, false);
-            this.d = this.c;
-            this.c = checkedId;
-            j.a().a = checkedId;
-            if (Log.D)
-            {
-                Log.d("JDNavigationFragment", "onCheckedChanged checkedId-->> " + checkedId);
-                Log.d("JDNavigationFragment", "onCheckedChanged mNow-->> " + this.c);
-            }
-            if (Log.D)
-                Log.d("JDNavigationFragment", "onCheckedChanged buttonActionList-->> " + JDNavigationFragment.d(this.a).size());
-            h localh = ((NavigationButton)group.findViewById(checkedId)).c();
-            s.a().a(checkedId, true);
-            if (!localh.b())
-                this.a.a(Integer.valueOf(this.d));
-            JDNavigationFragment.e(this.a).push(Integer.valueOf(this.d));
-            ((NavigationButton)group.findViewById(checkedId)).c().a();
-            x.a().b();
-        }
-    };
-
-    private RadioGroup.OnCheckedChangeListener onCheckedChangeListener/*o*/ = new RadioGroup.OnCheckedChangeListener(){//f
+    private _F onCheckedChangeListener/*o*/ = new _F();
+    public class _F implements RadioGroup.OnCheckedChangeListener{//f
         private boolean b;
         private int c = -1;
         private int d = -2;
@@ -153,7 +106,7 @@ public class NavigationFragment extends BaseFragment {
             }
             return;
         }
-    };
+    }
 
     public static NavigationFragment a(int lastIndex)
     {
@@ -291,8 +244,8 @@ public class NavigationFragment extends BaseFragment {
             if (Log.D)
                 Log.d("JDNavigationFragment", "bottomRadioGroup.getCheckedRadioButtonId() != radioId -->> " + this.rgBottomMenu.getCheckedRadioButtonId());
             this.e = this.rgBottomMenu.getCheckedRadioButtonId();
-            this.o.a(true);
-            this.o.a(paramInteger.intValue());
+            this.onCheckedChangeListener.a(true);
+            this.onCheckedChangeListener.a(paramInteger.intValue());
             this.rgBottomMenu.check(paramInteger.intValue());
             if (Log.D)
                 Log.d("JDNavigationFragment", "old -->> " + this.e);
