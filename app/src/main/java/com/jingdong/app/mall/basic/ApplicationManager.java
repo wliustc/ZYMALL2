@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.jingdong.app.mall.MainFrameActivity;
 import com.jingdong.app.mall.MyApplication;
+import com.zy.app.mall.MainFrameActivity;
 import com.zy.app.mall.basic.BackStackManager;
 import com.zy.app.mall.basic.JDTaskModule;
 import com.zy.common.utils.Log;

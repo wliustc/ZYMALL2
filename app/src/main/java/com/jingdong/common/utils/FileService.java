@@ -2,15 +2,22 @@ package com.jingdong.common.utils;
 
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 
+import com.jingdong.common.BaseApplication;
 import com.zy.common.utils.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
  * Created by Robin on 2016/11/3.
  */
+//bj
 public class FileService {
     private static int a = -20;
     private static int b = -20;
@@ -19,7 +26,7 @@ public class FileService {
     private static bn e = new bn(5, "/json");
     private static bn f = new bn(1, "/image");
 
-    public static bm a(int paramInt)
+    public static _Bm a(int paramInt)
     {
         switch (paramInt)
         {
@@ -43,24 +50,24 @@ public class FileService {
                     return e.a();
                 }
                 while (h() <= 16777216L);
-                return new bm(a("/camera"), 2);
+                return new _Bm(a("/camera"), 2);
             }
             while (c() <= 8388608L);
             if (Log.D)
                 Log.d("FileService", "getDirectoryByJsonSize() -->> INTERNAL");
-            return new bm(a("/persist", 2, false), 1);
+            return new _Bm(a("/persist", 2, false), 1);
             if (Log.D)
                 Log.d("FileService", "getDirectoryByImageSize() -->> ");
             if (!b())
                 continue;
             if (Log.D)
                 Log.d("FileService", "getDirectoryByImageSize() -->> EXTERNAL");
-            return new bm(a("/file"), 2);
+            return new _Bm(a("/file"), 2);
         }
         while (c() <= 8388608L);
         if (Log.D)
             Log.d("FileService", "getDirectoryByImageSize() -->> INTERNAL");
-        return new bm(a("/file", 2, false), 1);
+        return new _Bm(a("/file", 2, false), 1);
     }
 
     public static File a(String paramString)
@@ -235,7 +242,7 @@ public class FileService {
         e.a = true;
     }
 
-    private static void a(bm parambm)
+    private static void a(_Bm parambm)
     {
         monitorenter;
         while (true)
@@ -291,14 +298,14 @@ public class FileService {
         }
     }
 
-    public static boolean a(bm parambm, String paramString, byte[] paramArrayOfByte)
+    public static boolean a(_Bm parambm, String paramString, byte[] paramArrayOfByte)
     {
         if (paramArrayOfByte == null)
             return false;
         return b(parambm, paramString, paramArrayOfByte, 0);
     }
 
-    public static boolean a(bm parambm, String paramString, byte[] paramArrayOfByte, int paramInt)
+    public static boolean a(_Bm parambm, String paramString, byte[] paramArrayOfByte, int paramInt)
     {
         int i;
         if ((paramArrayOfByte == null) || (paramArrayOfByte.length <= 0) || (TextUtils.isEmpty(paramString)) || (parambm == null))
@@ -355,7 +362,7 @@ public class FileService {
         return BaseApplication.getInstance().getFilesDir().getAbsolutePath() + "/" + parambi.f();
     }
 
-    private static void b(bm parambm)
+    private static void b(_Bm parambm)
     {
         monitorenter;
         if (parambm == null);
@@ -369,7 +376,7 @@ public class FileService {
                 localFile = parambm.b();
                 if ((localFile == null) || (!localFile.exists()))
                     continue;
-                switch (bm.a(parambm))
+                switch (_Bm.a(parambm))
                 {
                     case 1:
                         if (b == -20)
@@ -396,7 +403,7 @@ public class FileService {
     }
 
     // ERROR //
-    private static boolean b(bm parambm, String paramString, byte[] paramArrayOfByte, int paramInt)
+    private static boolean b(_Bm parambm, String paramString, byte[] paramArrayOfByte, int paramInt)
     {
         // Byte code:
         //   0: aload_0
@@ -497,7 +504,7 @@ public class FileService {
         return localStatFs.getAvailableBlocks() * l;
     }
 
-    private static void c(bm parambm)
+    private static void c(_Bm parambm)
     {
         if (parambm == null);
         while (true)
@@ -650,5 +657,45 @@ public class FileService {
                 return -1L;
             }
         return -1L;
+    }
+
+    public static final class _Bm{
+        private File a;
+        private String b;
+        private int c;
+
+        public _Bm(File paramFile, int paramInt)
+        {
+            this.a = paramFile;
+            this.c = paramInt;
+        }
+
+        public _Bm(String paramString, int paramInt)
+        {
+            this(new File(paramString), paramInt);
+        }
+
+        public final void a()
+        {
+            if ((this.a != null) && (!this.a.exists()))
+                this.a.mkdirs();
+        }
+
+        public final File b()
+        {
+            return this.a;
+        }
+
+        public final int c()
+        {
+            return this.c;
+        }
+
+        public final String d()
+        {
+            if ((this.b == null) && (this.a != null))
+                this.b = this.a.getAbsolutePath();
+            return this.b;
+        }
     }
 }

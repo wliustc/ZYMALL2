@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 
-import com.jingdong.app.mall.MainFrameActivity;
 import com.jingdong.common.BaseApplication;
+import com.zy.app.mall.MainFrameActivity;
 import com.zy.app.mall.R;
 
 /**

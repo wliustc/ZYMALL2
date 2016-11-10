@@ -3,9 +3,12 @@ package com.zy.common.utils;
 import android.content.Context;
 
 import com.jingdong.app.mall.more.VoiceSearchActivity;
+import com.jingdong.common.BaseApplication;
 import com.zy.app.mall.home.JDHomeFragment;
 import com.zy.app.mall.home.floor.view.view.HomeTitle;
 import com.zy.cleanmvp.ui.BaseFragment;
+
+import java.util.HashMap;
 
 /**
  * Created by Robin on 2016/5/8.
@@ -105,4 +108,10 @@ public class JDMtaUtils {
     }
 
 
+    public static String getCurrentMicrosecond() {
+        return String.format("%.6f", new Object[] { Double.valueOf((System.currentTimeMillis() + 0.0D) / 1000.0D) });
+    }
+
+    public static void sendExceptionData(BaseApplication instance, HashMap localHashMap) {
+    }
 }

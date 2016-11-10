@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jingdong.app.mall.MainFrameActivity"
+            android:name="com.zy.app.mall.MainFrameActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:hardwareAccelerated="true"
             android:label="@string/app_name"

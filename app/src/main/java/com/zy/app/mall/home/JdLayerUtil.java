@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jingdong.app.mall.home.LayerFrameLayout;
-import com.jingdong.common.BaseActivity;
+import com.zy.common.BaseActivity;
 import com.zy.common.entity.HomeLayerParamEntity;
 import com.zy.common.utils.CommonUtil;
 import com.zy.common.utils.Log;

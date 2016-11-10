@@ -3,9 +3,12 @@ package com.jingdong.common.c;
 import android.content.Context;
 
 import com.jingdong.common.BaseApplication;
+import com.jingdong.common.config.Configuration;
 import com.jingdong.common.utils.AddressUtil;
 import com.zy.common.entity.AddressGlobal;
+import com.zy.common.frame.IMainActivity;
 import com.zy.common.res.StringUtil;
+import com.zy.common.utils.CommonUtil;
 import com.zy.common.utils.Log;
 
 import java.util.Map;
@@ -148,9 +151,9 @@ public class LocManager {
             monitorexit;
         }
         throw paramk;
-    }
+    }*/
 
-    public final void a(com.jingdong.common.frame.c paramc, String paramString)
+    public final void a(IMainActivity paramc, String paramString)
     {
         if (Log.D)
             Log.d("LocManager", " startLocationService -->> ");
@@ -168,7 +171,7 @@ public class LocManager {
             return;
         }
         g();
-    }*/
+    }
 
     public final void c()
     {

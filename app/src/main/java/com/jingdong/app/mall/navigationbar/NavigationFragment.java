@@ -2,6 +2,7 @@ package com.jingdong.app.mall.navigationbar;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -10,10 +11,8 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.jingdong.app.mall.MainFrameActivity;
 import com.jingdong.app.mall.basic.JDUntil;
-import com.jingdong.app.mall.navigationbar.NavigationOptHelper;
-import com.jingdong.app.mall.navigationbar.UnifyRequestDataHolder;
+import com.zy.app.mall.MainFrameActivity;
 import com.zy.app.mall.R;
 import com.zy.app.mall.navigationbar.INavigationPage;
 import com.zy.app.mall.navigationbar.NavigationButton;
@@ -42,6 +41,7 @@ public class NavigationFragment extends BaseFragment {
     private RadioGroup.LayoutParams layoutParams;   //i
     private boolean j = true;
     private INavigationPage k;
+    private int l = -1;
     private boolean m = false;
     private boolean isNavigationButtonOver ;  //f
     private View.OnTouchListener onTouchListener/*n*/ = new View.OnTouchListener(){////e(this);
@@ -56,6 +56,54 @@ public class NavigationFragment extends BaseFragment {
             return !NavigationFragment.b;
         }
 
+    };
+    private RadioGroup.OnCheckedChangeListener o = new RadioGroup.OnCheckedChangeListener(){//f(this)
+        private boolean b;
+        private int c = -1;
+        private int d = -2;
+
+        public final void a(int paramInt)
+        {
+            this.c = paramInt;
+        }
+
+        public final void a(boolean paramBoolean)
+        {
+            this.b = true;
+        }
+        @Override
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
+            if (!JDNavigationFragment.b(this.a));
+            do
+            {
+                do
+                    return;
+                while (checkedId < 0);
+                if (!this.b)
+                    continue;
+                this.b = false;
+                return;
+            }
+            while ((this.c == checkedId) && (!JDNavigationFragment.c(this.a)));
+            JDNavigationFragment.a(this.a, false);
+            this.d = this.c;
+            this.c = checkedId;
+            j.a().a = checkedId;
+            if (Log.D)
+            {
+                Log.d("JDNavigationFragment", "onCheckedChanged checkedId-->> " + checkedId);
+                Log.d("JDNavigationFragment", "onCheckedChanged mNow-->> " + this.c);
+            }
+            if (Log.D)
+                Log.d("JDNavigationFragment", "onCheckedChanged buttonActionList-->> " + JDNavigationFragment.d(this.a).size());
+            h localh = ((NavigationButton)group.findViewById(checkedId)).c();
+            s.a().a(checkedId, true);
+            if (!localh.b())
+                this.a.a(Integer.valueOf(this.d));
+            JDNavigationFragment.e(this.a).push(Integer.valueOf(this.d));
+            ((NavigationButton)group.findViewById(checkedId)).c().a();
+            x.a().b();
+        }
     };
 
     private RadioGroup.OnCheckedChangeListener onCheckedChangeListener/*o*/ = new RadioGroup.OnCheckedChangeListener(){//f
@@ -238,14 +286,14 @@ public class NavigationFragment extends BaseFragment {
         if (Log.D)
             Log.d("JDNavigationFragment", "radioId -->> " + paramInteger);
         j.a().a = paramInteger.intValue();
-        if (this.a.getCheckedRadioButtonId() != paramInteger.intValue())
+        if (this.rgBottomMenu.getCheckedRadioButtonId() != paramInteger.intValue())
         {
             if (Log.D)
-                Log.d("JDNavigationFragment", "bottomRadioGroup.getCheckedRadioButtonId() != radioId -->> " + this.a.getCheckedRadioButtonId());
-            this.e = this.a.getCheckedRadioButtonId();
+                Log.d("JDNavigationFragment", "bottomRadioGroup.getCheckedRadioButtonId() != radioId -->> " + this.rgBottomMenu.getCheckedRadioButtonId());
+            this.e = this.rgBottomMenu.getCheckedRadioButtonId();
             this.o.a(true);
             this.o.a(paramInteger.intValue());
-            this.a.check(paramInteger.intValue());
+            this.rgBottomMenu.check(paramInteger.intValue());
             if (Log.D)
                 Log.d("JDNavigationFragment", "old -->> " + this.e);
         }
@@ -266,7 +314,7 @@ public class NavigationFragment extends BaseFragment {
             MainFrameActivity localMainFrameActivity = (MainFrameActivity)this.thisActivity;
             if (localMainFrameActivity != null)
                 localMainFrameActivity.a(paramInt);
-            this.a.check(paramInt);
+            this.rgBottomMenu.check(paramInt);
             j.a().a = paramInt;
             return;
         }

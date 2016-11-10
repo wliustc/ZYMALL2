@@ -13,9 +13,12 @@ public class Configuration {
 
     public static Boolean getBooleanProperty(String paramString) {
         //TODO: 该方法未实现
-
         return false;
+    }
 
+    public static Boolean getBooleanProperty(String msgMode, Boolean aBoolean) {
+        //TODO: 该方法未实现
+        return false;
     }
 
     public static String getPortalHost() {
@@ -60,4 +63,6 @@ public class Configuration {
         }
         return paramInteger;
     }
+
+
 }

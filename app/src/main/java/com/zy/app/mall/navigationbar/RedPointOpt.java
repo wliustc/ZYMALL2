@@ -3,9 +3,9 @@ package com.zy.app.mall.navigationbar;
 import android.content.SharedPreferences;
 import android.os.Handler;
 
-import com.jingdong.app.mall.MainFrameActivity;
 import com.jingdong.app.mall.MyApplication;
 import com.jingdong.app.mall.utils.CommonUtil;
+import com.zy.app.mall.MainFrameActivity;
 import com.zy.app.mall.utils.frame.TabBarButton;
 
 /**

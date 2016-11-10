@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import com.jingdong.app.mall.MainFrameActivity;
-import com.jingdong.common.BaseActivity;
+import com.zy.common.BaseActivity;
 
 /**
  * Created by Robin on 2016/4/14.

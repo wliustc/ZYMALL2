@@ -120,4 +120,8 @@ public abstract class BaseApplication extends Application {
 
     public static void exitDialog() {
     }
+
+    public static void networkSetting() {
+        //TODO: 未实现
+    }
 }

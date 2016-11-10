@@ -1755,7 +1755,7 @@
     <string name="ai0">确定清除本地缓存？</string>
     <string name="ai1">本地缓存设置</string>
     <string name="ai2">位置设置</string>
-    <string name="ai3">打开“定位服务”来允许“京东”确定您的位置?</string>
+    <string name="location_tip">打开“定位服务”来允许“京东”确定您的位置?</string><!-- "ai3" -->
     <string name="ai4">update location information</string>
     <string name="ai5">设置地理位置信息</string>
     <string name="ai6">登 录</string>
@@ -1904,7 +1904,7 @@
     <string name="am1">推送消息筛选</string>
     <string name="am2">msg_auto_update_frequency</string>
     <string name="am3">msg_auto_update_category</string>
-    <string name="am4">msg_auto_update_switch</string>
+    <string name="msg_auto_update_switch_key">msg_auto_update_switch</string><!-- "am4" -->
     <string name="am5">已关闭消息推送通知</string>
     <string name="am6">已开启消息推送通知</string>
     <string name="am7">接收消息通知</string>

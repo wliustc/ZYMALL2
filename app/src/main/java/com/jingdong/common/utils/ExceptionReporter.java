@@ -2,6 +2,7 @@ package com.jingdong.common.utils;
 import android.text.TextUtils;
 
 import com.jingdong.common.BaseApplication;
+import com.jingdong.jdma.common.secure.Base64;
 import com.zy.app.util.image.assist.JDFailReason;
 import com.zy.common.utils.JDMtaUtils;
 import com.zy.common.utils.Log;
@@ -252,34 +253,34 @@ public class ExceptionReporter {
 //            paramString.printStackTrace();
 //        }
 //    }
-//
-//    public static void reportFlowData(String paramString1, String paramString2)
-//    {
-//        if (Log.D)
-//            Log.d(TAG, "reportFlowData：" + paramString1);
-//        try
-//        {
-//            HashMap localHashMap = new HashMap();
-//            localHashMap.put("function", "self_flowData");
-//            localHashMap.put("specialFlag", "1");
-//            localHashMap.put("url", Base64.encodeBytes(paramString1.getBytes()));
-//            localHashMap.put("postData", Base64.encodeBytes(paramString2.getBytes()));
-//            localHashMap.put("httpResp", "0");
-//            localHashMap.put("errCode", "902");
-//            localHashMap.put("verifyCode", "");
-//            localHashMap.put("occurTime", JDMtaUtils.getCurrentMicrosecond());
-//            localHashMap.put("specialFlag", "1");
-//            localHashMap.put("errType", "2");
-//            JDMtaUtils.sendExceptionData(BaseApplication.getInstance(), localHashMap);
-//            return;
-//        }
-//        catch (Throwable paramString1)
-//        {
-//            while (!Log.E);
-//            paramString1.printStackTrace();
-//        }
-//    }
-//
+
+    public static void reportFlowData(String paramString1, String paramString2)
+    {
+        if (Log.D)
+            Log.d(TAG, "reportFlowData：" + paramString1);
+        try
+        {
+            HashMap localHashMap = new HashMap();
+            localHashMap.put("function", "self_flowData");
+            localHashMap.put("specialFlag", "1");
+            localHashMap.put("url", Base64.encodeBytes(paramString1.getBytes()));
+            localHashMap.put("postData", Base64.encodeBytes(paramString2.getBytes()));
+            localHashMap.put("httpResp", "0");
+            localHashMap.put("errCode", "902");
+            localHashMap.put("verifyCode", "");
+            localHashMap.put("occurTime", JDMtaUtils.getCurrentMicrosecond());
+            localHashMap.put("specialFlag", "1");
+            localHashMap.put("errType", "2");
+            JDMtaUtils.sendExceptionData(BaseApplication.getInstance(), localHashMap);
+            return;
+        }
+        catch (Throwable e)
+        {
+            if (Log.E)
+            e.printStackTrace();
+        }
+    }
+
 //    public static void reportHttpException(String paramString1, HttpGroup.HttpSetting paramHttpSetting, HttpGroup.HttpError paramHttpError, String paramString2)
 //    {
 //        if (Log.D)
@@ -406,4 +407,6 @@ public class ExceptionReporter {
 //            paramHttpResponse = Integer.valueOf(i);
 //        }
     }
+
+
 }

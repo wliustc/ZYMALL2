@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
-import com.jingdong.app.mall.MainFrameActivity;
 import com.jingdong.app.mall.MyApplication;
+import com.zy.app.mall.MainFrameActivity;
 import com.zy.app.mall.R;
 import com.zy.common.utils.Log;
 
