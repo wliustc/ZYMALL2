@@ -17,7 +17,7 @@ import java.util.Set;
  */
 //a
 public class AuraBlackList {
-    private static com.jingdong.app.mall.aura.internal.a a = new com.jingdong.app.mall.aura.internal.a();
+    //private static com.jingdong.app.mall.aura.internal.a a = new com.jingdong.app.mall.aura.internal.a();
 
     static Set<String> a()
     {
@@ -26,75 +26,7 @@ public class AuraBlackList {
 
     public static void a(IMyActivity paramIMyActivity, boolean paramBoolean)
     {
-        if (paramIMyActivity != null){
-            if (a.a()) {
-                HttpGroup.HttpSetting localHttpSetting = new HttpGroup.HttpSetting();
-                localHttpSetting.setFunctionId("kvConfig");
-                localHttpSetting.setHost(Configuration.getNgwHost());
-                localHttpSetting.setEffect(0);
-                localHttpSetting.setNotifyUser(false);
-                localHttpSetting.putJsonParam("type", "auraBlackList");
-                localHttpSetting.putJsonParam("buildId", com.jingdong.app.mall.utils.CommonUtil.getSoftwareVersionCode(BaseApplication.getInstance().getBaseContext()));
-                localHttpSetting.setListener(new HttpGroup.OnAllListener(){//b()
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onProgress(int paramInt1, int paramInt2) {
-
-                    }
-
-                    @Override
-                    public void onError(HttpGroup.HttpError paramHttpError) {
-                        Log.v("AuraBlackListOfNetwork", "onError = " + paramHttpError.toString());
-                    }
-
-                    @Override
-                    public void onEnd(HttpGroup.HttpResponse paramHttpResponse) {
-                        paramHttpResponse = paramHttpResponse.getJSONObject();
-                        if (paramHttpResponse == null);
-                        while (true)
-                        {
-                            return;
-                            Log.v("AuraBlackListOfNetwork", paramHttpResponse.toString());
-                            if (!paramHttpResponse.optString("code").equals("0"))
-                                continue;
-                            paramHttpResponse = paramHttpResponse.getJSONObjectOrNull("configs");
-                            if (paramHttpResponse == null)
-                                continue;
-                            Iterator localIterator = paramHttpResponse.keys();
-                            while (localIterator.hasNext())
-                            {
-                                String str = (String)localIterator.next();
-                                if ((str == null) || ((!"add".equals(str)) && (!"minus".equals(str))))
-                                    continue;
-                                try
-                                {
-                                    HashSet localHashSet = new HashSet();
-                                    JSONArray localJSONArray = paramHttpResponse.optJSONArray(str);
-                                    int i = 0;
-                                    while (i < localJSONArray.length())
-                                    {
-                                        localHashSet.add(localJSONArray.getString(i));
-                                        i += 1;
-                                    }
-                                    a.a(str, localHashSet);
-                                }
-                                catch (Exception localException)
-                                {
-                                }
-                            }
-                        }
-                    }
-                });
-                paramIMyActivity.getHttpGroupaAsynPool().add(localHttpSetting);
-            }
-        }else
-            Log.v("AuraBlackListOfNetwork", "activity is null");
-        do
-            return;
+        //TODO:未实现
 
     }
 

@@ -1,4 +1,4 @@
-package com.jingdong.app.mall.navigationbar;
+package com.zy.app.mall.navigationbar;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,11 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jingdong.app.mall.basic.JDUntil;
+import com.jingdong.app.mall.navigationbar.NavigationOptHelper;
+import com.jingdong.app.mall.navigationbar.UnifyRequestDataHolder;
 import com.zy.app.mall.MainFrameActivity;
 import com.zy.app.mall.R;
-import com.zy.app.mall.navigationbar.INavigationPage;
-import com.zy.app.mall.navigationbar.NavigationButton;
-import com.zy.app.mall.navigationbar.RedPointOpt;
 import com.zy.app.mall.utils.frame.RadioStateDrawable;
 import com.zy.cleanmvp.ui.BaseFragment;
 import com.zy.common.utils.DPIUtil;
@@ -43,13 +42,12 @@ public class NavigationFragment extends BaseFragment {
     private INavigationPage k;
     private int l = -1;
     private boolean m = false;
-    private boolean isNavigationButtonOver ;  //f
-    private View.OnTouchListener onTouchListener/*n*/ = new View.OnTouchListener(){////e(this);
+    private boolean isNavigationButtonOver;  //f
+    private View.OnTouchListener onTouchListener/*n*/ = new View.OnTouchListener() {////e(this);
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if ((event.getAction() == 1) && (v.getId() == NavigationOptHelper.getInstance().b()))
-            {
-                NavigationFragment.this.k = ((MainFrameActivity)NavigationFragment.this.thisActivity).j();
+            if ((event.getAction() == 1) && (v.getId() == NavigationOptHelper.getInstance().b())) {
+                NavigationFragment.this.k = ((MainFrameActivity) NavigationFragment.this.thisActivity).j();
                 if (NavigationFragment.this.k != null)
                     NavigationFragment.this.k.a(NavigationOptHelper.getInstance().b(), v.getId());
             }
@@ -59,48 +57,46 @@ public class NavigationFragment extends BaseFragment {
     };
 
     private _F onCheckedChangeListener/*o*/ = new _F();
-    public class _F implements RadioGroup.OnCheckedChangeListener{//f
+
+    public class _F implements RadioGroup.OnCheckedChangeListener {//f
         private boolean b;
         private int c = -1;
         private int d = -2;
 
-        public final void a(int paramInt)
-        {
+        public final void a(int paramInt) {
             this.c = paramInt;
         }
 
-        public final void a(boolean paramBoolean)
-        {
+        public final void a(boolean paramBoolean) {
             this.b = true;
         }
 
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (NavigationFragment.this.j){
+            if (NavigationFragment.this.j) {
                 if (checkedId < 0)
                     return;
                 if (this.b) {
                     this.b = false;
                     return;
                 }//:cond_2
-                if ((this.c != checkedId) || !NavigationFragment.this.g){
+                if ((this.c != checkedId) || !NavigationFragment.this.g) {
                     NavigationFragment.this.g = false;
                     this.d = this.c;
                     this.c = checkedId;
                     NavigationOptHelper.getInstance().lastIndex = checkedId;
-                    if (Log.D)
-                    {
+                    if (Log.D) {
                         Log.d("JDNavigationFragment", "onCheckedChanged checkedId-->> " + checkedId);
                         Log.d("JDNavigationFragment", "onCheckedChanged mNow-->> " + this.c);
                     }
                     if (Log.D)
                         Log.d("JDNavigationFragment", "onCheckedChanged buttonActionList-->> " + NavigationFragment.this.navigationButtonList.size());
-                    NavigationButton.ButtonAction buttonAction = ((NavigationButton)group.findViewById(checkedId)).getButtonAction();
+                    NavigationButton.ButtonAction buttonAction = ((NavigationButton) group.findViewById(checkedId)).getButtonAction();
                     RedPointOpt.getInstance().a(checkedId, true);
                     if (!buttonAction.isHighlight())
                         NavigationFragment.this.a(Integer.valueOf(this.d));
                     NavigationFragment.this.d.push(Integer.valueOf(this.d));
-                    ((NavigationButton)group.findViewById(checkedId)).getButtonAction().a();
+                    ((NavigationButton) group.findViewById(checkedId)).getButtonAction().a();
                     UnifyRequestDataHolder.getInstance().b();
                 }
             }
@@ -108,48 +104,16 @@ public class NavigationFragment extends BaseFragment {
         }
     }
 
-    public static NavigationFragment a(int lastIndex)
-    {
+    public static NavigationFragment a(int lastIndex) {
         NavigationFragment navigationFragment = new NavigationFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("lastIndex", lastIndex);
         navigationFragment.setArguments(bundle);
         return navigationFragment;
     }
-    @Override
-    public View onCreateViews(LayoutInflater layoutInflater, Bundle bundle) {
-        View inflate = layoutInflater.inflate(R.layout.app_jd_navigation_xml, null);//2130903160
-        if (JDUntil.hasSmartBar())
-            inflate.setVisibility(View.GONE);
-        this.rgBottomMenu = ((RadioGroup)inflate.findViewById(R.id.bottomMenu));    //2131165838
-        this.navigationBg = inflate.findViewById(R.id.navigation_bg);  //2131165836
-        return inflate;
-    }
-
-    @Override
-    public boolean onKeyDown(int paramInt, KeyEvent keyEvent) {
-        return false;
-    }
-
-    @Override
-    public void onCreate(Bundle paramBundle)
-    {
-        super.onCreate(paramBundle);
-        NavigationOptHelper.b = true;
-        if (getArguments() != null)
-            NavigationOptHelper.getInstance().lastIndex = getArguments().getInt("lastIndex");
-        if (paramBundle != null)
-        {
-            NavigationOptHelper.getInstance().lastIndex = 0;
-            this.m = true;
-        }
-        this.needRemoveviewOnStop = false;
-        init();
-    }
 
     //c()
     private void init() {
-
         if (Log.D)
             Log.d("JDNavigationFragment", "------navigationInit--------");
         this.navigationButtonList = NavigationOptHelper.getInstance().getNavigationButtonList(getActivity(), this.m, this.navigationBg);
@@ -185,7 +149,7 @@ public class NavigationFragment extends BaseFragment {
                 if (index == 3) //购物车
                     MainFrameActivity.a(button.getStateController());
                 if (index == 4) //我的
-                   MainFrameActivity.a(button.f());
+                    MainFrameActivity.a(button.f());
                 button.setId(index);
                 button.setPadding(0, 0, 0, 0);
                 button.setGravity(Gravity.CENTER);
@@ -199,7 +163,7 @@ public class NavigationFragment extends BaseFragment {
                 // :goto_3
                 button.setLayoutParams(this.layoutParams);
                 TextView text = new TextView(this.getContext());
-                text.setText(""+i2);
+                text.setText("" + i2);
                 text.setTextColor(Color.RED);
                 text.setPadding(0, 0, 0, 0);
                 text.setGravity(Gravity.CENTER);
@@ -212,35 +176,31 @@ public class NavigationFragment extends BaseFragment {
         this.rgBottomMenu.check(lastIndex);
     }
 
-    public final void a()
-    {
-        c();
+    public final void a() {
+        init();
         this.j = false;
-        int i1 = j.a().a;
+        int i1 = NavigationOptHelper.getInstance().lastIndex;
         b(-1);
-        if ((i1 == 2) && (!TextUtils.isEmpty(((NavigationButton)this.c.get(i1)).b())))
-        {
+        if ((i1 == 2) && (!TextUtils.isEmpty(((NavigationButton) this.navigationButtonList.get(i1)).getUrl()))) {
             this.j = true;
             this.g = true;
         }
         b(i1);
         this.j = true;
-        s locals = s.a();
-        if (!this.g);
-        for (boolean bool = true; ; bool = false)
-        {
-            locals.a(i1, bool);
-            return;
-        }
+        RedPointOpt locals = RedPointOpt.getInstance();
+        boolean bool = true;
+        if (this.g)
+            bool = false;
+        locals.a(i1, bool);
+        return;
+
     }
 
-    public final void a(Integer paramInteger)
-    {
+    public final void a(Integer paramInteger) {
         if (Log.D)
             Log.d("JDNavigationFragment", "radioId -->> " + paramInteger);
-        j.a().a = paramInteger.intValue();
-        if (this.rgBottomMenu.getCheckedRadioButtonId() != paramInteger.intValue())
-        {
+        NavigationOptHelper.getInstance().lastIndex = paramInteger.intValue();
+        if (this.rgBottomMenu.getCheckedRadioButtonId() != paramInteger.intValue()) {
             if (Log.D)
                 Log.d("JDNavigationFragment", "bottomRadioGroup.getCheckedRadioButtonId() != radioId -->> " + this.rgBottomMenu.getCheckedRadioButtonId());
             this.e = this.rgBottomMenu.getCheckedRadioButtonId();
@@ -252,29 +212,53 @@ public class NavigationFragment extends BaseFragment {
         }
     }
 
-    public final void b()
-    {
+    public final void b() {
         this.d.clear();
     }
 
-    public final void b(int paramInt)
-    {
+    public final void b(int paramInt) {
         if (Log.D)
             Log.d("JDNavigationFragment", "setCurrentTab() index = " + paramInt);
-        if (n.a());
-        try
-        {
-            MainFrameActivity localMainFrameActivity = (MainFrameActivity)this.thisActivity;
-            if (localMainFrameActivity != null)
-                localMainFrameActivity.a(paramInt);
-            this.rgBottomMenu.check(paramInt);
-            j.a().a = paramInt;
-            return;
-        }
-        catch (Exception localException)
-        {
-            while (true)
+        if (JDUntil.hasSmartBar()) {//if-eqz v0, :cond_1
+            try {
+                MainFrameActivity localMainFrameActivity = (MainFrameActivity) this.thisActivity;
+                if (localMainFrameActivity != null)
+                    localMainFrameActivity.a(paramInt);
+            } catch (Exception localException) {
                 localException.printStackTrace();
+            }
         }
+        this.rgBottomMenu.check(paramInt);
+        NavigationOptHelper.getInstance().lastIndex = paramInt;
+        return;
+    }
+
+    @Override
+    public void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        NavigationOptHelper.b = true;
+        if (getArguments() != null)
+            NavigationOptHelper.getInstance().lastIndex = getArguments().getInt("lastIndex");
+        if (paramBundle != null) {
+            NavigationOptHelper.getInstance().lastIndex = 0;
+            this.m = true;
+        }
+        this.needRemoveviewOnStop = false;
+        init();
+    }
+
+    @Override
+    public View onCreateViews(LayoutInflater layoutInflater, Bundle bundle) {
+        View inflate = layoutInflater.inflate(R.layout.app_jd_navigation_xml, null);//2130903160
+        if (JDUntil.hasSmartBar())
+            inflate.setVisibility(View.GONE);
+        this.rgBottomMenu = ((RadioGroup) inflate.findViewById(R.id.bottomMenu));    //2131165838
+        this.navigationBg = inflate.findViewById(R.id.navigation_bg);  //2131165836
+        return inflate;
+    }
+
+    @Override
+    public boolean onKeyDown(int paramInt, KeyEvent keyEvent) {
+        return false;
     }
 }
