@@ -5,6 +5,6 @@ package com.zy.common.utils;
  */
 //com.jingdong.common.utils.fz
 public class TimerUntil {
-    public static long a;
-    public static long b;
+    public static long startTime;//a
+    public static long endTime;//b
 }

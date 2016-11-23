@@ -114,4 +114,8 @@ public class JDMtaUtils {
 
     public static void sendExceptionData(BaseApplication instance, HashMap localHashMap) {
     }
+
+    public static void destroy() {
+        //TODO: 方法未实现
+    }
 }

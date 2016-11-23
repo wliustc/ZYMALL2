@@ -28,6 +28,9 @@ public class JDJSON {
         DEFAULT_GENERATE_FEATURE = SerializerFeature.QuoteFieldNames.getMask() | 0x0 | SerializerFeature.SkipTransientField.getMask() | SerializerFeature.WriteEnumUsingName.getMask() | SerializerFeature.SortField.getMask();
     }
 
+    public static void init(boolean paramBoolean) {
+        debug = paramBoolean;
+    }
 
     public static final <T> T parseObject(String paramString, Class<T> paramClass){
         throw new RuntimeException("Not find parseObject(String paramString, Class<T> paramClass) in JDJSON");

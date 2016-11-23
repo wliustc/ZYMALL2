@@ -22,6 +22,10 @@ public class Log {
         android.util.Log.i(tag, message);
     }
 
+    public static void install(){
+        //TODO: 该方法未实现
+    }
+
     public static void unInstall() {
 //        if (mLogCore != null)
 //        {

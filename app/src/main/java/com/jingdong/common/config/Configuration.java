@@ -1,5 +1,7 @@
 package com.jingdong.common.config;
 
+import java.util.Properties;
+
 /**
  * Created by Robin on 2016/4/14.
  */
@@ -8,6 +10,7 @@ public class Configuration {
     private static String ngwHost;
 
     public static String getProperty(String partner) {
+        //TODO: 该方法未实现
         return (String)null;
     }
 
@@ -65,4 +68,8 @@ public class Configuration {
     }
 
 
+    public static Properties getProperties() {
+        init();
+        return properties;
+    }
 }
